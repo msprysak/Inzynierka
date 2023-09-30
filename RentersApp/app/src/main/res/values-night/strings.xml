@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="password">Hasło</string>
+    <string name="register">Zarejestruj się</string>
+    <string name="account_set">Masz już konto? Zaloguj się!</string>
+</resources>
