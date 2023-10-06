@@ -9,6 +9,10 @@
     <string name="or">──────── lub ────────</string>
     <string name="register">Zarejestruj się</string>
     <string name="account_set">Masz już konto? Zaloguj się!</string>
+
+    <!-- Strings related to registration -->
+    <string name="invalid_email">Proszę wprowadź poprawny adres email</string>
+    <string name="empty_password">Proszę wprowadź hasło</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -16,7 +20,19 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome!"</string>
     <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="invalid_password">Hasło nie spełnia wymogów bezpieczeństwa.</string>
+    <string name="invalid_confirm_password">Hasła nie są takie same!</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="confirm_password">Potwierdź hasło</string>
+    <string name="login">Zaloguj się</string>
+    <string name="nie_masz_jeszcze_konta_zarejestruj_si">Nie masz jeszcze konta? Zarejestruj się!</string>
+    <string name="username">Nazwa użytkownika</string>
+    <string name="join_home_button">Dołącz do istniejącego domu</string>
+    <string name="create_home_button">Utwórz nowy dom</string>
+    <string name="home_name">Nazwa domu</string>
+    <string name="home_address">Adres (opcjonalnie)</string>
+    <string name="cancel">Anuluj</string>
+    <string name="create">Utwórz</string>
+    <string name="Add_home_photo">Dodaj zdjęcie domu</string>
 </resources>
