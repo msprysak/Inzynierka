@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_add_users"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    tools:context=".ui.addusers.AddUsersFragment">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/colorSecondaryContainer">
+
+            <TextView
+                android:id="@+id/createCodeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/create_temporary_code_to_join"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/container" />
+
+            <TextView
+                android:id="@+id/timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:countDown="true"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/timer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/createCodeText" />
+
+            <TextView
+                android:id="@+id/codeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:drawablePadding="5dp"
+                android:hint="@string/_0000"
+                android:letterSpacing="1"
+                android:textColor="?attr/colorOnSecondaryContainer"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:drawableEndCompat="@drawable/ic_copy"
+                app:layout_constraintBottom_toTopOf="@id/createCodeButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/timer" />
+
+
+            <Button
+                android:id="@+id/createCodeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/create_code"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/createCodeText" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</FrameLayout>

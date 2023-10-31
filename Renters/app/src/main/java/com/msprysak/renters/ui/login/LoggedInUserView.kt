@@ -1,4 +1,4 @@
-package com.msprysak.renters.ui.login
+package com.msprysak.rentersapp.ui.login
 
 /**
  * User details post authentication that is exposed to the UI

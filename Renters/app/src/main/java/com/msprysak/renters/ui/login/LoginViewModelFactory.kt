@@ -1,9 +1,9 @@
-package com.msprysak.renters.ui.login
+package com.msprysak.rentersapp.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.msprysak.renters.data.LoginDataSource
-import com.msprysak.renters.data.LoginRepository
+import com.msprysak.rentersapp.data.LoginDataSource
+import com.msprysak.rentersapp.data.LoginRepository
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

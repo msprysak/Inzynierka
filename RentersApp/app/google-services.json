@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "927059252472",
-    "project_id": "rentersapp-c0b93",
-    "storage_bucket": "rentersapp-c0b93.appspot.com"
+    "project_number": "548760596154",
+    "project_id": "rentersapp-d5c1a",
+    "storage_bucket": "rentersapp-d5c1a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:927059252472:android:636fb7755182874af3d70d",
+        "mobilesdk_app_id": "1:548760596154:android:9b07def0a5ba94c9d59c83",
         "android_client_info": {
           "package_name": "com.msprysak.rentersapp"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCdWqAW84gAbLoxSsta_S0a6le8wdL6L7g"
+          "current_key": "AIzaSyAw2HvBa_Qk56AnXeRHzAf-trp_8s2_AJE"
         }
       ],
       "services": {

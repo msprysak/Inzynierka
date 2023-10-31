@@ -8,7 +8,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         tools:layout="@layout/fragment_register"
-        android:id="@+id/fragment"
+        android:id="@+id/registerFragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

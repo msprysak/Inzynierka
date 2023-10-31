@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:paddingLeft="@dimen/fragment_horizontal_margin"
+    android:paddingTop="@dimen/fragment_vertical_margin"
+    android:paddingRight="@dimen/fragment_horizontal_margin"
+    android:paddingBottom="@dimen/fragment_vertical_margin"
+    tools:context=".ui.createhome.CreateHomeFragment">
+
+
+
+    <TextView
+        android:id="@+id/welcomeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Witaj %KTOS%,\n dziękujemy za wybór naszej aplikacji"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="150dp"
+        />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="60dp"
+        tools:layout_editor_absoluteY="148dp">
+
+
+
+
+        <Button
+            android:id="@+id/btn_create_home"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/create_home_button"
+            android:textSize="15sp"
+
+            android:textStyle="bold"/>
+
+
+        <Button
+            android:id="@+id/btn_join_home"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/join_home_button"
+            android:textSize="15sp"
+
+            android:textStyle="bold"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

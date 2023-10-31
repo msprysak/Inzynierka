@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/xd"
     tools:context=".ui.register.RegisterFragment">
 
     <TextView
@@ -30,7 +31,8 @@
         android:src="@drawable/google_icon"
         app:layout_constraintEnd_toStartOf="@id/incognitoIconImageView"
         app:layout_constraintStart_toStartOf="@id/createAccountTextView"
-        app:layout_constraintTop_toBottomOf="@id/createAccountTextView" />
+        app:layout_constraintTop_toBottomOf="@id/createAccountTextView"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/incognitoIconImageView"
@@ -43,7 +45,8 @@
         app:layout_constraintBottom_toBottomOf="@id/googleIconImageView"
         app:layout_constraintEnd_toEndOf="@id/createAccountTextView"
         app:layout_constraintStart_toEndOf="@id/googleIconImageView"
-        app:layout_constraintTop_toTopOf="@id/googleIconImageView" />
+        app:layout_constraintTop_toTopOf="@id/googleIconImageView"
+        tools:ignore="ContentDescription" />
 
 
     <LinearLayout
@@ -81,12 +84,11 @@
             app:errorIconDrawable="@drawable/ic_warning">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/usernameEditText"
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="40"
+                android:maxLength="20"
                 android:ems="10"
-                android:autofillHints="username"
                 android:inputType="textPersonName"
                 tools:ignore="VisualLintTextFieldSize" />
 
@@ -109,7 +111,6 @@
                 android:layout_height="wrap_content"
                 android:maxLength="40"
                 android:ems="10"
-                android:autofillHints="emailAddress"
                 android:inputType="textEmailAddress"
                 tools:ignore="VisualLintTextFieldSize" />
 
@@ -122,7 +123,11 @@
 
             android:layout_marginTop="30dp"
             android:layout_marginEnd="50dp"
-            android:hint="@string/password">
+            android:hint="@string/password"
+            app:passwordToggleEnabled="true"
+            app:counterMaxLength="15"
+            app:counterEnabled="true"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEditText"
@@ -130,10 +135,11 @@
                 android:layout_height="wrap_content"
                 android:maxLength="15"
                 android:ems="10"
-                android:autofillHints="password"
                 android:inputType="textPassword"
                 tools:ignore="VisualLintTextFieldSize"
-                app:errorIconDrawable="@drawable/ic_warning"/>
+                app:errorIconDrawable="@drawable/ic_warning"
+                app:passwordToggleEnabled="true"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -144,17 +150,18 @@
 
             android:layout_marginTop="30dp"
             android:layout_marginEnd="50dp"
-            android:hint="@string/confirm_password">
+            android:hint="@string/confirm_password"
+            app:passwordToggleEnabled="true"
+            app:counterMaxLength="15"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirmPasswordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="15"
                 android:inputType="textPassword"
-                android:autofillHints="password"
-                tools:ignore="VisualLintTextFieldSize"
-                app:errorIconDrawable="@drawable/ic_warning"/>
+                android:maxLength="15"
+                app:errorIconDrawable="@drawable/ic_warning" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -169,9 +176,8 @@
                 android:id="@+id/registerButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/register"
                 android:layout_centerInParent="true"
-                />
+                android:text="@string/register" />
 
         </RelativeLayout>
 

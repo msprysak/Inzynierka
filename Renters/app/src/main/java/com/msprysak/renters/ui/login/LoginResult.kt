@@ -1,9 +1,9 @@
-package com.msprysak.renters.ui.login
+package com.msprysak.rentersapp.ui.login
 
 /**
  * Authentication result : success (user details) or error message.
  */
-data class LoginResult(
-    val success: LoggedInUserView? = null,
-    val error: Int? = null
-)
+//data class LoginResult(
+//    val success: LoggedInUserView? = null,
+//    val error: Int? = null
+//)

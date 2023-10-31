@@ -3,14 +3,12 @@ package com.msprysak.rentersapp.ui.register
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.fragment.app.Fragment
+import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -23,7 +21,7 @@ import com.msprysak.rentersapp.util.createClickableSpan
 
 class RegisterFragment : BaseFragment() {
 
-    private lateinit var registerViewModel: RegisterViewModel
+    private val registerViewModel by viewModels<RegisterViewModel>()
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
 
@@ -45,9 +43,8 @@ class RegisterFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        registerViewModel = ViewModelProvider(this).get(RegisterViewModel::class.java)
 
-
+        val usernameEditText = binding.username
         val emailEditText = binding.emailEditText
         val passwordEditText = binding.passwordEditText
         val confirmPasswordEditText = binding.confirmPasswordEditText
@@ -55,8 +52,6 @@ class RegisterFragment : BaseFragment() {
         val loginText =  binding.accountSetTextView
 
         registerButton.isEnabled = false
-        val icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_warning)
-        icon?.setBounds(0,0, icon.intrinsicWidth, icon.intrinsicHeight)
 
 //        RegisterViewModel.registerFormState.observe observes the LiveData object in the RegisterViewModel class.
         registerViewModel.registerFormState.observe(viewLifecycleOwner
@@ -65,16 +60,32 @@ class RegisterFragment : BaseFragment() {
                 return@observe
             }
             registerButton.isEnabled = registerFormState.isDataValid
+            registerFormState.usernameError?.let {
+                usernameEditText.error = getString(it)
+            }
             registerFormState.emailAddressError?.let {
-                binding.emailEditText.setError(getString(it),icon)
+                binding.emailEditText.error = getString(it)
             }
             registerFormState.passwordError?.let {
-                binding.passwordEditText.setError(getString(it),icon)
+                binding.passwordEditText.error = getString(it)
             }
             registerFormState.confirmPasswordError?.let {
-                binding.confirmPasswordEditText.setError(getString(it),icon)
+                binding.confirmPasswordEditText.error = getString(it)
             }
+            registerFormState.signupError?.let {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            }
+            registerFormState.signupSuccess?.let {
+                if (it) {
+                    startApp()
+                    Toast.makeText(context, R.string.register_success, Toast.LENGTH_SHORT).show()
+                }
+            }
+
         }
+
+
+
         val afterTextChangedListener = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 // ignore
@@ -85,34 +96,31 @@ class RegisterFragment : BaseFragment() {
             }
 
             override fun afterTextChanged(s: Editable) {
+                val username = usernameEditText.text.toString()
+                val email = emailEditText.text.toString()
+                val password = passwordEditText.text.toString()
+                val confirmPassword = confirmPasswordEditText.text.toString()
                 registerViewModel.registerDataChanged(
-                    emailEditText.text.toString(),
-                    passwordEditText.text.toString(),
-                    confirmPasswordEditText.text.toString()
+                    username,
+                    email,
+                    password,
+                    confirmPassword
                 )
             }
         }
+        usernameEditText.addTextChangedListener(afterTextChangedListener)
         emailEditText.addTextChangedListener(afterTextChangedListener)
         passwordEditText.addTextChangedListener(afterTextChangedListener)
         confirmPasswordEditText.addTextChangedListener(afterTextChangedListener)
 
         registerButton.setOnClickListener {
-            signupClicked(emailEditText.text.toString(), passwordEditText.text.toString())
+            registerViewModel.signupClicked(usernameEditText.text.toString(),emailEditText.text.toString(), passwordEditText.text.toString())
         }
+
+
         createClickableSpan(loginText, "Zaloguj się!", RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
 
     }
 
-    fun signupClicked(email: String, password: String){
-        auth.createUserWithEmailAndPassword(email,password)
-            .addOnSuccessListener { authResult ->
-                if (authResult.user != null) {
-                    startApp()
-                    Log.d(LOG_DEBUG, "Successfully created user with uid: ${authResult.user?.uid}")
-                }
-            }
-            .addOnFailureListener{exc ->
-                Log.d(LOG_DEBUG, "Failed to create user: ${exc.message}")
-            }
-    }
+
 }

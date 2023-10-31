@@ -1,25 +1,35 @@
-package com.msprysak.renters.ui.login
+package com.msprysak.rentersapp.ui.login
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.annotation.StringRes
-import androidx.fragment.app.Fragment
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
 import android.widget.Toast
-import com.msprysak.renters.databinding.FragmentLoginBinding
-
+import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.msprysak.renters.BaseFragment
 import com.msprysak.renters.R
+import com.msprysak.rentersapp.BaseFragment
+import com.msprysak.rentersapp.R
+import com.msprysak.rentersapp.activities.MainActivity
+import com.msprysak.rentersapp.databinding.FragmentLoginBinding
+import com.msprysak.rentersapp.util.createClickableSpan
 
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment() {
+
+
+    private val  LOG_DEBUG = "LoginFragment"
+    private val fbAuth = FirebaseAuth.getInstance()
 
     private lateinit var loginViewModel: LoginViewModel
     private var _binding: FragmentLoginBinding? = null
@@ -41,13 +51,14 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
 
-        val usernameEditText = binding.username
+        val emailEditText = binding.email
         val passwordEditText = binding.password
         val loginButton = binding.login
-        val loadingProgressBar = binding.loading
+        loginButton.isEnabled = false
 
         loginViewModel.loginFormState.observe(viewLifecycleOwner,
             Observer { loginFormState ->
@@ -55,25 +66,24 @@ class LoginFragment : Fragment() {
                     return@Observer
                 }
                 loginButton.isEnabled = loginFormState.isDataValid
-                loginFormState.usernameError?.let {
-                    usernameEditText.error = getString(it)
+                loginFormState.emailError?.let {
+                    emailEditText.error = getString(it)
                 }
                 loginFormState.passwordError?.let {
                     passwordEditText.error = getString(it)
                 }
             })
-
-        loginViewModel.loginResult.observe(viewLifecycleOwner,
-            Observer { loginResult ->
-                loginResult ?: return@Observer
-                loadingProgressBar.visibility = View.GONE
-                loginResult.error?.let {
-                    showLoginFailed(it)
-                }
-                loginResult.success?.let {
-                    updateUiWithUser(it)
-                }
-            })
+//
+//        loginViewModel.loginResult.observe(viewLifecycleOwner,
+//            Observer { loginResult ->
+//                loginResult ?: return@Observer
+//                loginResult.error?.let {
+//                    showLoginFailed(it)
+//                }
+//                loginResult.success?.let {
+//                    updateUiWithUser(it)
+//                }
+//            })
 
         val afterTextChangedListener = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -86,30 +96,33 @@ class LoginFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable) {
                 loginViewModel.loginDataChanged(
-                    usernameEditText.text.toString(),
+                    emailEditText.text.toString(),
                     passwordEditText.text.toString()
                 )
             }
         }
-        usernameEditText.addTextChangedListener(afterTextChangedListener)
+        emailEditText.addTextChangedListener(afterTextChangedListener)
         passwordEditText.addTextChangedListener(afterTextChangedListener)
-        passwordEditText.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                loginViewModel.login(
-                    usernameEditText.text.toString(),
-                    passwordEditText.text.toString()
-                )
-            }
-            false
-        }
+
+//
+//        passwordEditText.setOnEditorActionListener { _, actionId, _ ->
+//            if (actionId == EditorInfo.IME_ACTION_DONE) {
+//                loginViewModel.login(
+//                    emailEditText.text.toString(),
+//                    passwordEditText.text.toString()
+//                )
+//            }
+//            false
+//        }
 
         loginButton.setOnClickListener {
-            loadingProgressBar.visibility = View.VISIBLE
-            loginViewModel.login(
-                usernameEditText.text.toString(),
-                passwordEditText.text.toString()
-            )
+            setupLoginClick(emailEditText.text?.trim().toString(), passwordEditText.text?.trim().toString())
+//            loginViewModel.login(
+//                emailEditText.text.toString(),
+//                passwordEditText.text.toString()
+//            )
         }
+
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
@@ -124,6 +137,20 @@ class LoginFragment : Fragment() {
         Toast.makeText(appContext, errorString, Toast.LENGTH_LONG).show()
     }
 
+    private fun setupLoginClick(email:String, pass:String){
+
+
+        fbAuth.signInWithEmailAndPassword(email,pass)
+            .addOnSuccessListener {authRes ->
+                if (authRes.user != null){
+                    startApp()
+                }
+            }
+            .addOnFailureListener { exc ->
+                Snackbar.make(requireView(), exc.message.toString(), Snackbar.LENGTH_LONG).show()
+                Log.d(LOG_DEBUG, "setupLoginClick: ${exc.message}")
+            }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

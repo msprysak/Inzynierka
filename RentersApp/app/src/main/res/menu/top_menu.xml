@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/top_menu">
+    <item
+        android:id="@+id/profileFragment"
+        app:showAsAction="ifRoom"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_person"/>
+    <item
+        android:id="@+id/settingsFragment"
+        app:showAsAction="ifRoom"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_settings"/>
+</menu>

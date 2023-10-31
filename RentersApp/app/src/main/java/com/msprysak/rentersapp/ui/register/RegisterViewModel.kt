@@ -1,25 +1,27 @@
 package com.msprysak.rentersapp.ui.register
 
-import android.text.TextUtils
 import android.util.Log
-import androidx.lifecycle.LiveData
+import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.util.Patterns
 import com.google.firebase.auth.FirebaseAuth
-import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.R
-import com.msprysak.rentersapp.data.LoginRepository
-import com.msprysak.rentersapp.data.Result
-import org.w3c.dom.Text
-import java.sql.Struct
+import com.msprysak.rentersapp.data.FirebaseRepository
+import com.msprysak.rentersapp.data.model.User
 
 class RegisterViewModel : ViewModel() {
 
     private val _registerForm = MutableLiveData<RegisterFormState>()
     val registerFormState : MutableLiveData<RegisterFormState> = _registerForm
 
-    private val fbAuth = FirebaseAuth.getInstance()
+    private val repository = FirebaseRepository()
+
+
+    private fun createNewUser(user: User){
+        repository.createNewUser(user)
+    }
+
+    private var auth= FirebaseAuth.getInstance()
     private val LOG = "RegisterViewModel"
 
     private fun isEmailValid(email: String): Boolean {
@@ -33,8 +35,14 @@ class RegisterViewModel : ViewModel() {
         return password == confirmPassword
     }
 
-    fun registerDataChanged(email: String, password: String, confirmPassword: String){
-        if (!isEmailValid(email)){
+    private fun isUsernameValid(username: String): Boolean {
+        return username.length >= 3 && Regex("^[a-zA-Z0-9]+$").matches(username)
+    }
+
+    fun registerDataChanged(username: String, email: String, password: String, confirmPassword: String){
+        if (!isUsernameValid(username)) {
+            _registerForm.value = RegisterFormState(usernameError  = R.string.invalid_username)
+        } else if (!isEmailValid(email)){
             _registerForm.value = RegisterFormState(emailAddressError = R.string.invalid_email)
         } else if (!isPasswordValid(password)){
             _registerForm.value = RegisterFormState(passwordError = R.string.invalid_password)
@@ -44,7 +52,31 @@ class RegisterViewModel : ViewModel() {
             _registerForm.value = RegisterFormState(isDataValid = true)
         }
     }
+    fun signupClicked(username: String, email: String, password: String){
+        auth.createUserWithEmailAndPassword(email,password)
+            .addOnSuccessListener { authResult ->
+                if (authResult.user != null) {
 
+                    val user = User(
+                        userId = authResult.user!!.uid,
+                        username = username,
+                        email = authResult.user!!.email,
+                        phoneNumber = "",
+                        profilePictureUrl = "",
+                        houseRoles = null
+
+
+                    )
+                    createNewUser(user)
+                    _registerForm.value = RegisterFormState(signupSuccess = true)
+                }
+
+            }
+            .addOnFailureListener{exc ->
+                _registerForm.value = RegisterFormState(signupError = exc.message)
+                Log.d(LOG, "Failed to create user: ${exc.message}")
+            }
+    }
 
 
 }
