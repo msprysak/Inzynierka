@@ -31,15 +31,6 @@ class MenuFragment : BaseFragment(), BindUser {
         return _binding!!.root
     }
 
-    override fun bindUserData(user: User) {
-        binding.username.text = user.username
-        if (!user.profilePictureUrl?.isEmpty()!!) {
-            Glide.with(this)
-                .load(user.profilePictureUrl)
-                .circleCrop()
-                .into(binding.profileImage)
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,5 +57,14 @@ class MenuFragment : BaseFragment(), BindUser {
             navController.navigate(MenuFragmentDirections.actionMenuFragmentToHomeFragment())
         }
 
+    }
+    override fun bindUserData(user: User) {
+        binding.username.text = user.username
+        if (!user.profilePictureUrl?.isEmpty()!!) {
+            Glide.with(this)
+                .load(user.profilePictureUrl)
+                .circleCrop()
+                .into(binding.profileImage)
+        }
     }
 }

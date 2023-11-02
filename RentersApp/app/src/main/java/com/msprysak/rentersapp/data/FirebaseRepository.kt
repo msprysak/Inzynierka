@@ -16,8 +16,43 @@ class FirebaseRepository {
     private val storage = FirebaseStorage.getInstance()
     private val auth = FirebaseAuth.getInstance()
     private val cloud = FirebaseFirestore.getInstance()
-    val sharedUserData: MutableLiveData<User> = MutableLiveData()
     val sharedPremisesData: MutableLiveData<Premises> = MutableLiveData()
+
+    val sharedUserData: MutableLiveData<User> = MutableLiveData()
+
+    fun getUserData(): LiveData<User> {
+        val docRef = cloud.collection("users")
+            .document(auth.currentUser!!.uid)
+
+        docRef.addSnapshotListener { documentSnapshot, e ->
+            if (e != null) {
+                return@addSnapshotListener
+            }
+            if (documentSnapshot != null && documentSnapshot.exists()) {
+                val user = documentSnapshot.toObject(User::class.java)
+                sharedUserData.postValue(user!!)
+            }
+        }
+        return sharedUserData
+    }
+    fun getPremisesData(premisesId: String): LiveData<Premises> {
+        val docRef = cloud.collection("premises")
+            .document(sharedUserData.value?.houseRoles?.keys?.first()!!)
+
+        docRef.addSnapshotListener { documentSnapshot, e ->
+            if (e != null) {
+                return@addSnapshotListener
+            }
+            if (documentSnapshot != null && documentSnapshot.exists()) {
+                val premises = documentSnapshot.toObject(Premises::class.java)
+                sharedPremisesData.postValue(premises!!)
+            }
+        }
+
+        return sharedPremisesData
+    }
+
+
     fun createNewUser(user: User) {
         cloud.collection("users")
             .document(user.userId!!)
@@ -36,53 +71,20 @@ class FirebaseRepository {
             }
     }
 
-    fun getPremisesData(): LiveData<Premises>{
-        val docRef = cloud.collection("premises")
-            .document(sharedUserData.value?.houseRoles!!["premisesId"]!!)
-
-        docRef.addSnapshotListener{documentSnapshot, e ->
-            if (e !=null){
-                return@addSnapshotListener
-            }
-            if (documentSnapshot != null && documentSnapshot.exists()){
-                val premises = documentSnapshot.toObject(Premises::class.java)
-                sharedPremisesData.value = premises!!
-            }
-        }
-        return sharedPremisesData
-    }
-
-    fun getUserData(): LiveData<User> {
-        val docRef = cloud.collection("users")
-            .document(auth.currentUser!!.uid)
-
-        docRef.addSnapshotListener{documentSnapshot, e ->
-            if (e !=null){
-                return@addSnapshotListener
-            }
-            if (documentSnapshot != null && documentSnapshot.exists()){
-                val user = documentSnapshot.toObject(User::class.java)
-                sharedUserData.value = user!!
-            }
-        }
-        return sharedUserData
-    }
-    fun fetchUserData(): LiveData<User> {
-
-        val userDocumentReference = cloud.collection("users")
-            .document(auth.currentUser!!.uid)
-
-        userDocumentReference.get()
-            .addOnSuccessListener { userDocumentSnapshot ->
-                val user = userDocumentSnapshot.toObject(User::class.java)
-                sharedUserData.value = user!!
-            }
+    fun editPremisesData(map: Map<String, String>) {
+        cloud.collection("premises")
+            .document(sharedUserData.value?.houseRoles?.keys?.first()!!)
+            .update(map)
+            .addOnSuccessListener { Log.d(DEBUG, "editPremisesData: Success") }
             .addOnFailureListener {
-                Log.d(DEBUG, "fetchUserData: ${it.message}")
+                Log.d(DEBUG, "editPremisesData: ${it.message}")
             }
-
-        return sharedUserData
     }
+
+
+
+
+
 
     fun createNewPremises(premises: Premises, user: User) {
 
@@ -116,18 +118,56 @@ class FirebaseRepository {
         storage.getReference("users")
             .child("${auth.currentUser!!.uid}.jpg")
             .putBytes(bytes)
-            .addOnCompleteListener() {
+            .addOnCompleteListener {
             }
             .addOnSuccessListener {
                 Log.d(DEBUG, "uploadUserPhoto: Success")
-                getPhotoDownloadUrl(it.storage)
+                getUserPhotoDownloadUrl(it.storage)
             }
-            .addOnFailureListener() {
+            .addOnFailureListener {
                 Log.d(DEBUG, "uploadUserPhoto: ${it.message}")
             }
     }
 
-    private fun getPhotoDownloadUrl(storage: StorageReference) {
+    fun uploadPremisesPhoto(bytes: ByteArray) {
+        storage.getReference("premises")
+            .child("${sharedUserData.value?.houseRoles?.keys?.first()}.jpg")
+            .putBytes(bytes)
+            .addOnCompleteListener {
+
+            }
+            .addOnSuccessListener {
+                Log.d(DEBUG, "uploadPremisesPhoto: Success")
+                getPremisesPhotoDownloadUrl(it.storage)
+            }
+            .addOnFailureListener {
+                Log.d(DEBUG, "uploadPremisesPhoto: ${it.message}")
+            }
+    }
+
+    private fun getPremisesPhotoDownloadUrl(storage: StorageReference) {
+        storage.downloadUrl
+            .addOnSuccessListener { updatePremisesPhoto(it.toString()) }
+            .addOnFailureListener {
+                Log.d(DEBUG, "getPhotoDownloadUrl: ${it.message}")
+            }
+    }
+
+    private fun updatePremisesPhoto(url: String?) {
+        cloud.collection("premises")
+            .document(sharedUserData.value?.houseRoles?.keys?.first()!!)
+            .update("premisesImageUrl", url)
+            .addOnSuccessListener {
+                Log.d(DEBUG, "updatePremisesPhoto: Success")
+            }
+            .addOnFailureListener {
+                Log.d(DEBUG, "updatePremisesPhoto: ${it.message.toString()}")
+            }
+
+    }
+
+
+    private fun getUserPhotoDownloadUrl(storage: StorageReference) {
         storage.downloadUrl
             .addOnSuccessListener { updateUserPhoto(it.toString()) }
             .addOnFailureListener {

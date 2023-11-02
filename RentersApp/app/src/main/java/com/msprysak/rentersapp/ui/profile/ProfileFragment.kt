@@ -1,18 +1,16 @@
 package com.msprysak.rentersapp.ui.profile
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.msprysak.rentersapp.BaseFragment
@@ -26,9 +24,10 @@ class ProfileFragment : BaseFragment(), BindUser {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
-    private val CAMERA_PERMISSION_REQUEST_CODE = 100
     private val profileViewModel by viewModels<ProfileViewModel>()
     private var imageBitmap: Bitmap? = null
+    private lateinit var initialUsername: String
+    private lateinit var initialPhoneNumber: String
 
 
     override fun onCreateView(
@@ -38,35 +37,37 @@ class ProfileFragment : BaseFragment(), BindUser {
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
 
-
+        binding.saveButton.isEnabled = false
         return _binding!!.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val changePasswordButton = binding.changePasswordButton
-        profileViewModel.repository.getUserData()
 
-        profileViewModel.userData.observe(viewLifecycleOwner) { user ->
+        profileViewModel.test().observe(viewLifecycleOwner) { user ->
             bindUserData(user)
         }
 
-        setupTakePictureClick()
-
+        profileViewModel.test().observe(viewLifecycleOwner){user ->
+            bindUserData(user)
+        }
         changePasswordButton.setOnClickListener {
             val dialog = ChangePasswordDialogFragment()
             dialog.show(childFragmentManager, "ChangePasswordDialogFragment")
         }
-
+        binding.saveButton.isEnabled = false
+        setupTextChangeListeners()
         setupTakePictureClick()
         setupSaveButton()
 
     }
-
     override fun bindUserData(user: User) {
+        initialUsername = user.username!!
+        initialPhoneNumber = user.phoneNumber!!
+
         binding.username.setText(user.username)
-        binding.username.setSelection(user.username!!.length)
+        binding.username.setSelection(user.username.length)
         binding.phoneNumberEditText.setText(user.phoneNumber)
         binding.emailEditText.setText(user.email)
         if (!user.profilePictureUrl?.isEmpty()!!) {
@@ -75,83 +76,83 @@ class ProfileFragment : BaseFragment(), BindUser {
                 .circleCrop()
                 .into(binding.editUserImageView)
         }
+
+    }
+
+
+
+    private fun setupTextChangeListeners() {
+        binding.username.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Niepotrzebna implementacja
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                binding.saveButton.isEnabled = s.toString() != initialUsername
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Niepotrzebna implementacja
+            }
+        })
+
+        binding.phoneNumberEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Niepotrzebna implementacja
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                binding.saveButton.isEnabled = s.toString() != initialPhoneNumber
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Niepotrzebna implementacja
+            }
+        })
+
     }
 
     private fun setupSaveButton() {
         binding.saveButton.setOnClickListener {
             saveProfileData()
+            binding.saveButton.isEnabled = false
         }
     }
 
     private fun setupTakePictureClick() {
         binding.editUserImageView.setOnClickListener {
             if (hasCameraGalleryPermissions()) {
-                takePicture()
+                selectImage(pictureResult) { pictureResult ->
+                    imageBitmap = pictureResult
+                }
             }
         }
     }
 
-
-    private fun hasCameraGalleryPermissions(): Boolean {
-        val cameraPermission = Manifest.permission.CAMERA
-        val readStoragePermission = Manifest.permission.READ_EXTERNAL_STORAGE
-        val hasCameraPermission =
-            PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
-                requireContext(),
-                cameraPermission
-            )
-        val hasStoragePermission =
-            PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
-                requireContext(),
-                readStoragePermission
-            )
-
-        if (!hasCameraPermission && !hasStoragePermission) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(cameraPermission, readStoragePermission),
-                CAMERA_PERMISSION_REQUEST_CODE
-            )
-        } else {
-            return true
-        }
-        return false
-    }
-
-    private fun takePicture() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val mimeType = "image/jpeg"
-        val pickImageIntent = Intent(Intent.ACTION_PICK)
-        pickImageIntent.type = mimeType
-
-        val chooser = Intent.createChooser(Intent(), "Zrób zdjęcie lub wybierz z galerii")
-        chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(takePictureIntent, pickImageIntent))
-        takePicture.launch(chooser)
-    }
-
-
-    private val takePicture =
+    private val pictureResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
                 if (data != null) {
                     val imageUri = data.data
-                    imageBitmap = if (imageUri != null) {
-                        MediaStore.Images.Media.getBitmap(
+                    if (imageUri != null) {
+                        imageBitmap = MediaStore.Images.Media.getBitmap(
                             requireContext().contentResolver,
                             imageUri
                         )
                     } else {
-                        data.extras?.get("data") as Bitmap
+                        imageBitmap = data.extras?.get("data") as Bitmap
                     }
 
 
                     imageBitmap?.let {
                         Glide.with(this)
                             .load(it)
+                            .dontTransform()
                             .circleCrop()
                             .into(binding.editUserImageView)
                     }
+                    binding.saveButton.isEnabled = true
 
                 }
             }

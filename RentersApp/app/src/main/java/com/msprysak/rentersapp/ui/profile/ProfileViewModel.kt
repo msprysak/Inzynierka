@@ -1,5 +1,6 @@
 package com.msprysak.rentersapp.ui.profile
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.msprysak.rentersapp.data.RepositorySingleton
@@ -10,14 +11,20 @@ class ProfileViewModel: ViewModel() {
 
     val repository = RepositorySingleton.getInstance()
 
-    val userData: MutableLiveData<User> = repository.sharedUserData
-
     fun editProfileData(map: Map<String, String>){
         repository.editProfileData(map)
     }
 
+    fun getUserData(): LiveData<User> {
+        return repository.getUserData()
+    }
     fun uploadUserPhoto(byteArray: ByteArray){
         repository.uploadUserPhoto(byteArray)
+    }
+
+
+    fun test(): LiveData<User>{
+        return repository.sharedUserData
     }
 
 }

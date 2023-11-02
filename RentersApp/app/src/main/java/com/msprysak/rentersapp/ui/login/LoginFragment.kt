@@ -111,7 +111,6 @@ class LoginFragment : BaseFragment() {
         fbAuth.signInWithEmailAndPassword(email,pass)
             .addOnSuccessListener {authRes ->
                 if (authRes.user != null){
-                    repository.fetchUserData()
                     println("LoginClick: ${repository.sharedUserData.value?.userId}")
                     // TODO:
                     //  JESLI UZYTKOWNIK NIE MA DOMU TO PRZEKIERUJ DO CREATEHOMEFRAGMENT

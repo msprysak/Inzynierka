@@ -2,7 +2,9 @@ package com.msprysak.rentersapp.ui.createhome
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FieldValue.serverTimestamp
 import com.msprysak.rentersapp.data.RepositorySingleton
 import com.msprysak.rentersapp.data.model.Premises
 import com.msprysak.rentersapp.data.model.User
@@ -15,9 +17,6 @@ class CreateHomeViewModel: ViewModel() {
 
     val userData: MutableLiveData<User> = repository.sharedUserData
 
-    init {
-        repository.fetchUserData()
-    }
     fun validateLocalName(localName: String): Boolean {
         return localName.isNotBlank()
     }
@@ -26,12 +25,11 @@ class CreateHomeViewModel: ViewModel() {
         // Utwórz nowy obiekt Premises
 
         val newPremises = Premises(
-            imageUrl = imageURL,
-            localAddress = localAddress,
-            localName = localName,
+            premisesImageUrl = imageURL,
+            address = localAddress,
+            name = localName,
             users = mapOf(userData.value?.userId!! to "landlord"),
-            creationDate = FieldValue.serverTimestamp(),
-            temporaryCode = null
+            creationDate = Timestamp.now()
         )
 
         repository.createNewPremises(newPremises, userData.value!!)

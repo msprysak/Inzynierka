@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1087865235352",
+    "project_id": "renters-19980",
+    "storage_bucket": "renters-19980.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087865235352:android:5ec2d283e82707d4c1aded",
+        "android_client_info": {
+          "package_name": "com.msprysak.renters"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKfTXJgzOC_kRqpL78xQu5wPGbsVSV_hk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
