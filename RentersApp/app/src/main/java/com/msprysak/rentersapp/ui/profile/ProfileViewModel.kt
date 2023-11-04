@@ -22,9 +22,9 @@ class ProfileViewModel: ViewModel() {
         repository.uploadUserPhoto(byteArray)
     }
 
-
-    fun test(): LiveData<User>{
-        return repository.sharedUserData
+    fun updatePassword(password: String){
+        repository.updatePassword(password)
     }
+
 
 }

@@ -12,7 +12,7 @@ class HomeViewModel : ViewModel() {
     private val repository = RepositorySingleton.getInstance()
 
    fun getPremisesData(): LiveData<Premises> {
-        return repository.sharedPremisesData
+        return repository.getPremisesData()
     }
 
     fun uploadPremisesPhoto(byteArray: ByteArray){

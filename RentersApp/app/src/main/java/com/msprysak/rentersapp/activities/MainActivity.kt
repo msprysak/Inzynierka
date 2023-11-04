@@ -3,7 +3,6 @@ package com.msprysak.rentersapp.activities
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -24,19 +23,10 @@ class MainActivity : AppCompatActivity() {
     private val auth = FirebaseAuth.getInstance()
     private val user = auth.currentUser
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (user != null) {
-            repository.getUserData().observe(this){userData ->
-                val  houseRoles = userData.houseRoles?.keys?.first()
-                if (houseRoles != null) {
-                    repository.getPremisesData(houseRoles)
-                }
-            }
-        } else {
-            auth.signOut()
-            finish()
-        }
+
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

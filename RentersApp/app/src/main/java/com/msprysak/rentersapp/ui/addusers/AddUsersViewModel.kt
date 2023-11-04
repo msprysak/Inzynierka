@@ -7,11 +7,9 @@ class AddUsersViewModel: ViewModel() {
 
     private val repository = RepositorySingleton.getInstance()
 
-    private val premises = repository.sharedPremisesData
-
-
     fun addTemporaryCode(randomCode: String) {
-        repository.addTemporaryCode(repository.sharedPremisesData.value!!.premisesId!!, randomCode)
+
+        return repository.addTemporaryCode(randomCode)
     }
 
 }

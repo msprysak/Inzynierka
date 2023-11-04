@@ -21,16 +21,16 @@ class FirebaseRepository {
 
     val sharedUserData: MutableLiveData<User> = MutableLiveData()
 
-    fun addTemporaryCode(premisesId: String, randomCode: String) {
+    fun addTemporaryCode(randomCode: String) {
         val data = hashMapOf(
             "code" to randomCode,
-            "premisesId" to premisesId,
+            "premisesId" to (sharedUserData.value?.houseRoles?.keys?.first() ?: "null"),
             "creationTime" to FieldValue.serverTimestamp()
         )
 
         val docRef = cloud.collection("temporaryCodes")
 
-        docRef.whereEqualTo("premisesId", premisesId)
+        docRef.whereEqualTo("premisesId", sharedUserData.value?.houseRoles?.keys?.first() ?: "null")
             .get()
             .addOnSuccessListener { querySnapshot ->
                 if (querySnapshot.isEmpty) {
@@ -47,13 +47,23 @@ class FirebaseRepository {
                         .delete()
                     docRef.document(randomCode)
                         .set(data)
-                    Log.d(DEBUG, "Dokument o premisesId = $premisesId już istnieje.")
+                    Log.d(DEBUG, "Dokument o premisesId  już istnieje.")
                 }
             }
             .addOnFailureListener { e ->
                 Log.d(DEBUG, "Błąd podczas sprawdzania dokumentów: ${e.message}")
             }
 
+    }
+
+    fun updatePassword(password: String){
+        auth.currentUser!!.updatePassword(password)
+            .addOnSuccessListener {
+                Log.d(DEBUG, "updatePassword: Success")
+            }
+            .addOnFailureListener {
+                Log.d(DEBUG, "updatePassword: ${it.message}")
+            }
     }
 
 //    private fun checkIfCodeExists(randomCode: String, callBack: (Boolean) -> Unit) {
@@ -98,7 +108,7 @@ class FirebaseRepository {
         }
         return sharedUserData
     }
-    fun getPremisesData(premisesId: String): LiveData<Premises> {
+    fun getPremisesData(): LiveData<Premises> {
         val docRef = cloud.collection("premises")
             .document(sharedUserData.value?.houseRoles?.keys?.first()!!)
 

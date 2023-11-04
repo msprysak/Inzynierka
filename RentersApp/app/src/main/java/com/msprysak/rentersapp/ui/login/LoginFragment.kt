@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.firebase.auth.FirebaseAuth
 import com.msprysak.rentersapp.BaseFragment
-import com.msprysak.rentersapp.data.FirebaseRepository
 import com.msprysak.rentersapp.data.RepositorySingleton
 import com.msprysak.rentersapp.databinding.FragmentLoginBinding
 
@@ -78,8 +77,7 @@ class LoginFragment : BaseFragment() {
 
             override fun afterTextChanged(s: Editable) {
                 loginViewModel.loginDataChanged(
-                    emailEditText.text.toString(),
-                    passwordEditText.text.toString()
+                    emailEditText.text.toString()
                 )
             }
         }
@@ -94,13 +92,6 @@ class LoginFragment : BaseFragment() {
 
     }
 
-//    private fun updateUiWithUser(model: LoggedInUserView) {
-//        val welcome = getString(R.string.welcome) + model.displayName
-//        // TODO : initiate successful logged in experience
-//        val appContext = context?.applicationContext ?: return
-//        Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
-//    }
-
     private fun showLoginFailed(@StringRes errorString: Int) {
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, errorString, Toast.LENGTH_LONG).show()
@@ -111,10 +102,6 @@ class LoginFragment : BaseFragment() {
         fbAuth.signInWithEmailAndPassword(email,pass)
             .addOnSuccessListener {authRes ->
                 if (authRes.user != null){
-                    println("LoginClick: ${repository.sharedUserData.value?.userId}")
-                    // TODO:
-                    //  JESLI UZYTKOWNIK NIE MA DOMU TO PRZEKIERUJ DO CREATEHOMEFRAGMENT
-                    //  JEŚLI UŻYTKOWNIK JEST PRZYPISANY DO DOMU TO PRZEKIERUJ DO MAINACTIVITY
                     startApp()
                 }
             }

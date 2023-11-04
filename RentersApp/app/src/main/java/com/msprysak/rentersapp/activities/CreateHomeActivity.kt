@@ -12,35 +12,39 @@ import com.msprysak.rentersapp.R
 class CreateHomeActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_home)
-        changeActivity()
-
-    }
-
-    private fun changeActivity() {
-        if (userIsMemberOfGroup()){
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-    }
-    private fun userIsMemberOfGroup(): Boolean {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
-        val docRef = Firebase.firestore.collection("users").document(userId!!)
-        docRef.get().addOnCompleteListener { complete ->
-            if (complete.isSuccessful) {
-                val document = complete.result
-                if (document != null) {
-                    val houseRoles = document.data?.get("houseRoles")
-                    println(houseRoles)
-                    if (houseRoles != null) {
-                        return@addOnCompleteListener
-                    }
-                }
+        userIsMemberOfGroup { isMember ->
+            if (isMember) {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            } else{
+                setContentView(R.layout.activity_create_home)
             }
         }
 
-        return false
     }
+
+    private fun userIsMemberOfGroup(callback: (Boolean) -> Unit) {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            val userId = currentUser.uid
+            val docRef = Firebase.firestore.collection("users").document(userId)
+
+            docRef.get().addOnCompleteListener { complete ->
+                if (complete.isSuccessful) {
+                    val document = complete.result
+                    val houseRoles = document?.data?.get("houseRoles")
+                    val isMember = houseRoles != null
+                    callback(isMember)
+                } else {
+                    callback(false)
+                }
+            }
+        } else {
+            callback(false)
+        }
+    }
+
+
+
 }

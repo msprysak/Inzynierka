@@ -1,11 +1,10 @@
 package com.msprysak.rentersapp.ui.menu
 
-import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.msprysak.rentersapp.data.RepositorySingleton
 import com.msprysak.rentersapp.data.model.User
-import com.msprysak.rentersapp.databinding.DialogAddHomeBinding
 
 class MenuViewModel : ViewModel() {
     // TODO: Implement the ViewModel
@@ -13,6 +12,9 @@ class MenuViewModel : ViewModel() {
     private val repository = RepositorySingleton.getInstance()
     val userData: MutableLiveData<User> = repository.sharedUserData
 
+    fun getUserData(): LiveData<User>{
+        return repository.getUserData()
+    }
     fun generateCode(){
         println("generateCode")
     }

@@ -34,6 +34,9 @@ class CreateHomeViewModel: ViewModel() {
 
         repository.createNewPremises(newPremises, userData.value!!, callback)
     }
+     fun uploadPremisesPhoto(byteArray: ByteArray){
+        repository.uploadPremisesPhoto(byteArray)
+    }
 
 
 

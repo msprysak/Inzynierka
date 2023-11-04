@@ -35,7 +35,7 @@ class MenuFragment : BaseFragment(), BindUser {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        menuViewModel.userData.observe(viewLifecycleOwner) { user ->
+        menuViewModel.getUserData().observe(viewLifecycleOwner) { user ->
             bindUserData(user)
         }
 

@@ -11,6 +11,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.msprysak.rentersapp.activities.CreateHomeActivity
 import com.msprysak.rentersapp.activities.MainActivity
 
 open class BaseFragment: Fragment() {
@@ -22,7 +23,7 @@ open class BaseFragment: Fragment() {
         exitTransition = transInflater.inflateTransition(R.transition.fade_out)
     }
     protected fun startApp(){
-        val intent = Intent(requireContext(), MainActivity::class.java).apply{
+        val intent = Intent(requireContext(), CreateHomeActivity::class.java).apply{
 //                Flags FLAG_ACTIVITY_NEW_TASK and FLAG_ACTIVITY_CLEAR_TASK are used to clear the back stack of activities.
             flags = (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }
