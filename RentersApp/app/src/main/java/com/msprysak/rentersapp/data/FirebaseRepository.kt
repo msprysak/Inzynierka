@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -19,6 +20,68 @@ class FirebaseRepository {
     val sharedPremisesData: MutableLiveData<Premises> = MutableLiveData()
 
     val sharedUserData: MutableLiveData<User> = MutableLiveData()
+
+    fun addTemporaryCode(premisesId: String, randomCode: String) {
+        val data = hashMapOf(
+            "code" to randomCode,
+            "premisesId" to premisesId,
+            "creationTime" to FieldValue.serverTimestamp()
+        )
+
+        val docRef = cloud.collection("temporaryCodes")
+
+        docRef.whereEqualTo("premisesId", premisesId)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (querySnapshot.isEmpty) {
+                    docRef.document(randomCode)
+                        .set(data)
+                        .addOnSuccessListener {
+                            Log.d(DEBUG, "Dodano nowy dokument")
+                        }
+                        .addOnFailureListener { e ->
+                            Log.d(DEBUG, "Błąd podczas dodawania nowego dokumentu: ${e.message}")
+                        }
+                } else {
+                    docRef.document(querySnapshot.documents[0].id)
+                        .delete()
+                    docRef.document(randomCode)
+                        .set(data)
+                    Log.d(DEBUG, "Dokument o premisesId = $premisesId już istnieje.")
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.d(DEBUG, "Błąd podczas sprawdzania dokumentów: ${e.message}")
+            }
+
+    }
+
+//    private fun checkIfCodeExists(randomCode: String, callBack: (Boolean) -> Unit) {
+//        val docRef = cloud.collection("temporaryCodes")
+//            .whereEqualTo("code", randomCode)
+//            .get()
+//            .addOnSuccessListener { documents ->
+//                if (documents.isEmpty) {
+//
+//                }
+//            }
+//    }
+
+    private fun checkIfUserAlreadyCreated(premisesId: String) {
+        cloud.collection("temporaryCodes")
+            .whereEqualTo("premisesId", premisesId)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                for (document in querySnapshot) {
+                    // Usuń znaleziony dokument
+                    document.reference.delete()
+                    Log.d(DEBUG, "Dokument został usunięty: ${document.id}")
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.d(DEBUG, "${e.message}")
+            }
+    }
 
     fun getUserData(): LiveData<User> {
         val docRef = cloud.collection("users")
@@ -59,6 +122,7 @@ class FirebaseRepository {
             .set(user)
     }
 
+
     fun editProfileData(map: Map<String, String>) {
         cloud.collection("users")
             .document(auth.currentUser!!.uid)
@@ -86,8 +150,7 @@ class FirebaseRepository {
 
 
 
-    fun createNewPremises(premises: Premises, user: User) {
-
+    fun createNewPremises(premises: Premises, user: User, callback: CreateHomeCallback) {
         cloud.collection("premises")
             .add(premises)
             .addOnSuccessListener { premisesDocumentReference ->
@@ -101,17 +164,23 @@ class FirebaseRepository {
                 userDocumentReference.update("houseRoles", userRoleInNewHouse)
                     .addOnSuccessListener {
                         Log.d(DEBUG, "createNewPremises: Success")
+                        callback.onSuccess()
                     }
-                    .addOnFailureListener {
-                        Log.d(DEBUG, "createNewPremises: ${it.message}")
+                    .addOnFailureListener { e ->
+                        val errorMessage = "createNewPremises: ${e.message}"
+                        Log.d(DEBUG, errorMessage)
+                        callback.onFailure(errorMessage)
                     }
 
                 Log.d(DEBUG, "addPremises: Success")
             }
-            .addOnFailureListener {
-                Log.d(DEBUG, "addPremises: ${it.message}")
+            .addOnFailureListener { e ->
+                val errorMessage = "addPremises: ${e.message}"
+                Log.d(DEBUG, errorMessage)
+                callback.onFailure(errorMessage)
             }
     }
+
 
     fun uploadUserPhoto(bytes: ByteArray) {
 

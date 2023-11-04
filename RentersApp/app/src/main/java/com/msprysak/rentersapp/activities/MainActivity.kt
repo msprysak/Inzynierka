@@ -31,9 +31,6 @@ class MainActivity : AppCompatActivity() {
                 val  houseRoles = userData.houseRoles?.keys?.first()
                 if (houseRoles != null) {
                     repository.getPremisesData(houseRoles)
-                }else{
-                    // Navigate to CreateHomeActivity
-
                 }
             }
         } else {

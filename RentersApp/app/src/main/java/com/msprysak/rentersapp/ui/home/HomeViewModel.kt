@@ -9,7 +9,7 @@ import com.msprysak.rentersapp.data.model.User
 
 class HomeViewModel : ViewModel() {
 
-    val repository = RepositorySingleton.getInstance()
+    private val repository = RepositorySingleton.getInstance()
 
    fun getPremisesData(): LiveData<Premises> {
         return repository.sharedPremisesData

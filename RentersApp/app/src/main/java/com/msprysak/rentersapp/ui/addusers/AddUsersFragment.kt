@@ -21,7 +21,7 @@ class AddUsersFragment : BaseFragment() {
 
 
     private var _binding: FragmentAddUsersBinding? = null
-    private val menuViewModel by viewModels<MenuViewModel>()
+    private val addUsersViewModel by viewModels<AddUsersViewModel>()
 
     private var countDownTimer: CountDownTimer? = null
     private val binding get() = _binding!!
@@ -47,7 +47,7 @@ class AddUsersFragment : BaseFragment() {
                 codeTextView,
                 createCodeButton,
             )
-            generateRandomNumber()
+            addUsersViewModel.addTemporaryCode(generateRandomNumber())
             startCounting(timer)
         }
         codeTextView.setOnClickListener {
@@ -57,17 +57,17 @@ class AddUsersFragment : BaseFragment() {
 
     }
 
-    private fun generateRandomNumber(){
-        val randomNumber = (1000..9999).random()
-        val codeTextView = binding.codeTextView
-        codeTextView.text = randomNumber.toString()
+    private fun generateRandomNumber(): String{
+        val randomNumber = (1000..9999).random().toString()
+        binding.codeTextView.text = randomNumber
+        return randomNumber
     }
     private fun startCounting(
         timer: TextView
     ){
         countDownTimer?.cancel()
 
-        countDownTimer = object : CountDownTimer(61 * 1000, 1000) {
+        countDownTimer = object : CountDownTimer(60 * 1000, 1000) {
 
             @SuppressLint("SetTextI18n")
             override fun onTick(secondsUntilFinished: Long) {
@@ -76,9 +76,7 @@ class AddUsersFragment : BaseFragment() {
             }
 
             override fun onFinish() {
-                timer.text = buildString {
-         append("@string/code_expired")
-    }
+                timer.text = "0 s"
             }
         }
 

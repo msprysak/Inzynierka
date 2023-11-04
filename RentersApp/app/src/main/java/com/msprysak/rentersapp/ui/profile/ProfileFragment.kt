@@ -45,13 +45,10 @@ class ProfileFragment : BaseFragment(), BindUser {
 
         val changePasswordButton = binding.changePasswordButton
 
-        profileViewModel.test().observe(viewLifecycleOwner) { user ->
+        profileViewModel.getUserData().observe(viewLifecycleOwner) { user ->
             bindUserData(user)
         }
 
-        profileViewModel.test().observe(viewLifecycleOwner){user ->
-            bindUserData(user)
-        }
         changePasswordButton.setOnClickListener {
             val dialog = ChangePasswordDialogFragment()
             dialog.show(childFragmentManager, "ChangePasswordDialogFragment")
@@ -135,13 +132,13 @@ class ProfileFragment : BaseFragment(), BindUser {
                 val data: Intent? = result.data
                 if (data != null) {
                     val imageUri = data.data
-                    if (imageUri != null) {
-                        imageBitmap = MediaStore.Images.Media.getBitmap(
+                    imageBitmap = if (imageUri != null) {
+                        MediaStore.Images.Media.getBitmap(
                             requireContext().contentResolver,
                             imageUri
                         )
                     } else {
-                        imageBitmap = data.extras?.get("data") as Bitmap
+                        data.extras?.get("data") as Bitmap
                     }
 
 

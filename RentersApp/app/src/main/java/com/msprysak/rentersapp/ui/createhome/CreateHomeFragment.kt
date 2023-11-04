@@ -27,8 +27,9 @@ class CreateHomeFragment: BaseFragment() {
     ): View? {
         _binding =  FragmentCreateHomeBinding.inflate(inflater, container, false)
 
-//        To próba jeszcze tego nie uzyawlem
-        binding.welcomeTextView.text = getString(R.string.welcome_message, createHomeViewModel.userData.value?.username)
+//        To próba jeszcze tego nie
+        createHomeViewModel.getUserData().observe(viewLifecycleOwner){ user ->
+            bindUserData(user)}
         return binding.root
     }
 
@@ -37,11 +38,6 @@ class CreateHomeFragment: BaseFragment() {
 
         val createHomeButton = binding.btnCreateHome
         val joinHomeButton = binding.btnJoinHome
-
-//        createHomeViewModel.userData.observe(viewLifecycleOwner) { user ->
-//            binding.welcomeTextView.text = getString(R.string.welcome_message, user.username)
-//        }
-
 
 
         // bind button click
@@ -61,7 +57,7 @@ class CreateHomeFragment: BaseFragment() {
     }
 
     private fun bindUserData(user: User){
-        Log.d(LOG_DEBUG, user.toString())
+        binding.welcomeTextView.text = getString(R.string.welcome_message, user.username)
     }
 
 }

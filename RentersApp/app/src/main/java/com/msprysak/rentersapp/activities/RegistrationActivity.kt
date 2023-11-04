@@ -12,7 +12,6 @@ import com.msprysak.rentersapp.data.RepositorySingleton
 
 class RegistrationActivity : AppCompatActivity() {
 
-    private val repository = RepositorySingleton.getInstance()
     private val fbAuth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,8 +27,8 @@ class RegistrationActivity : AppCompatActivity() {
 // Function isCurrentUser() checks if the user is already logged in. If the user is logged in, the user is redirected to the MainActivity.
     private fun isCurrentUser() {
         fbAuth.currentUser?.let { auth ->
-
-            val intent = Intent(this, MainActivity::class.java).apply{
+            println("isCurrentUser")
+            val intent = Intent(this, CreateHomeActivity::class.java).apply{
                 flags = (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             }
             startActivity(intent)

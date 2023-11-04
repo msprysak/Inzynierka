@@ -1,13 +1,17 @@
 package com.msprysak.rentersapp.ui.createhome
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import com.msprysak.rentersapp.activities.MainActivity
+import com.msprysak.rentersapp.data.CreateHomeCallback
 import com.msprysak.rentersapp.databinding.DialogAddHomeBinding
 
 class AddHomeDialogFragment : DialogFragment() {
@@ -53,7 +57,19 @@ class AddHomeDialogFragment : DialogFragment() {
         })
 
         createButton.setOnClickListener{
-            createHomeViewModel.createHomeClicked("",localAddressEditText.text.toString(),localNameEditText.text.toString())
+            createButton.isEnabled = false
+            createHomeViewModel.createHome("", localAddressEditText.text.toString(), localNameEditText.text.toString(), object : CreateHomeCallback {
+                override fun onSuccess() {
+                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    startActivity(intent)
+                }
+
+                override fun onFailure(errorMessage: String) {
+                    Toast.makeText(activity, errorMessage, Toast.LENGTH_SHORT).show()
+                }
+            })
+
+
         }
 
         cancelButton.setOnClickListener{
