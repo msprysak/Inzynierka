@@ -1,6 +1,6 @@
 package com.msprysak.rentersapp.data
 
-interface CreateHomeCallback {
+interface CallBack {
     fun onSuccess()
     fun onFailure(errorMessage: String)
 }

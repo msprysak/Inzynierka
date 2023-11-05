@@ -3,7 +3,7 @@ package com.msprysak.rentersapp.ui.createhome
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
-import com.msprysak.rentersapp.data.CreateHomeCallback
+import com.msprysak.rentersapp.data.CallBack
 import com.msprysak.rentersapp.data.RepositorySingleton
 import com.msprysak.rentersapp.data.model.Premises
 import com.msprysak.rentersapp.data.model.User
@@ -23,7 +23,7 @@ class CreateHomeViewModel: ViewModel() {
         return repository.getUserData()
     }
 
-    fun createHome(imageURL: String, localAddress: String, localName: String, callback: CreateHomeCallback) {
+    fun createHome(imageURL: String, localAddress: String, localName: String, callback: CallBack) {
         val newPremises = Premises(
             premisesImageUrl = imageURL,
             address = localAddress,
@@ -38,6 +38,10 @@ class CreateHomeViewModel: ViewModel() {
         repository.uploadPremisesPhoto(byteArray)
     }
 
+    // Funkcja do sprawdzania i tworzenia prośby o dołączenie do grupy
+    fun sendJoinRequest(code: String, callback: CallBack){
+        repository.sendJoinRequest(code, callback)
+    }
 
 
 

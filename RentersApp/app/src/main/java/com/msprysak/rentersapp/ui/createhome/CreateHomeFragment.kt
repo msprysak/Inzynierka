@@ -1,15 +1,12 @@
 package com.msprysak.rentersapp.ui.createhome
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.R
-import com.msprysak.rentersapp.data.FirebaseRepository
 import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.databinding.FragmentCreateHomeBinding
 
@@ -38,25 +35,17 @@ class CreateHomeFragment: BaseFragment() {
         val createHomeButton = binding.btnCreateHome
         val joinHomeButton = binding.btnJoinHome
 
-//        createHomeViewModel.userData.observe(viewLifecycleOwner) { user ->
-//            binding.welcomeTextView.text = getString(R.string.welcome_message, user.username)
-//        }
-
-
-
-        // bind button click
         createHomeButton.setOnClickListener {
             val createHomeDialog = AddHomeDialogFragment()
-
             createHomeDialog.show(childFragmentManager, "CreateHomeDialogFragment")
 
-            Toast.makeText(context, "Create Home Button Clicked", Toast.LENGTH_SHORT).show()
-        }
-        joinHomeButton.setOnClickListener{
-            Toast.makeText(context, "Join Home Button Clicked", Toast.LENGTH_SHORT).show()
         }
 
-//        createHomeButton.setOnClickListener()
+        joinHomeButton.setOnClickListener {
+            val enterCodeDialog = EnterHomeCodeDialogFragment()
+            enterCodeDialog.show(childFragmentManager, "EnterHomeCodeDialogFragment")
+        }
+
 
     }
 

@@ -67,7 +67,7 @@ class AddUsersFragment : BaseFragment() {
     ){
         countDownTimer?.cancel()
 
-        countDownTimer = object : CountDownTimer(61 * 1000, 1000) {
+        countDownTimer = object : CountDownTimer(60 * 1000, 1000) {
 
             @SuppressLint("SetTextI18n")
             override fun onTick(secondsUntilFinished: Long) {

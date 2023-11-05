@@ -111,4 +111,5 @@
     <string name="new_password">Nowe hasło</string>
     <string name="repeat_password">Powtórz hasło</string>
     <string name="save">Zapisz</string>
+    <string name="enter_code">Wprowadź kod</string>
 </resources>

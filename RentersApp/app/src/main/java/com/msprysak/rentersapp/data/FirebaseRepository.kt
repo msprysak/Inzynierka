@@ -66,6 +66,41 @@ class FirebaseRepository {
             }
     }
 
+    fun sendJoinRequest(code: String, callback: CallBack) {
+        val userId = auth.currentUser?.uid // Pobierz ID zalogowanego użytkownika
+        val temporaryCodesRef = cloud.collection("temporaryCodes")
+
+        temporaryCodesRef.whereEqualTo("code", code)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    val documentSnapshot = querySnapshot.documents[0]
+                    val premisesId = documentSnapshot.getString("premisesId")
+                    if (userId != null && premisesId != null) {
+                        val requestsRef = cloud.collection("requests")
+                        val request = hashMapOf(
+                            "premisesId" to premisesId,
+                            "userId" to userId,
+                            "status" to "pending"
+                        )
+                        println("request: $request")
+                        requestsRef.add(request)
+                            .addOnSuccessListener { callback.onSuccess() }
+                            .addOnFailureListener { e ->
+                                callback.onFailure("Ups, coś poszło nie tak")
+                            }
+                    }
+                } else {
+                    println("request: xd")
+                    callback.onFailure("Kod nie istnieje")
+                }
+            }
+            .addOnFailureListener { e ->
+                callback.onFailure("Ups, coś poszło nie tak")
+            }
+
+    }
+
 //    private fun checkIfCodeExists(randomCode: String, callBack: (Boolean) -> Unit) {
 //        val docRef = cloud.collection("temporaryCodes")
 //            .whereEqualTo("code", randomCode)
@@ -160,7 +195,7 @@ class FirebaseRepository {
 
 
 
-    fun createNewPremises(premises: Premises, user: User, callback: CreateHomeCallback) {
+    fun createNewPremises(premises: Premises, user: User, callback: CallBack) {
         cloud.collection("premises")
             .add(premises)
             .addOnSuccessListener { premisesDocumentReference ->
@@ -178,7 +213,6 @@ class FirebaseRepository {
                     }
                     .addOnFailureListener { e ->
                         val errorMessage = "createNewPremises: ${e.message}"
-                        Log.d(DEBUG, errorMessage)
                         callback.onFailure(errorMessage)
                     }
 
