@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import com.msprysak.rentersapp.data.CallBack
+import com.msprysak.rentersapp.CallBack
 import com.msprysak.rentersapp.databinding.DialogHomeEnterCodeBinding
 
 class EnterHomeCodeDialogFragment: DialogFragment() {
@@ -31,7 +31,6 @@ class EnterHomeCodeDialogFragment: DialogFragment() {
 
         dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-
         return _binding!!.root
 
     }
@@ -43,9 +42,9 @@ class EnterHomeCodeDialogFragment: DialogFragment() {
 
         confirmButton.setOnClickListener {
             val code = binding.enterCodeEditText.text.toString()
-            createHomeViewModel.sendJoinRequest(code, object: CallBack{
+            createHomeViewModel.sendJoinRequest(code, object: CallBack {
                 override fun onSuccess() {
-                    Toast.makeText(requireContext(), "Zaproszenie wysłane", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Prośba o dołączenie została wysłana", Toast.LENGTH_SHORT).show()
                     dismiss()
                 }
 

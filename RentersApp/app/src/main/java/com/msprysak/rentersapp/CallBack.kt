@@ -1,4 +1,4 @@
-package com.msprysak.rentersapp.data
+package com.msprysak.rentersapp
 
 interface CallBack {
     fun onSuccess()

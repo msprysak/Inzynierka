@@ -1,15 +1,15 @@
 package com.msprysak.rentersapp.ui.profile
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.msprysak.rentersapp.data.RepositorySingleton
 import com.msprysak.rentersapp.data.model.User
-import kotlinx.coroutines.yield
 
 class ProfileViewModel: ViewModel() {
 
     val repository = RepositorySingleton.getInstance()
+    private val fbAuth = FirebaseAuth.getInstance()
 
     fun editProfileData(map: Map<String, String>){
         repository.editProfileData(map)
@@ -26,5 +26,7 @@ class ProfileViewModel: ViewModel() {
         repository.updatePassword(password)
     }
 
-
+    fun signOut(){
+        fbAuth.signOut()
+    }
 }

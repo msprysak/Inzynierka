@@ -2,26 +2,33 @@ package com.msprysak.rentersapp.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.msprysak.rentersapp.R
+import com.msprysak.rentersapp.data.RepositorySingleton
 
-class CreateHomeActivity: AppCompatActivity() {
+class CreateHomeActivity : AppCompatActivity() {
+    private val repository = RepositorySingleton.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        repository.fetchUserData()
         userIsMemberOfGroup { isMember ->
             if (isMember) {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-            } else{
+                changeActivity()
+            } else {
                 setContentView(R.layout.activity_create_home)
             }
         }
+    }
 
+    private fun changeActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        this.startActivity(intent)
     }
 
     private fun userIsMemberOfGroup(callback: (Boolean) -> Unit) {
@@ -44,7 +51,4 @@ class CreateHomeActivity: AppCompatActivity() {
             callback(false)
         }
     }
-
-
-
 }

@@ -18,7 +18,7 @@
         android:id="@+id/notificationsFragment"
         android:name="com.msprysak.rentersapp.ui.notifications.NotificationsFragment"
         android:label="@string/notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_notifications_list" />
     <fragment
         android:id="@+id/paymentsFragment"
         android:name="com.msprysak.rentersapp.ui.payments.PaymentsFragment"

@@ -7,34 +7,28 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.google.firebase.auth.FirebaseAuth
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.data.RepositorySingleton
 import com.msprysak.rentersapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var _binding: ActivityMainBinding
-    private val binding get() = _binding
-
+    private lateinit var binding: ActivityMainBinding
     private val repository = RepositorySingleton.getInstance()
     private lateinit var navController: NavController
-    private lateinit var navHostFragment: NavHostFragment
-    private val auth = FirebaseAuth.getInstance()
-    private val user = auth.currentUser
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-        _binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        navController = navHostFragment.navController
+        setupNavigation()
+        setupObservers()
+    }
 
+    private fun setupNavigation() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        navController = navHostFragment.navController
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -50,9 +44,21 @@ class MainActivity : AppCompatActivity() {
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
 
         binding.bottomNavigationView.setupWithNavController(navController)
+    }
 
+    private fun setupObservers() {
+        repository.fetchUserData()
+        repository.sharedUserData.observe(this) { user ->
+            if (user != null) {
+                repository.fetchPremisesData()
+            }
+        }
 
-
+        repository.sharedPremisesData.observe(this) { premises ->
+            if (premises != null) {
+                repository.fetchJoinRequests()
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

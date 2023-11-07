@@ -8,7 +8,9 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.msprysak.rentersapp.CallBack
 import com.msprysak.rentersapp.data.model.Premises
+import com.msprysak.rentersapp.data.model.Request
 import com.msprysak.rentersapp.data.model.User
 
 class FirebaseRepository {
@@ -18,8 +20,109 @@ class FirebaseRepository {
     private val auth = FirebaseAuth.getInstance()
     private val cloud = FirebaseFirestore.getInstance()
     val sharedPremisesData: MutableLiveData<Premises> = MutableLiveData()
-
     val sharedUserData: MutableLiveData<User> = MutableLiveData()
+    private val joinRequests: MutableLiveData<List<Request>> = MutableLiveData()
+
+    fun acceptJoinRequest(request: Request, callback: CallBack) {
+        val requestCollectionRef = cloud.collection("requests")
+            .whereEqualTo("premisesId", sharedPremisesData.value!!.premisesId)
+            .whereEqualTo("userId", request.userId)
+        val premisesDocRef = cloud.collection("premises")
+            .document(request.premisesId)
+
+        requestCollectionRef.get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    val requestDocRef = querySnapshot.documents[0].reference
+
+                    cloud.runTransaction { transaction ->
+                        // Odczytaj dane z requestDocRef i premisesDocRef
+                        val requestData = transaction.get(requestDocRef)
+                        val userId = requestData.getString("userId")
+                        val premisesId = requestData.getString("premisesId")
+                        val premisesData = transaction.get(premisesDocRef)
+                        val users = premisesData.get("users") as MutableMap<String, String>
+                        val newUsers = users.toMutableMap()
+                        newUsers[userId!!] = "tenant"
+
+                        // Wykonaj operacje zapisu
+                        transaction.delete(requestDocRef)
+                        transaction.update(premisesDocRef, "users", newUsers)
+
+                        val userDocRef = cloud.collection("users").document(userId)
+                        transaction.update(userDocRef, "houseRoles.$premisesId", "tenant")
+
+                        null
+                    }
+                        .addOnSuccessListener {
+                            callback.onSuccess()
+                        }
+                        .addOnFailureListener { e ->
+                            println("Transaction failure: ${e.message}")
+                            callback.onFailure("Ups, coś poszło nie tak")
+                        }
+                } else {
+                    callback.onFailure("Brak pasujących żądań")
+                }
+            }
+            .addOnFailureListener { e ->
+                println("acceptJoinRequest: ${e.message}")
+                callback.onFailure("Ups, coś poszło nie tak")
+            }
+    }
+
+
+
+
+
+
+
+    fun rejectJoinRequest(request: Request, callback: CallBack) {
+        val requestRef = cloud.collection("requests")
+            .whereEqualTo("premisesId", request.premisesId)
+            .whereEqualTo("userId", request.userId)
+
+        requestRef.get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    val documentSnapshot = querySnapshot.documents[0]
+                    documentSnapshot.reference.delete()
+                    callback.onSuccess()
+                } else {
+                    callback.onFailure("Ups, coś poszło nie tak")
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.d(DEBUG, "rejectJoinRequest: ${e.message}")
+                callback.onFailure("Ups, coś poszło nie tak")
+            }
+    }
+
+    fun activateJoinRequestsListener(): LiveData<List<Request>> {
+        val houseRoles = sharedUserData.value?.houseRoles
+        if (!houseRoles.isNullOrEmpty()) {
+            val premisesId = houseRoles.keys.first()
+            val docRef = cloud.collection("requests")
+                .whereEqualTo("premisesId", premisesId)
+            docRef.addSnapshotListener { querySnapshot, e ->
+                if (e != null) {
+                    Log.d(DEBUG, "getJoinRequests: ${e.message}")
+                    // Dodaj obsługę błędów tutaj, jeśli to konieczne.
+                    return@addSnapshotListener
+                }
+                if (querySnapshot != null) {
+                    val requests = mutableListOf<Request>()
+                    for (document in querySnapshot) {
+                        val request = document.toObject(Request::class.java)
+                        requests.add(request)
+                        println(request)
+                    }
+                    joinRequests.postValue(requests)
+                }
+            }
+        }
+        return joinRequests
+    }
 
     fun addTemporaryCode(randomCode: String) {
         val data = hashMapOf(
@@ -67,7 +170,7 @@ class FirebaseRepository {
     }
 
     fun sendJoinRequest(code: String, callback: CallBack) {
-        val userId = auth.currentUser?.uid // Pobierz ID zalogowanego użytkownika
+        val userId = auth.currentUser?.uid
         val temporaryCodesRef = cloud.collection("temporaryCodes")
 
         temporaryCodesRef.whereEqualTo("code", code)
@@ -78,28 +181,43 @@ class FirebaseRepository {
                     val premisesId = documentSnapshot.getString("premisesId")
                     if (userId != null && premisesId != null) {
                         val requestsRef = cloud.collection("requests")
-                        val request = hashMapOf(
-                            "premisesId" to premisesId,
-                            "userId" to userId,
-                            "status" to "pending"
-                        )
-                        println("request: $request")
-                        requestsRef.add(request)
-                            .addOnSuccessListener { callback.onSuccess() }
+
+                        requestsRef.whereEqualTo("premisesId", premisesId)
+                            .whereEqualTo("userId", userId)
+                            .get()
+                            .addOnSuccessListener { existingRequestsSnapshot ->
+                                if (existingRequestsSnapshot.isEmpty) {
+                                    val request = hashMapOf(
+                                        "username" to sharedUserData.value?.username,
+                                        "userId" to userId,
+                                        "premisesId" to premisesId,
+                                        "status" to "pending"
+                                    )
+                                    requestsRef.add(request)
+                                        .addOnSuccessListener { callback.onSuccess() }
+                                        .addOnFailureListener { e ->
+                                            Log.d(DEBUG, "${e.message}")
+                                            callback.onFailure("Ups, coś poszło nie tak")
+                                        }
+                                } else {
+                                    callback.onFailure("Już wysłano prośbę o dołączenie")
+                                }
+                            }
                             .addOnFailureListener { e ->
+                                Log.d(DEBUG, "sendJoinRequest: ${e.message}")
                                 callback.onFailure("Ups, coś poszło nie tak")
                             }
                     }
                 } else {
-                    println("request: xd")
                     callback.onFailure("Kod nie istnieje")
                 }
             }
             .addOnFailureListener { e ->
+                Log.d(DEBUG, "sendJoinRequest: ${e.message}")
                 callback.onFailure("Ups, coś poszło nie tak")
             }
-
     }
+
 
 //    private fun checkIfCodeExists(randomCode: String, callBack: (Boolean) -> Unit) {
 //        val docRef = cloud.collection("temporaryCodes")
@@ -160,6 +278,52 @@ class FirebaseRepository {
         return sharedPremisesData
     }
 
+    fun fetchUserData() {
+        val docRef = cloud.collection("users")
+            .document(auth.currentUser!!.uid)
+
+        docRef.get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val user = documentSnapshot.toObject(User::class.java)
+                    sharedUserData.postValue(user!!)
+                } else {
+                    Log.d(DEBUG, "fetchUserData: Document doesn't exist")
+                }
+            }
+    }
+
+    fun fetchPremisesData() {
+        val docRef = cloud.collection("premises")
+            .document(sharedUserData.value?.houseRoles?.keys?.first()!!)
+        docRef.get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    val premises = documentSnapshot.toObject(Premises::class.java)
+                    sharedPremisesData.postValue(premises!!)
+                    Log.d(DEBUG, "fetchPremisesData: Success")
+                } else {
+                    Log.d(DEBUG, "fetchPremisesData: Document doesn't exist")
+                }
+            }
+    }
+
+    fun fetchJoinRequests() {
+        val docRef = cloud.collection("requests")
+            .whereEqualTo("premisesId", sharedUserData.value?.houseRoles?.keys?.first()!!)
+            .whereEqualTo("status", "pending")
+
+        docRef.get()
+            .addOnSuccessListener { querySnapshot ->
+                val requests = mutableListOf<Request>()
+                for (document in querySnapshot) {
+                    val request = document.toObject(Request::class.java)
+                    requests.add(request)
+                }
+                joinRequests.postValue(requests)
+            }
+
+    }
 
     fun createNewUser(user: User) {
         cloud.collection("users")

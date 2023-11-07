@@ -23,7 +23,7 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.activities.MainActivity
-import com.msprysak.rentersapp.data.CallBack
+import com.msprysak.rentersapp.CallBack
 import com.msprysak.rentersapp.databinding.DialogAddHomeBinding
 import java.io.ByteArrayOutputStream
 
@@ -79,7 +79,8 @@ class AddHomeDialogFragment : DialogFragment() {
 
         createButton.setOnClickListener{
             createButton.isEnabled = false
-            createHomeViewModel.createHome("", localAddressEditText.text.toString(), localNameEditText.text.toString(), object : CallBack {
+            createHomeViewModel.createHome("", localAddressEditText.text.toString(), localNameEditText.text.toString(), object :
+                CallBack {
 
                 override fun onSuccess() {
                     if (imageBitmap != null) {

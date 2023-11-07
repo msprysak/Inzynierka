@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.BindUser
+import com.msprysak.rentersapp.activities.RegistrationActivity
 import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.databinding.FragmentProfileBinding
 import java.io.ByteArrayOutputStream
@@ -57,6 +58,8 @@ class ProfileFragment : BaseFragment(), BindUser {
         setupTextChangeListeners()
         setupTakePictureClick()
         setupSaveButton()
+        setupSignoutButton()
+
 
     }
     override fun bindUserData(user: User) {
@@ -76,6 +79,15 @@ class ProfileFragment : BaseFragment(), BindUser {
 
     }
 
+    private fun setupSignoutButton() {
+        binding.signoutButton.setOnClickListener {
+            profileViewModel.signOut()
+            val intent = Intent(requireContext(), RegistrationActivity::class.java).apply {
+                flags = (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            }
+            startActivity(intent)
+        }
+    }
 
 
     private fun setupTextChangeListeners() {
