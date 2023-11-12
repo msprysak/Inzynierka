@@ -1,33 +1,65 @@
 package com.msprysak.rentersapp.ui.chat
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.msprysak.rentersapp.BaseFragment
-import com.msprysak.rentersapp.R
+import com.msprysak.rentersapp.adapters.ChatAdapter
+import com.msprysak.rentersapp.databinding.FragmentChatBinding
 
 class ChatFragment : BaseFragment() {
 
-    companion object {
-        fun newInstance() = ChatFragment()
-    }
+    private var _binding: FragmentChatBinding? = null
+    private val binding get() = _binding!!
 
-    private lateinit var viewModel: ChatViewModel
+    private val chatViewModel by viewModels<ChatViewModel>()
+
+    private lateinit var chatAdapter: ChatAdapter
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_chat, container, false)
+        _binding = FragmentChatBinding.inflate(inflater, container, false)
+        return _binding!!.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ChatViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val messageEditText = binding.messageEditText
+
+        recyclerView = binding.chatRecyclerView
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
+
+        chatViewModel.fetchMessages().observe(viewLifecycleOwner) { messages ->
+            chatAdapter = ChatAdapter(messages)
+            recyclerView.adapter = chatAdapter
+            recyclerView.scrollToPosition(messages.size - 1)
+            chatAdapter.notifyDataSetChanged()
+        }
+
+
+
+
+        binding.messageSendButton.setOnClickListener {
+            if (messageEditText.text.isNotEmpty()){
+                sendMessage(messageEditText.text.toString())
+            }
+        }
+
+    }
+
+    private fun sendMessage(message: String) {
+        if (message.isNotEmpty()) {
+            chatViewModel.sendMessage(message)
+            binding.messageEditText.text.clear()
+        }
     }
 
 }

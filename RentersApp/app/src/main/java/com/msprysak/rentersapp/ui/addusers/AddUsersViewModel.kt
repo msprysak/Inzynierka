@@ -1,15 +1,18 @@
 package com.msprysak.rentersapp.ui.addusers
 
 import androidx.lifecycle.ViewModel
-import com.msprysak.rentersapp.data.RepositorySingleton
+import com.msprysak.rentersapp.data.UserRepositoryInstance
+import com.msprysak.rentersapp.data.repositories.PremisesRepository
 
 class AddUsersViewModel: ViewModel() {
 
-    private val repository = RepositorySingleton.getInstance()
+    private val repository = UserRepositoryInstance.getInstance()
+
+    private val premisesRepository = PremisesRepository.getInstance(repository.getUserData())
 
     fun addTemporaryCode(randomCode: String) {
 
-        return repository.addTemporaryCode(randomCode)
+        return premisesRepository.addTemporaryCode(randomCode)
     }
 
 }

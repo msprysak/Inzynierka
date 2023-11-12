@@ -10,7 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.msprysak.rentersapp.BaseFragment
-import com.msprysak.rentersapp.BindUser
+import com.msprysak.rentersapp.data.interfaces.BindUser
 import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.databinding.FragmentMenuBinding
 
@@ -42,6 +42,8 @@ class MenuFragment : BaseFragment(), BindUser {
         val editProfileButton = binding.editProfileButton
         val addUsersTextView = binding.addUsersTextView
         val editHomeInfoTextView = binding.editHomeTextView
+        val usersTextView = binding.usersTextView
+        val reportsTextView = binding.reportsTextView
         val navController = findNavController()
         val currentDestinationId = navController.currentDestination?.id
         Log.d("CurrentDestination", "Current destination ID: $currentDestinationId")
@@ -56,11 +58,18 @@ class MenuFragment : BaseFragment(), BindUser {
         editHomeInfoTextView.setOnClickListener{
             navController.navigate(MenuFragmentDirections.actionMenuFragmentToHomeFragment())
         }
+        usersTextView.setOnClickListener {
+            navController.navigate(MenuFragmentDirections.actionMenuFragmentToUsersFragment())
+        }
+        reportsTextView.setOnClickListener{
+            navController.navigate(MenuFragmentDirections.actionMenuFragmentToReportsFragment())
+        }
+
 
     }
     override fun bindUserData(user: User) {
         binding.username.text = user.username
-        if (!user.profilePictureUrl?.isEmpty()!!) {
+        if (!user.profilePictureUrl.isNullOrEmpty()) {
             Glide.with(this)
                 .load(user.profilePictureUrl)
                 .circleCrop()

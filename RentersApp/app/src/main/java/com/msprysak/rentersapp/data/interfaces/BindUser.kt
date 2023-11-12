@@ -1,4 +1,4 @@
-package com.msprysak.rentersapp
+package com.msprysak.rentersapp.data.interfaces
 
 import com.msprysak.rentersapp.data.model.User
 

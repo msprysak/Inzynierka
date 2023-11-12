@@ -17,5 +17,6 @@
     <dimen name="menu_drawable_padding">10dp</dimen>
     <dimen name="card_view_width">340dp</dimen>
     <dimen name="card_view_height">250dp</dimen>
+    <dimen name="item_space">10dp</dimen>
 
 </resources>

@@ -1,12 +1,10 @@
-package com.msprysak.rentersapp.util
+package com.msprysak.rentersapp.utils
 
-import android.app.Activity
 import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 

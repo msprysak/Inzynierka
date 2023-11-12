@@ -11,10 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.msprysak.rentersapp.BaseFragment
-import com.msprysak.rentersapp.CallBack
-import com.msprysak.rentersapp.OnItemClickListener
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.adapters.NotificationAdapter
+import com.msprysak.rentersapp.data.interfaces.CallBack
+import com.msprysak.rentersapp.data.interfaces.OnItemClickListener
 import com.msprysak.rentersapp.data.model.Request
 import com.msprysak.rentersapp.databinding.FragmentNotificationsListBinding
 
@@ -61,7 +61,7 @@ class NotificationsFragment : BaseFragment(), OnItemClickListener {
 
     }
 
-    override fun onLandlordClick(item: Any) {
+    override fun onLandlordClick(item: Any, anchorView: View) {
         val anchorView: View = requireView().findViewById(R.id.popupMenu)
         val popupMenu = PopupMenu(this.context, anchorView)
         val inflater: MenuInflater = popupMenu.menuInflater
@@ -70,8 +70,8 @@ class NotificationsFragment : BaseFragment(), OnItemClickListener {
         if (item is Request) {
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
+//                    Zaakceptuj prośbę o dołączenie
                     R.id.accept -> {
-                        println("Accept")
                          notificationsViewModel.acceptJoinRequest(item, object: CallBack {
                              override fun onSuccess() {
                                  Toast.makeText(requireContext(), "Prośba o dołączenie została zaakceptowana", Toast.LENGTH_SHORT).show()
@@ -84,6 +84,7 @@ class NotificationsFragment : BaseFragment(), OnItemClickListener {
                          })
                         true
                     }
+//                    Odrzuć prośbę o dołączenie
 
                     R.id.decline -> {
                          notificationsViewModel.rejectJoinRequest(item, object: CallBack {
@@ -109,7 +110,7 @@ class NotificationsFragment : BaseFragment(), OnItemClickListener {
     }
 
 
-    override fun onUserClick(item: Any) {
+    override fun onTenantClick(item: Any, anchorView: View) {
         TODO("Not yet implemented")
     }
 }

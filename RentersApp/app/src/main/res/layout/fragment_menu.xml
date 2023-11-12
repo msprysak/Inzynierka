@@ -83,10 +83,10 @@
 
 
         <TextView
-            android:id="@+id/tenantsTextView"
+            android:id="@+id/usersTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tenants"
+            android:text="@string/users"
             android:textSize="20sp"
             android:layout_marginTop="@dimen/menu_item_margin"
             android:textStyle="bold"

@@ -7,10 +7,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.msprysak.rentersapp.R
-import com.msprysak.rentersapp.data.RepositorySingleton
+import com.msprysak.rentersapp.data.UserRepositoryInstance
 
 class CreateHomeActivity : AppCompatActivity() {
-    private val repository = RepositorySingleton.getInstance()
+    private val repository = UserRepositoryInstance.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +44,7 @@ class CreateHomeActivity : AppCompatActivity() {
                     val isMember = houseRoles != null
                     callback(isMember)
                 } else {
+                    println("complete: ${complete.exception}")
                     callback(false)
                 }
             }

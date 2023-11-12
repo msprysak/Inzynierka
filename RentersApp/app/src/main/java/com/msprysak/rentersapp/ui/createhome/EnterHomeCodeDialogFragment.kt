@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import com.msprysak.rentersapp.CallBack
+import com.msprysak.rentersapp.data.interfaces.CallBack
 import com.msprysak.rentersapp.databinding.DialogHomeEnterCodeBinding
 
 class EnterHomeCodeDialogFragment: DialogFragment() {

@@ -8,15 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.databinding.FragmentRegisterBinding
-import com.msprysak.rentersapp.util.createClickableSpan
+import com.msprysak.rentersapp.utils.createClickableSpan
 
 
 class RegisterFragment : BaseFragment() {

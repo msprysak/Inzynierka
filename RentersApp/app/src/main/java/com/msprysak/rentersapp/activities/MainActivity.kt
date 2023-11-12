@@ -8,13 +8,17 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.msprysak.rentersapp.R
-import com.msprysak.rentersapp.data.RepositorySingleton
+import com.msprysak.rentersapp.data.UserRepositoryInstance
+import com.msprysak.rentersapp.data.repositories.JoinRequestRepository
+import com.msprysak.rentersapp.data.repositories.PremisesRepository
 import com.msprysak.rentersapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val repository = RepositorySingleton.getInstance()
+    private val repository = UserRepositoryInstance.getInstance()
+    private lateinit var premisesRepository: PremisesRepository
+    private lateinit var joinRequestRepository: JoinRequestRepository
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,18 +52,25 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupObservers() {
         repository.fetchUserData()
-        repository.sharedUserData.observe(this) { user ->
-            if (user != null) {
-                repository.fetchPremisesData()
+        repository.getUserData().observe(this) { user ->
+            if (user != null && !::premisesRepository.isInitialized) {
+                // Inicjalizuj premisesRepository tylko jeśli nie zostało jeszcze zainicjowane
+                premisesRepository = PremisesRepository.getInstance(repository.getUserData())
+                premisesRepository.fetchPremisesData()
             }
-        }
 
-        repository.sharedPremisesData.observe(this) { premises ->
-            if (premises != null) {
-                repository.fetchJoinRequests()
+            // Sprawdź, czy premisesRepository zostało zainicjowane przed dostępem
+            premisesRepository.premises.observe(this) { premises ->
+                if (premises != null && !::joinRequestRepository.isInitialized) {
+                    // Inicjalizuj joinRequestRepository tylko jeśli nie zostało jeszcze zainicjowane
+                    joinRequestRepository = JoinRequestRepository(repository.getUserData())
+                    joinRequestRepository.fetchJoinRequests()
+                }
             }
         }
     }
+
+
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()

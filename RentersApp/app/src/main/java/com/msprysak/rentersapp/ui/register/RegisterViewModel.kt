@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.msprysak.rentersapp.R
-import com.msprysak.rentersapp.data.FirebaseRepository
+import com.msprysak.rentersapp.data.UserRepositoryInstance
 import com.msprysak.rentersapp.data.model.User
 
 class RegisterViewModel : ViewModel() {
@@ -14,11 +14,11 @@ class RegisterViewModel : ViewModel() {
     private val _registerForm = MutableLiveData<RegisterFormState>()
     val registerFormState : MutableLiveData<RegisterFormState> = _registerForm
 
-    private val repository = FirebaseRepository()
+    private val userRepository = UserRepositoryInstance.getInstance()
 
 
     private fun createNewUser(user: User){
-        repository.createNewUser(user)
+        userRepository.createNewUser(user)
     }
 
     private var auth= FirebaseAuth.getInstance()

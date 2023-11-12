@@ -14,8 +14,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.msprysak.rentersapp.BaseFragment
-import com.msprysak.rentersapp.BindUser
 import com.msprysak.rentersapp.activities.RegistrationActivity
+import com.msprysak.rentersapp.data.interfaces.BindUser
 import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.databinding.FragmentProfileBinding
 import java.io.ByteArrayOutputStream
@@ -70,7 +70,7 @@ class ProfileFragment : BaseFragment(), BindUser {
         binding.username.setSelection(user.username.length)
         binding.phoneNumberEditText.setText(user.phoneNumber)
         binding.emailEditText.setText(user.email)
-        if (!user.profilePictureUrl?.isEmpty()!!) {
+        if (!user.profilePictureUrl.isNullOrEmpty()) {
             Glide.with(this)
                 .load(user.profilePictureUrl)
                 .circleCrop()

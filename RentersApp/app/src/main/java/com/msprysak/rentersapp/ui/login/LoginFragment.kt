@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.firebase.auth.FirebaseAuth
 import com.msprysak.rentersapp.BaseFragment
-import com.msprysak.rentersapp.data.RepositorySingleton
 import com.msprysak.rentersapp.databinding.FragmentLoginBinding
 
 class LoginFragment : BaseFragment() {
@@ -29,8 +28,6 @@ class LoginFragment : BaseFragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
-    private val repository = RepositorySingleton.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,

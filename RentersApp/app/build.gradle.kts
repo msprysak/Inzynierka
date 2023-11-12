@@ -74,6 +74,7 @@ dependencies {
 
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
+
 //    Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
@@ -82,5 +83,6 @@ dependencies {
 
     // Date and time
     implementation("org.threeten:threetenbp:1.5.1")
+
 
 }

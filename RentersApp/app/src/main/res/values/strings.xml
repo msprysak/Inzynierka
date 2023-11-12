@@ -120,4 +120,9 @@
     <string name="status">Status</string>
     <string name="decline">Odrzuć</string>
     <string name="sign_out">Wyloguj</string>
+    <string name="users">Użytkownicy</string>
+    <string name="colon">:</string>
+    <string name="landlord">Właściciel</string>
+    <string name="messages">Wiadomości</string>
+    <string name="type_message">Wpisz wiadomość...</string>
 </resources>
