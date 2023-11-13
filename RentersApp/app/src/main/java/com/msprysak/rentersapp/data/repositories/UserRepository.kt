@@ -33,6 +33,13 @@ class UserRepository : IUserRepository {
             }
 
     }
+    private fun getUserPhotoDownloadUrl(storage: StorageReference) {
+        storage.downloadUrl
+            .addOnSuccessListener { updateUserPhoto(it.toString()) }
+            .addOnFailureListener {
+                Log.d(DEBUG, "getPhotoDownloadUrl: ${it.message}")
+            }
+    }
 
     override fun uploadUserPhoto(byteArray: ByteArray) {
         storage.getReference("users")
@@ -46,13 +53,6 @@ class UserRepository : IUserRepository {
             }
             .addOnFailureListener {
                 Log.d(DEBUG, "uploadUserPhoto: ${it.message}")
-            }
-    }
-    private fun getUserPhotoDownloadUrl(storage: StorageReference) {
-        storage.downloadUrl
-            .addOnSuccessListener { updateUserPhoto(it.toString()) }
-            .addOnFailureListener {
-                Log.d(DEBUG, "getPhotoDownloadUrl: ${it.message}")
             }
     }
 

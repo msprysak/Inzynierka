@@ -12,7 +12,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.msprysak.rentersapp.activities.CreateHomeActivity
-import com.msprysak.rentersapp.activities.MainActivity
 
 open class BaseFragment: Fragment() {
 
@@ -61,7 +60,7 @@ open class BaseFragment: Fragment() {
 
     protected fun selectImage(takePicture: ActivityResultLauncher<Intent>, onImageSelected: (Bitmap) -> Unit) {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val mimeType = "image/jpeg"
+        val mimeType = "image/*"
         val pickImageIntent = Intent(Intent.ACTION_PICK)
         pickImageIntent.type = mimeType
 

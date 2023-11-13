@@ -45,7 +45,7 @@
         app:layout_constraintStart_toStartOf="@id/profileImage"
         app:layout_constraintEnd_toEndOf="@id/profileImage"
         app:layout_constraintTop_toBottomOf="@id/username"
-        android:text="@string/editProfile"
+        android:text="@string/edit_profile"
 
         />
 
@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/menu_item_margin"
-            android:text="@string/addUsers"
+            android:text="@string/add_users"
             android:textSize="@dimen/menu_item_text_size"
             android:textStyle="bold"
             app:drawableLeftCompat="@drawable/ic_group_add"

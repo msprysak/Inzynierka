@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.reports.AddEditReportsFragment">
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/images_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:itemCount="1"
+        tools:listitem="@layout/item_report_image" />
+
+    <LinearLayout
+        android:id="@+id/report_title_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/edit_text_rounded"
+        android:backgroundTint="?attr/colorSecondaryContainer"
+        android:elevation="8dp"
+        android:layout_below="@id/images_recycler_view"
+        android:layout_centerHorizontal="true"
+        >
+
+        <EditText
+            android:id="@+id/report_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:maxLength="255"
+            android:minHeight="48dp"
+            android:textColor="?attr/colorOnSecondaryContainer"
+            android:textColorHint="?attr/colorOnSecondaryContainer"
+            android:background="@drawable/edit_text_rounded_transparent"
+            android:hint="@string/report_title" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/report_description_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/report_title_container"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/edit_text_rounded"
+        android:backgroundTint="?attr/colorSecondaryContainer"
+        android:elevation="8dp"
+        >
+
+        <EditText
+            android:id="@+id/report_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:maxLength="255"
+            android:minHeight="48dp"
+            android:textColor="?attr/colorOnSecondaryContainer"
+            android:textColorHint="?attr/colorOnSecondaryContainer"
+            android:background="@drawable/edit_text_rounded_transparent"
+            android:hint="@string/enter_report_description" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/report_comment_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/edit_text_rounded"
+        android:backgroundTint="?attr/colorSecondaryContainer"
+        android:elevation="8dp"
+        android:layout_below="@id/report_description_container"
+
+        >
+
+        <EditText
+            android:id="@+id/report_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:maxLength="255"
+            android:minHeight="48dp"
+            android:text="@string/enter_comment"
+            android:visibility="gone"
+            android:textColor="?attr/colorOnSecondaryContainer"
+            android:textColorHint="?attr/colorOnSecondaryContainer"
+            android:background="@drawable/edit_text_rounded_transparent"
+            android:hint="@string/enter_report_description" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_add_report"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_report"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/report_description_container"
+        android:layout_toStartOf="@id/btn_add_images"
+        android:layout_marginEnd="30dp"
+        android:layout_alignParentEnd="true"
+        />
+
+    <Button
+        android:id="@+id/btn_add_images"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_images"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/report_description_container"
+        android:layout_marginStart="30dp"
+        android:layout_alignParentStart="true"
+
+        />
+</RelativeLayout>

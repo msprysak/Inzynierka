@@ -91,12 +91,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="more">Więcej</string>
-    <string name="editProfile">Edytuj profil</string>
+    <string name="edit_profile">Edytuj profil</string>
     <string name="generate_code">Wygeneruj jednorazowy kod</string>
     <string name="tenants">Najemcy</string>
     <string name="invoices">Faktury</string>
     <string name="umowy">Umowy</string>
-    <string name="addUsers">Dodaj użytkowników</string>
+    <string name="add_users">Dodaj użytkowników</string>
     <string name="reports">Zgłoszenia</string>
     <string name="edit_home">Edytuj informacje o mieszkaniu</string>
     <string name="create_code">Utwórz kod</string>
@@ -125,4 +125,10 @@
     <string name="landlord">Właściciel</string>
     <string name="messages">Wiadomości</string>
     <string name="type_message">Wpisz wiadomość...</string>
+    <string name="add_report">Dodaj zgłoszenie</string>
+    <string name="enter_report_title">Wprowadź tytuł zgłoszenia</string>
+    <string name="report_title">Tytuł zgłoszenia</string>
+    <string name="enter_report_description">Wprowadź opis zgłoszenia</string>
+    <string name="enter_comment">Wprowadź komenatrz</string>
+    <string name="add_images">Dodaj zdjęcia</string>
 </resources>

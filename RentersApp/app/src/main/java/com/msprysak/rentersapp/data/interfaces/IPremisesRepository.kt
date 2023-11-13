@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.msprysak.rentersapp.data.model.Premises
 import com.msprysak.rentersapp.data.model.User
 
-interface PremisesRepositoryInterface {
+interface IPremisesRepository {
 
     fun createNewPremises(premises: Premises, user: User, callback: CallBack)
     fun editPremisesData(map: Map<String,String>)

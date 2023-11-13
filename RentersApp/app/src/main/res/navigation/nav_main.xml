@@ -48,17 +48,17 @@
     <fragment
         android:id="@+id/addUsersFragment"
         android:name="com.msprysak.rentersapp.ui.addusers.AddUsersFragment"
-        android:label="Dodaj użytkowników"
+        android:label="@string/add_users"
         tools:layout="@layout/fragment_add_users" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.msprysak.rentersapp.ui.profile.ProfileFragment"
-        android:label="Edytuj profil"
+        android:label="@string/edit_profile"
         tools:layout="@layout/fragment_profile"/>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.msprysak.rentersapp.ui.home.HomeFragment"
-        android:label="Edytuj mieszkanie"
+        android:label="@string/edit_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/usersFragment"
@@ -69,5 +69,14 @@
         android:id="@+id/reportsFragment"
         android:name="com.msprysak.rentersapp.ui.reports.ReportsFragment"
         android:label="@string/reports"
-        tools:layout="@layout/fragment_reports" />
+        tools:layout="@layout/fragment_reports" >
+        <action
+            android:id="@+id/action_reportsFragment_to_addEditReportsFragment"
+            app:destination="@id/addEditReportsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEditReportsFragment"
+        android:name="com.msprysak.rentersapp.ui.reports.AddEditReportsFragment"
+        android:label="@string/add_report"
+        tools:layout="@layout/fragment_add_report" />
 </navigation>
