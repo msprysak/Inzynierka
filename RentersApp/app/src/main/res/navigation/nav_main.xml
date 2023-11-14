@@ -73,10 +73,22 @@
         <action
             android:id="@+id/action_reportsFragment_to_addEditReportsFragment"
             app:destination="@id/addEditReportsFragment" />
+        <action
+            android:id="@+id/action_reportsFragment_to_fullReportFragment"
+            app:destination="@id/fullReportFragment">
+        </action>
     </fragment>
     <fragment
         android:id="@+id/addEditReportsFragment"
         android:name="com.msprysak.rentersapp.ui.reports.AddEditReportsFragment"
         android:label="@string/add_report"
         tools:layout="@layout/fragment_add_report" />
+
+    <fragment
+        android:id="@+id/fullReportFragment"
+        android:name="com.msprysak.rentersapp.ui.reports.FullReportFragment"
+        android:label="fragment_full_report"
+        tools:layout="@layout/fragment_full_report">
+    </fragment>
+
 </navigation>

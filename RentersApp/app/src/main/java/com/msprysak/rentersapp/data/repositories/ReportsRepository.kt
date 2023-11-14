@@ -137,5 +137,51 @@ class ReportsRepository : IReportsRepository {
         return reportsLiveData
     }
 
+//    override fun getFullReportById(reportId: String): LiveData<FullReport> {
+//        val reportDocRef = cloud.collection("reports").document(reportId)
+//            .get()
+//            .addOnSuccessListener { documentSnapshot -> }
+//
+//
+//    }
+// fun setupReportsListener(premisesId: String) {
+//        cloud.collection("reports")
+//            .whereEqualTo("premisesId", premisesId)
+//            .orderBy("reportDate", Query.Direction.DESCENDING)
+//
+//            .addSnapshotListener{ documentSnapshot, error ->
+//                if (error != null){
+//                    Log.d(DEBUG, "setupReportsObserver: ${error.message}")
+//                    return@addSnapshotListener
+//                }
+//                val reports = mutableListOf<Reports>()
+//                val tasks = mutableListOf<Task<DocumentSnapshot>>()
+//
+//                for (doc in documentSnapshot!!){
+//                    val report = doc.toObject(Reports::class.java)
+//                    val userTask = cloud.collection("users").document(report.userId!!)
+//                        .get()
+//
+//                    tasks.add(userTask)
+//                }
+//                Tasks.whenAllSuccess<DocumentSnapshot>(tasks)
+//                    .addOnSuccessListener { userSnapshots ->
+//                        for ((index, doc) in documentSnapshot.withIndex()){
+//                            val report = doc.toObject(Reports::class.java)
+//                            val user = userSnapshots[index].toObject(User::class.java)
+//                            reports.add(report!!)
+//                            reportsLiveData.postValue(reports.map { Pair(it,user!!) })
+//                        }
+//                    }
+//                    .addOnFailureListener { exception ->
+//                        Log.d(DEBUG, "setupReportsObserver: ${exception.message}")
+//                    }
+//
+//            }
+//    }
+//
+//    override fun getReports(): LiveData<List<Pair<Reports, User>>> {
+//        return reportsLiveData
+//    }
 
 }
