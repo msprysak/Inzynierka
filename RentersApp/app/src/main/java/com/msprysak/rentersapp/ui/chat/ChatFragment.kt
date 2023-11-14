@@ -40,7 +40,7 @@ class ChatFragment : BaseFragment() {
         chatViewModel.fetchMessages().observe(viewLifecycleOwner) { messages ->
             chatAdapter = ChatAdapter(messages)
             recyclerView.adapter = chatAdapter
-            recyclerView.scrollToPosition(messages.size - 1)
+            recyclerView.scrollToPosition(chatAdapter.itemCount - 1)
             chatAdapter.notifyDataSetChanged()
         }
 

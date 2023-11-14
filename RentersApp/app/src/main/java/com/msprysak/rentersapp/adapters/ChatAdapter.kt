@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.msprysak.rentersapp.data.UserRepositoryInstance
 import com.msprysak.rentersapp.data.model.Message
+import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.data.recyclerview.item.MessageItem
 import com.msprysak.rentersapp.databinding.ItemChatMessageBinding
 
 class ChatAdapter(
-    private val message: List<Message>,
+    private val message: List<Pair<Message,User>>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val currentUserId = UserRepositoryInstance.getInstance().user.value!!.userId.toString()
@@ -28,11 +29,11 @@ class ChatAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder as MessageItem
-        val item = message[position]
-        if (item.senderId == currentUserId){
-            holder.bindRightUser(item)
+        val (message, user) = message[position]
+        if (user.userId == currentUserId){
+            holder.bindRightUser(Pair(message,user))
         } else{
-            holder.bindLeftUser(item)
+            holder.bindLeftUser(Pair(message,user))
         }
 
     }
