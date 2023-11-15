@@ -4,11 +4,14 @@ import ReportItem
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.msprysak.rentersapp.data.interfaces.OnReportItemClickListener
 import com.msprysak.rentersapp.data.model.Reports
+import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.databinding.ItemReportBinding
 
 class ReportsAdapter(
-    private val reports: List<Reports>,
+    private val reports: List<Pair<Reports,User>>,
+    private val onReportItemClickListener: OnReportItemClickListener
 )  : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -24,7 +27,12 @@ class ReportsAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder as ReportItem
-        holder.bindReportsRecyclerView(reports[position])
+        val (report,user) = reports[position]
 
+        holder.bindReportsRecyclerView(report)
+
+        holder.itemView.setOnClickListener {
+            onReportItemClickListener.onItemClick(Pair(report,user))
+        }
     }
 }

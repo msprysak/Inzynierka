@@ -1,133 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.reports.FullReportFragment">
 
-    <TextView
-        android:id="@+id/report_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:text="14.11.2023"
-        android:textSize="19sp"
-        android:textStyle="bold"
-        tools:ignore="HardcodedText" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/user_info_container"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/report_date"
-        android:padding="10dp"
-        >
+        android:padding="10dp">
 
-        <ImageView
-            android:id="@+id/reporter_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_person"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <TextView
+            android:id="@+id/report_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="14.11.2023"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/user_info_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/report_date"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/reporter_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_person"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/reporter_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="@string/reporter"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/reporter_image"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/reporter_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/username"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/reporter_image"
+                app:layout_constraintTop_toBottomOf="@id/reporter_text" />
+
+            <TextView
+                android:id="@+id/reporter_phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/phone_number"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/reporter_name"
+                app:layout_constraintStart_toStartOf="@id/reporter_name"
+                app:layout_constraintTop_toBottomOf="@id/reporter_name" />
+
+            <Spinner
+                android:id="@+id/status_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_info_container"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/reporter_phone_number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/images_recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/user_info_container"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            tools:itemCount="1"
+            tools:listitem="@layout/item_report_image" />
 
         <TextView
-            android:id="@+id/reporter_text"
+            android:id="@+id/report_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:text="@string/reporter"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/reporter_image"
-            app:layout_constraintTop_toTopOf="parent" />
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text_rounded"
+            android:backgroundTint="?attr/colorSecondaryContainer"
+            android:elevation="20dp"
+            android:hint="@string/report_title"
+            android:maxLength="255"
+            android:minHeight="48dp"
+            android:padding="10dp"
+            android:textColor="?attr/colorOnSecondaryContainer"
+            android:textColorHint="?attr/colorOnSecondaryContainer"
+            android:textSize="20sp"
+            android:layout_below="@id/images_recycler_view"/>
 
         <TextView
-            android:id="@+id/reporter_name"
+            android:id="@+id/report_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/username"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/reporter_image"
-            app:layout_constraintTop_toBottomOf="@id/reporter_text" />
+            android:layout_below="@id/report_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text_rounded"
+            android:backgroundTint="?attr/colorSecondaryContainer"
+            android:elevation="10dp"
 
-        <TextView
-            android:id="@+id/reporter_phone_number"
+            android:hint="@string/enter_report_description"
+            android:maxLength="255"
+            android:minHeight="48dp"
+            android:padding="10dp"
+            android:textColor="?attr/colorOnSecondaryContainer"
+            android:textColorHint="?attr/colorOnSecondaryContainer"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/report_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/phone_number"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@id/reporter_name"
-            app:layout_constraintStart_toStartOf="@id/reporter_name"
-            app:layout_constraintTop_toBottomOf="@id/reporter_name" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/images_recycler_view"
-        tools:itemCount="1"
-        tools:listitem="@layout/item_report_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_below="@id/user_info_container"
-        />
-
-    <TextView
-        android:id="@+id/report_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:textSize="20sp"
-        android:maxLength="255"
-        android:minHeight="48dp"
-        android:layout_marginTop="5dp"
-        android:textColor="?attr/colorOnSecondaryContainer"
-        android:textColorHint="?attr/colorOnSecondaryContainer"
-        android:background="?attr/colorSecondaryContainer"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/report_title"
-        android:layout_below="@id/images_recycler_view"/>
-
-    <TextView
-        android:id="@+id/report_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:textSize="20sp"
-        android:maxLength="255"
-        android:minHeight="48dp"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:textColor="?attr/colorOnSecondaryContainer"
-        android:textColorHint="?attr/colorOnSecondaryContainer"
-        android:background="?attr/colorSecondaryContainer"
-        android:layout_below="@id/report_title"
-        android:hint="@string/enter_report_description" />
-
-    <EditText
-        android:id="@+id/report_comment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:textSize="20sp"
-        android:maxLength="255"
-        android:minHeight="48dp"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:textColor="?attr/colorOnSecondaryContainer"
-        android:textColorHint="?attr/colorOnSecondaryContainer"
-        android:background="?attr/colorSecondaryContainer"
-        android:layout_below="@id/report_description"
-        android:hint="@string/enter_comment_to_report" />
-
-</RelativeLayout>
+            android:layout_below="@id/report_description"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text_rounded"
+            android:backgroundTint="?attr/colorSecondaryContainer"
+            android:elevation="10dp"
+            android:hint="@string/enter_comment_to_report"
+            android:maxLength="255"
+            android:minHeight="48dp"
+            android:padding="10dp"
+            android:textColor="?attr/colorOnSecondaryContainer"
+            android:textColorHint="?attr/colorOnSecondaryContainer"
+            android:textSize="20sp" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/save_changes"
+            android:layout_below="@id/report_comment"
+            android:layout_centerHorizontal="true"
+            />
+    </RelativeLayout>
+</ScrollView>

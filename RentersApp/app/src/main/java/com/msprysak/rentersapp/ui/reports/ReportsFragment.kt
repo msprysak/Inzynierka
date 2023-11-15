@@ -15,6 +15,7 @@ import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.adapters.ReportsAdapter
 import com.msprysak.rentersapp.data.interfaces.OnReportItemClickListener
 import com.msprysak.rentersapp.data.model.Reports
+import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.databinding.FragmentReportsBinding
 
 class ReportsFragment : BaseFragment(), OnReportItemClickListener {
@@ -41,7 +42,6 @@ class ReportsFragment : BaseFragment(), OnReportItemClickListener {
         val navController = findNavController()
 
         val addReportButton = binding.addReportButton
-        reportsViewModel.setupObserver()
 
         recyclerView = binding.reportsRecyclerView
         recyclerView.setHasFixedSize(true)
@@ -50,10 +50,11 @@ class ReportsFragment : BaseFragment(), OnReportItemClickListener {
         val itemDecoration = ItemsDecorator(requireContext(), R.dimen.item_space)
         recyclerView.addItemDecoration(itemDecoration)
 
-        reportsViewModel.getReports().observe(viewLifecycleOwner) { reports ->
-            reportsAdapter = ReportsAdapter(reports)
+        reportsViewModel.setupObserver().observe(viewLifecycleOwner) { reports ->
+            reportsAdapter = ReportsAdapter(reports, this)
             recyclerView.adapter = reportsAdapter
-            println(reports)
+            (recyclerView.adapter as ReportsAdapter).notifyDataSetChanged()
+            reportsAdapter.notifyDataSetChanged()
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -81,8 +82,10 @@ class ReportsFragment : BaseFragment(), OnReportItemClickListener {
         bottomNavigation?.visibility = View.VISIBLE
     }
 
-    override fun onItemClick(reports: Reports) {
-
+    override fun onItemClick(pair: Pair<Reports, User>) {
+        val navController = findNavController()
+        val action = ReportsFragmentDirections.actionReportsFragmentToFullReportFragment(pair.first, pair.second)
+        navController.navigate(action)
     }
 
 }

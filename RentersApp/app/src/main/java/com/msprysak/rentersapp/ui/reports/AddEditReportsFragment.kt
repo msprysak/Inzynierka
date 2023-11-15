@@ -52,10 +52,10 @@ class AddEditReportsFragment : BaseFragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
 
-        photoAdapter = ReportsPhotoAdapter(selectedImages.toMutableList()) { image ->
+        photoAdapter = ReportsPhotoAdapter(selectedImages.toMutableList(), true, { image ->
             selectedImages.remove(image)
             photoAdapter.updateList(selectedImages)
-        }
+        },{})
         recyclerView.adapter = photoAdapter
 
         addImagesButton.setOnClickListener {

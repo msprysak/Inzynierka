@@ -10,13 +10,15 @@ import com.msprysak.rentersapp.databinding.ItemReportImageBinding
 
 class ReportsPhotoAdapter(
     private val photos: MutableList<Uri>,
-    private val onDeleteClickListener: (Uri) -> Unit
+    private val showCancelButton: Boolean,
+    private val onDeleteClickListener: (Uri) -> Unit,
+    private val onImageClick: (Uri) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val context: Context = parent.context
         val inflater: LayoutInflater = LayoutInflater.from(context)
         val binding = ItemReportImageBinding.inflate(inflater, parent, false)
-        return ReportImageItem(binding)
+        return ReportImageItem(binding, showCancelButton)
     }
 
     override fun getItemCount(): Int {
@@ -29,6 +31,13 @@ class ReportsPhotoAdapter(
         holder.bind(item)
         holder.setOnDeleteClickListener {
             onDeleteClickListener(item)
+        }
+        if (!showCancelButton){
+            holder.setOnImageClickListener {
+                onImageClick(item)
+                println("onImageClickListener")
+            }
+
         }
 
     }

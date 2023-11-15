@@ -20,6 +20,8 @@ class ReportItem(private val binding: ItemReportBinding) : RecyclerView.ViewHold
                 .placeholder(R.drawable.ic_report)
                 .into(binding.reportImage)
         }
+
+
     }
 
     private fun formatReportDate(date: Date): String {

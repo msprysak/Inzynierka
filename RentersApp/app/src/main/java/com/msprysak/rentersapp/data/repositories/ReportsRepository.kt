@@ -4,12 +4,17 @@ import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.msprysak.rentersapp.data.interfaces.CallBack
 import com.msprysak.rentersapp.data.interfaces.IReportsRepository
 import com.msprysak.rentersapp.data.model.Reports
+import com.msprysak.rentersapp.data.model.User
 import java.util.UUID
 
 class ReportsRepository : IReportsRepository {
@@ -17,7 +22,6 @@ class ReportsRepository : IReportsRepository {
     private val storage = FirebaseStorage.getInstance()
     private val cloud = FirebaseFirestore.getInstance()
 
-    private val reportsLiveData = MutableLiveData<List<Reports>>()
 
     private val DEBUG = "ReportsRepository_DEBUG"
     override fun createNewReport(
@@ -114,40 +118,10 @@ class ReportsRepository : IReportsRepository {
         TODO("Not yet implemented")
     }
 
-    fun setupReportsListener(premisesId: String) {
-        cloud.collection("reports")
-            .whereEqualTo("premisesId", premisesId)
-            .orderBy("reportDate")
-
-            .addSnapshotListener{ documentSnapshot, error ->
-                if (error != null){
-                    Log.d(DEBUG, "setupReportsObserver: ${error.message}")
-                    return@addSnapshotListener
-                }
-                val reports = mutableListOf<Reports>()
-                for (doc in documentSnapshot!!){
-                    val report = doc.toObject(Reports::class.java)
-                    reports.add(report)
-                }
-                reportsLiveData.value = reports
-            }
-    }
-
-    override fun getReports(): LiveData<List<Reports>> {
-        return reportsLiveData
-    }
-
-//    override fun getFullReportById(reportId: String): LiveData<FullReport> {
-//        val reportDocRef = cloud.collection("reports").document(reportId)
-//            .get()
-//            .addOnSuccessListener { documentSnapshot -> }
-//
-//
-//    }
-// fun setupReportsListener(premisesId: String) {
+//    fun setupReportsListener(premisesId: String) {
 //        cloud.collection("reports")
 //            .whereEqualTo("premisesId", premisesId)
-//            .orderBy("reportDate", Query.Direction.DESCENDING)
+//            .orderBy("reportDate")
 //
 //            .addSnapshotListener{ documentSnapshot, error ->
 //                if (error != null){
@@ -155,31 +129,65 @@ class ReportsRepository : IReportsRepository {
 //                    return@addSnapshotListener
 //                }
 //                val reports = mutableListOf<Reports>()
-//                val tasks = mutableListOf<Task<DocumentSnapshot>>()
-//
 //                for (doc in documentSnapshot!!){
 //                    val report = doc.toObject(Reports::class.java)
-//                    val userTask = cloud.collection("users").document(report.userId!!)
-//                        .get()
-//
-//                    tasks.add(userTask)
+//                    reports.add(report)
 //                }
-//                Tasks.whenAllSuccess<DocumentSnapshot>(tasks)
-//                    .addOnSuccessListener { userSnapshots ->
-//                        for ((index, doc) in documentSnapshot.withIndex()){
-//                            val report = doc.toObject(Reports::class.java)
-//                            val user = userSnapshots[index].toObject(User::class.java)
-//                            reports.add(report!!)
-//                            reportsLiveData.postValue(reports.map { Pair(it,user!!) })
-//                        }
-//                    }
-//                    .addOnFailureListener { exception ->
-//                        Log.d(DEBUG, "setupReportsObserver: ${exception.message}")
-//                    }
-//
+//                reportsLiveData.value = reports
 //            }
 //    }
 //
+//    override fun getReports(): LiveData<List<Reports>> {
+//        return reportsLiveData
+//    }
+
+    //    override fun getFullReportById(reportId: String): LiveData<FullReport> {
+//        val reportDocRef = cloud.collection("reports").document(reportId)
+//            .get()
+//            .addOnSuccessListener { documentSnapshot -> }
+//
+//
+//    }
+    override fun setupReportsListener(premisesId: String): LiveData<List<Pair<Reports, User>>> {
+        val reportsLiveData = MutableLiveData<List<Pair<Reports, User>>>()
+
+        cloud.collection("reports")
+            .whereEqualTo("premisesId", premisesId)
+            .orderBy("reportDate", Query.Direction.DESCENDING)
+            .addSnapshotListener { documentSnapshot, error ->
+                if (error != null) {
+                    Log.d(DEBUG, "setupReportsObserver: ${error.message}")
+                    return@addSnapshotListener
+                }
+
+                val reports = mutableListOf<Pair<Reports, User>>()
+                val tasks = mutableListOf<Task<DocumentSnapshot>>()
+
+                for (doc in documentSnapshot!!) {
+                    val report = doc.toObject(Reports::class.java)
+                    val userTask = cloud.collection("users").document(report.userId!!)
+                        .get()
+
+                    tasks.add(userTask)
+                }
+
+                Tasks.whenAllSuccess<DocumentSnapshot>(tasks)
+                    .addOnSuccessListener { userSnapshots ->
+                        for ((index, doc) in documentSnapshot.withIndex()) {
+                            val report = doc.toObject(Reports::class.java)
+                            val user = userSnapshots[index].toObject(User::class.java)
+                            reports.add(Pair(report, user!!))
+                        }
+                        reportsLiveData.postValue(reports)
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.d(DEBUG, "setupReportsObserver: ${exception.message}")
+                    }
+            }
+
+        return reportsLiveData
+    }
+
 //    override fun getReports(): LiveData<List<Pair<Reports, User>>> {
 //        return reportsLiveData
 //    }

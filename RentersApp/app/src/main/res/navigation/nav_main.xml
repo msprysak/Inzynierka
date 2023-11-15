@@ -76,6 +76,16 @@
         <action
             android:id="@+id/action_reportsFragment_to_fullReportFragment"
             app:destination="@id/fullReportFragment">
+
+            <argument
+                android:name="report"
+                app:argType="com.msprysak.rentersapp.data.model.Reports" />
+
+            <argument
+                android:name="user"
+                app:argType="com.msprysak.rentersapp.data.model.User" />
+
+
         </action>
     </fragment>
     <fragment
@@ -87,8 +97,21 @@
     <fragment
         android:id="@+id/fullReportFragment"
         android:name="com.msprysak.rentersapp.ui.reports.FullReportFragment"
-        android:label="fragment_full_report"
+        android:label="Podgląd zgłoszenia"
         tools:layout="@layout/fragment_full_report">
+
+        <action
+            android:id="@+id/action_fullReportFragment_to_imageFullScreen"
+            app:destination="@id/imageFullScreen">
+
+        <argument
+            android:name="imageUri"
+            app:argType="string" />
+        </action>
     </fragment>
+    <fragment
+        android:id="@+id/imageFullScreen"
+        android:name="com.msprysak.rentersapp.ui.reports.ImageFullScreen"
+        android:label="@string/image_preview" />
 
 </navigation>

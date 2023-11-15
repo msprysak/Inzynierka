@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.msprysak.rentersapp.data.UserRepositoryInstance
 import com.msprysak.rentersapp.data.interfaces.CallBack
 import com.msprysak.rentersapp.data.model.Reports
+import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.data.repositories.PremisesRepository
 import com.msprysak.rentersapp.data.repositories.ReportsRepository
 
@@ -28,11 +29,7 @@ class ReportsViewModel: ViewModel() {
         )
     }
 
-    fun setupObserver(){
+    fun setupObserver(): LiveData<List<Pair<Reports, User>>> {
         return repository.setupReportsListener(premisesInstance.getCurrentPremisesId())
-    }
-
-    fun getReports():LiveData<List<Reports>>{
-        return repository.getReports()
     }
 }

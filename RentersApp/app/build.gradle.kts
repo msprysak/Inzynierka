@@ -2,8 +2,9 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
-    id("androidx.navigation.safeargs.kotlin")
+    id("androidx.navigation.safeargs")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -73,7 +74,6 @@ dependencies {
     implementation("com.google.firebase:firebase-functions-ktx")
 
     implementation("com.google.android.gms:play-services-auth:20.7.0")
-
 
 //    Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
