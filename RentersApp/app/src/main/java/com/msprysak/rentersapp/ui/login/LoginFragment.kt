@@ -45,6 +45,7 @@ class LoginFragment : BaseFragment() {
 
         val emailEditText = binding.email
         val passwordEditText = binding.password
+        passwordEditText.hint = getString(com.msprysak.rentersapp.R.string.password)
         val loginButton = binding.login
         loginButton.isEnabled = false
 

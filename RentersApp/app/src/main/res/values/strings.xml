@@ -112,7 +112,7 @@
     <string name="repeat_password">Powtórz hasło</string>
     <string name="save">Zapisz</string>
     <string name="enter_code">Wprowadź kod</string>
-    <string name="title">Title</string>
+    <string name="title">Wprowadź tytuł</string>
     <string name="join_to_group_request">Prośba o dołaczenie do grupy</string>
     <string name="accept">Akceptuj</string>
     <string name="delete">Usuń</string>
@@ -135,4 +135,9 @@
     <string name="reporter">Zgłaszający:</string>
     <string name="enter_comment_to_report">Wprowadź komentarz do zgłoszenia</string>
     <string name="image_preview">Podgląd zdjęcia</string>
+    <string name="enter_amount">Podaj kwotę</string>
+    <string name="add_payment_date">Dodaj datę płatności</string>
+    <string name="start_payment_date_label">Data rozpoczęcia płatności:</string>
+    <string name="end_payment_date_label">Data zakończenia płatności:</string>
+    <string name="add_to_selected_users">Przypisz do wybranych użytkowników</string>
 </resources>

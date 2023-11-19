@@ -93,23 +93,23 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="50dp"
-
             android:layout_marginTop="30dp"
             android:layout_marginEnd="50dp"
-            android:hint="@string/password"
-            app:passwordToggleEnabled="true"
-            >
+            android:hint="Haslo"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:maxLength="15"/>
+                android:maxLength="20"
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
