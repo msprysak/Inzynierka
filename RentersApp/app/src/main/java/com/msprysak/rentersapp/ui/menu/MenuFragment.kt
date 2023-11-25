@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.msprysak.rentersapp.BaseFragment
+import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.data.interfaces.BindUser
 import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.databinding.FragmentMenuBinding
@@ -35,15 +36,22 @@ class MenuFragment : BaseFragment(), BindUser {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        menuViewModel.getUserData().observe(viewLifecycleOwner) { user ->
-            bindUserData(user)
-        }
-
         val editProfileButton = binding.editProfileButton
         val addUsersTextView = binding.addUsersTextView
         val editHomeInfoTextView = binding.editHomeTextView
         val usersTextView = binding.usersTextView
         val reportsTextView = binding.reportsTextView
+
+        menuViewModel.getUserData().observe(viewLifecycleOwner) { user ->
+            bindUserData(user)
+            if (user.houseRoles!!.containsValue("tenant")){
+                addUsersTextView.visibility = View.GONE
+                editHomeInfoTextView.text = resources.getString(R.string.show_home_info)
+            }
+        }
+
+
+
         val navController = findNavController()
         val currentDestinationId = navController.currentDestination?.id
         Log.d("CurrentDestination", "Current destination ID: $currentDestinationId")
@@ -64,7 +72,6 @@ class MenuFragment : BaseFragment(), BindUser {
         reportsTextView.setOnClickListener{
             navController.navigate(MenuFragmentDirections.actionMenuFragmentToReportsFragment())
         }
-
 
     }
     override fun bindUserData(user: User) {

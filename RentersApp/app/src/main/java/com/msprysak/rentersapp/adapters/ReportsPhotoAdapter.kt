@@ -35,7 +35,6 @@ class ReportsPhotoAdapter(
         if (!showCancelButton){
             holder.setOnImageClickListener {
                 onImageClick(item)
-                println("onImageClickListener")
             }
 
         }

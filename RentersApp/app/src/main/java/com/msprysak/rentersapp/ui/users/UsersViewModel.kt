@@ -16,12 +16,9 @@ class UsersViewModel: ViewModel() {
     fun fetchUsers(): LiveData<List<User>> {
         // Sprawdź, czy premisesRepository.premises i premisesRepository.premises.value nie są null
         val premises = premisesRepository.premises.value
-        println("premises $premises")
-        if (premises != null && premises.users != null) {
-            val userIdsList = premises.users.keys.toList()
-            return premisesRepository.getUsersByIds(userIdsList)
+        if (premises?.users != null) {
+            return premisesRepository.getUsersByIds(premises.users.keys.toList())
         } else {
-            // Zwróć pustą listę lub inny odpowiedni wynik w przypadku null
             return MutableLiveData<List<User>>().apply { value = emptyList() }
         }
     }

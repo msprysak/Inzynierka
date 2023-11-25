@@ -82,7 +82,6 @@ class JoinRequestRepository(private val userData: LiveData<User>):
                             callback.onSuccess()
                         }
                         .addOnFailureListener { e ->
-                            println("Transaction failure: ${e.message}")
                             callback.onFailure("Ups, coś poszło nie tak")
                         }
                 } else {
@@ -90,7 +89,6 @@ class JoinRequestRepository(private val userData: LiveData<User>):
                 }
             }
             .addOnFailureListener { e ->
-                println("acceptJoinRequest: ${e.message}")
                 callback.onFailure("Ups, coś poszło nie tak")
             }
     }

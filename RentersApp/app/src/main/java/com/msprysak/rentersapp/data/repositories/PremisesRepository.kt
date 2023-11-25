@@ -136,29 +136,42 @@ class PremisesRepository private  constructor(private val userData: LiveData<Use
 
     }
 
-    override fun fetchPremisesData(): LiveData<Premises> {
-        cloud.collection("premises")
-            .document(userData.value?.houseRoles?.keys?.first()!!)
-            .get()
-            .addOnSuccessListener { documentSnapshot ->
-                val premisesData = documentSnapshot.toObject(Premises::class.java)
-                premisesLiveData.postValue(premisesData!!)
-
-                Log.d(DEBUG, "fetchPremisesData: Success")
-            }
-            .addOnFailureListener {
-                Log.d(DEBUG, "fetchPremisesData: ${it.message}")
-            }
-        return premisesLiveData
-    }
 
     override fun getUsersByIds(ids: List<String>): LiveData<List<User>> {
+        val usersListData = MutableLiveData<List<User>>()
+
         val docRef = cloud.collection("users")
             .whereIn("userId", ids)
 
+        docRef.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val querySnapshot = task.result
+                val usersList = mutableListOf<User>()
+
+                for (document in querySnapshot!!) {
+                    val user = document.toObject(User::class.java)
+                    usersList.add(user)
+                }
+
+                usersListData.value = usersList
+                Log.d(DEBUG, "getUsersDataById: Success")
+            } else {
+                Log.d(DEBUG, "getUsersDataById: ${task.exception?.message}")
+            }
+        }
+
+        return usersListData
+    }
+
+
+    override fun fetchUsers(callback: (List<User>) -> Unit) {
+
+        val docRef = cloud.collection("users")
+            .whereIn("userId", premises.value!!.users!!.keys.toList())
+
         docRef.addSnapshotListener { querySnapshot, e ->
             if (e != null) {
-                Log.d(DEBUG, "getUsersDataById: ${e.message}")
+                Log.d(DEBUG, "fetchUsers: ${e.message}")
                 return@addSnapshotListener
             }
 
@@ -168,12 +181,12 @@ class PremisesRepository private  constructor(private val userData: LiveData<Use
                 usersList.add(user)
             }
 
-
-            (usersListData as MutableLiveData).postValue(usersList)
-            Log.d(DEBUG, "getUsersDataById: Success")
+            callback(usersList)
+            Log.d(DEBUG, "fetchUsers: Success")
         }
-        return usersListData
     }
+
+
 
     override fun uploadPremisesPhoto(bytes: ByteArray) {
         storage.getReference("premises")

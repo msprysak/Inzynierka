@@ -45,14 +45,12 @@ class NotificationAdapter(
                 val joinRequestModel = item as Request
                 joinRequestModelViewHolder.bind(joinRequestModel)
                 joinRequestModelViewHolder.itemView.visibility = if (isUserLandlord()) View.VISIBLE else View.GONE
-                println("isUserLandlord: ${isUserLandlord()}")
-                println("Data bound for JOIN_REQUEST_VIEW")
+
             }
             REPORT_VIEW -> {
                 val reportsModelViewHolder = holder as ReportsItem
                 val reportsModel = item as Reports
                 reportsModelViewHolder.bind(reportsModel)
-                println("Data bound for REPORT_VIEW")
             }
         }
     }

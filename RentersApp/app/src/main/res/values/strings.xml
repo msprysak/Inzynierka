@@ -18,6 +18,8 @@
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome!"</string>
+    <string name="select_users">Wybierz użytkowników</string>
+    <string name="select_all_users">Wybierz wszystkich</string>
     <string name="invalid_username">Nieprawidłowa nazwa użytkownika!</string>
     <string name="invalid_password">Hasło nie spełnia wymogów bezpieczeństwa.</string>
     <string name="invalid_confirm_password">Hasła nie są takie same!</string>
@@ -33,6 +35,9 @@
     <string name="home_name">Nazwa domu</string>
     <string name="home_address">Adres (opcjonalnie)</string>
     <string name="cancel">Anuluj</string>
+    <string name="change_dates">Edyuj daty płatności</string>
+    <string name="select_payment_dates">Wybierz daty płatności</string>
+    <string name="edit_selected_users">Edytuj wybranych użytkowników</string>
     <string name="create">Utwórz</string>
     <string name="Add_home_photo">Dodaj zdjęcie domu</string>
     <string name="enter_access_code">Podaj 4 cyfrowy kod dostępu</string>
@@ -83,6 +88,7 @@
     <string name="code_expired">Kod wygasł!</string>
     <string name="menu">Menu</string>
     <string name="home">Dom</string>
+    <string name="show_home_info">Pokaż informacje o mieszkaniu</string>
     <string name="payments">Płatności</string>
     <string name="chat">Chat</string>
     <string name="profile">Profil</string>
@@ -117,7 +123,7 @@
     <string name="accept">Akceptuj</string>
     <string name="delete">Usuń</string>
     <string name="preview">Podgląd</string>
-    <string name="status">Status</string>
+    <string name="status">Status:</string>
     <string name="decline">Odrzuć</string>
     <string name="sign_out">Wyloguj</string>
     <string name="users">Użytkownicy</string>
@@ -140,4 +146,13 @@
     <string name="start_payment_date_label">Data rozpoczęcia płatności:</string>
     <string name="end_payment_date_label">Data zakończenia płatności:</string>
     <string name="add_to_selected_users">Przypisz do wybranych użytkowników</string>
+    <string name="payment_amount">Kwota do zapłaty:</string>
+    <string name="payment">Płatność</string>
+    <string name="sent_date">Data wysłania:</string>
+    <string name="sample_date">21.11.2023</string>
+    <string name="payment_date_since">Data płatności od</string>
+    <string name="payment_date">Data płatności</string>
+    <string name="since">Od:</string>
+    <string name="until">Do</string>
+    <string name="delete_report">Usuń zgłoszenie</string>
 </resources>

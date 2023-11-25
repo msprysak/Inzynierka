@@ -43,11 +43,23 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val saveButton = binding.saveButton
+        val editHomeImageView = binding.editHomeImageView
+        val homeNameEditText = binding.homeNameEditText
+        val addressEditText = binding.addressEditText
 
         homeViewModel.getPremisesData().observe(viewLifecycleOwner) { premises ->
             bindPremisesData(premises)
         }
 
+        if (homeViewModel.getUserData().houseRoles!!.containsValue("tenant")) {
+            saveButton.visibility = View.GONE
+            editHomeImageView.isEnabled = false
+            homeNameEditText.isEnabled = false
+            addressEditText.isEnabled = false
+
+
+        }
 
         setupTextChangeListeners()
         setupTakePictureClick()

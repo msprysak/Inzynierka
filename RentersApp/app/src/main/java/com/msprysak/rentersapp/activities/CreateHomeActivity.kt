@@ -44,7 +44,6 @@ class CreateHomeActivity : AppCompatActivity() {
                     val isMember = houseRoles != null
                     callback(isMember)
                 } else {
-                    println("complete: ${complete.exception}")
                     callback(false)
                 }
             }

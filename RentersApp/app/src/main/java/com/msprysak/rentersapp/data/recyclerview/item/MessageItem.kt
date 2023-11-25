@@ -12,13 +12,11 @@ class MessageItem(private val binding: ItemChatMessageBinding) : RecyclerView.Vi
         val (message, user) = pair
         binding.leftChatUsernameText.text = user.username
         binding.leftChatMessageText.text = message.message
-        if (!user.profilePictureUrl.isNullOrEmpty()){
-            Glide.with(binding.root)
-                .load(user.profilePictureUrl)
-                .circleCrop()
-                .placeholder(R.drawable.ic_account_circle)
-                .into(binding.leftChatProfileImage)
-        }
+        Glide.with(binding.root)
+            .load(user.profilePictureUrl)
+            .circleCrop()
+            .placeholder(R.drawable.ic_account_circle)
+            .into(binding.leftChatProfileImage)
         binding.rightChatMessageLayout.visibility = RecyclerView.GONE
         binding.leftChatMessageLayout.visibility = RecyclerView.VISIBLE
     }
@@ -26,13 +24,11 @@ class MessageItem(private val binding: ItemChatMessageBinding) : RecyclerView.Vi
         val (message, user) = pair
         binding.rightChatUsernameText.text = user.username
         binding.rightChatMessageText.text = message.message
-        if (!user.profilePictureUrl.isNullOrEmpty()){
-            Glide.with(binding.root)
-                .load(user.profilePictureUrl)
-                .circleCrop()
-                .placeholder(R.drawable.ic_account_circle)
-                .into(binding.rightChatProfileImage)
-        }
+        Glide.with(binding.root)
+            .load(user.profilePictureUrl)
+            .circleCrop()
+            .placeholder(R.drawable.ic_account_circle)
+            .into(binding.rightChatProfileImage)
         binding.leftChatMessageLayout.visibility = RecyclerView.GONE
         binding.rightChatMessageLayout.visibility = RecyclerView.VISIBLE
 

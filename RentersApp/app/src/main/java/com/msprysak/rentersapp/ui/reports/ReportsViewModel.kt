@@ -17,6 +17,10 @@ class ReportsViewModel: ViewModel() {
 
     private val repository = ReportsRepository()
 
+    fun getUserData(): User? {
+        return userInstance.getUserData().value
+    }
+
 
 
     fun createNewReport(report: Reports, uriList : List<Uri>, callBack: CallBack) {

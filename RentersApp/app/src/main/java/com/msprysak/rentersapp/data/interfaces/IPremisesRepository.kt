@@ -11,9 +11,9 @@ interface IPremisesRepository {
     fun getPremisesData(): LiveData<Premises>
 
     fun addTemporaryCode(randomCode: String)
+    fun getUsersByIds(ids: List<String>) : LiveData<List<User>>
 
-    fun fetchPremisesData(): LiveData<Premises>
-    fun getUsersByIds(ids: List<String>): LiveData<List<User>>
+    fun fetchUsers(callback: (List<User>) -> Unit)
 
     fun uploadPremisesPhoto(bytes: ByteArray)
 

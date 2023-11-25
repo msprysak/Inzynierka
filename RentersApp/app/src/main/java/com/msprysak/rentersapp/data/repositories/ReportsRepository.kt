@@ -33,7 +33,6 @@ class ReportsRepository : IReportsRepository {
     ) {
         val reportDocRef = cloud.collection("reports").document()
 
-        // Utwórz nowy raport w Firestore
         val reportData = hashMapOf(
             "reportId" to reportDocRef.id,
             "userId" to userId,
@@ -45,7 +44,6 @@ class ReportsRepository : IReportsRepository {
             "reportImages" to listOf<String>()
         )
 
-        // Dodaj nowe zdjęcia do Firebase Storage i pobierz ich URL
         val uploadedPhotoUrls = mutableListOf<String>()
 
         if (selectedImages.isNotEmpty()) {

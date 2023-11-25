@@ -44,13 +44,11 @@ class NotificationsFragment : BaseFragment(), OnItemClickListener {
         recyclerView = binding.notificationsRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.setHasFixedSize(true)
-        println("Adapter set on RecyclerView")
 
         notificationsViewModel.getJoinRequests().observe(
             viewLifecycleOwner
         ) { joinRequests ->
             if (joinRequests != null) {
-                println("joinRequests: $joinRequests")
                 dataList = joinRequests as ArrayList<Any>
                 notificationAdapter = NotificationAdapter(dataList, this)
                 recyclerView.adapter = notificationAdapter

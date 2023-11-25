@@ -12,8 +12,9 @@ import com.msprysak.rentersapp.databinding.ItemTenatBinding
 
 class TenantItem(
     private val binding: ItemTenatBinding,
-    private val onItemClickListener: OnItemClickListener,
-    private val loggedInUserRole: String): RecyclerView.ViewHolder(binding.root) {
+    private val onItemClickListener: OnItemClickListener?,
+    private val loggedInUserRole: String?
+): RecyclerView.ViewHolder(binding.root) {
     private val popupMenuButton: View = binding.popupMenu
 
     @SuppressLint("SetTextI18n")
@@ -46,11 +47,11 @@ class TenantItem(
 
         if (loggedInUserRole == "landlord") {
             popupMenuButton.setOnClickListener{
-                onItemClickListener.onLandlordClick(user,popupMenuButton)
+                onItemClickListener!!.onLandlordClick(user,popupMenuButton)
             }
         } else{
             popupMenuButton.setOnClickListener{
-                onItemClickListener.onTenantClick(user,popupMenuButton)
+                onItemClickListener!!.onTenantClick(user,popupMenuButton)
             }
         }
 

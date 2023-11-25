@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             if (user != null && !::premisesRepository.isInitialized) {
                 // Inicjalizuj premisesRepository tylko jeśli nie zostało jeszcze zainicjowane
                 premisesRepository = PremisesRepository.getInstance(repository.getUserData())
-                premisesRepository.fetchPremisesData()
+                premisesRepository.getPremisesData()
             }
 
             // Sprawdź, czy premisesRepository zostało zainicjowane przed dostępem

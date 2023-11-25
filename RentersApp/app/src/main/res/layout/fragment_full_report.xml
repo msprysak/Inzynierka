@@ -153,12 +153,25 @@
             android:textColorHint="?attr/colorOnSecondaryContainer"
             android:textSize="20sp" />
         <Button
+            android:id="@+id/save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:layout_marginStart="30dp"
             android:text="@string/save_changes"
             android:layout_below="@id/report_comment"
-            android:layout_centerHorizontal="true"
+            />
+        <Button
+            android:id="@+id/delete_report_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_report"
+            android:enabled="false"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/report_comment"
+            android:layout_toEndOf="@id/save_button"
+            android:layout_marginStart="20dp"
+
             />
     </RelativeLayout>
 </ScrollView>

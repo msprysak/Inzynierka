@@ -11,8 +11,8 @@ import com.msprysak.rentersapp.databinding.ItemTenatBinding
 
 class TenantsAdapter(
     private val tenants: List<User>,
-    private val itemClickListener: OnItemClickListener,
-    private val loggedInUserRole: String
+    private val itemClickListener: OnItemClickListener? = null,
+    private val loggedInUserRole: String? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
