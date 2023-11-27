@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_menuFragment_to_reportsFragment"
             app:destination="@id/reportsFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_addPremisesFragment"
+            app:destination="@id/addPremisesFragment" />
     </fragment>
     <fragment
         android:id="@+id/addUsersFragment"
@@ -113,5 +116,9 @@
         android:id="@+id/imageFullScreen"
         android:name="com.msprysak.rentersapp.ui.reports.ImageFullScreen"
         android:label="@string/image_preview" />
+    <fragment
+        android:id="@+id/addPremisesFragment"
+        android:name="com.msprysak.rentersapp.ui.addpremises.AddPremisesFragment"
+        android:label="AddPremisesFragment" />
 
 </navigation>

@@ -6,15 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.msprysak.rentersapp.data.interfaces.CallBack
-import com.msprysak.rentersapp.data.interfaces.IPremisesRepository
 import com.msprysak.rentersapp.data.model.Premises
 import com.msprysak.rentersapp.data.model.User
 
-class PremisesRepository private  constructor(private val userData: LiveData<User>) :
-    IPremisesRepository {
+class PremisesRepository private  constructor(private val userData: LiveData<User>) {
 
     private val DEBUG = "PremisesRepository_DEBUG"
 
@@ -23,11 +22,20 @@ class PremisesRepository private  constructor(private val userData: LiveData<Use
     private val cloud = FirebaseFirestore.getInstance()
 
     val usersListData: LiveData<List<User>> = MutableLiveData()
-    val premises: LiveData<Premises>
-        get() = premisesLiveData
 
-    private val premisesLiveData: MutableLiveData<Premises> = MutableLiveData()
+    var premises: LiveData<Premises>
+        get() = _premisesLiveData
+        set(value) {
+            _premisesLiveData.value = value.value
+        }
 
+
+    private var _premisesLiveData: MutableLiveData<Premises> = MutableLiveData()
+
+    fun updatePremises(premises: Premises) {
+        _premisesLiveData.value = premises
+        Log.d(DEBUG, "Premises updated: ${premises.name}")
+    }
     companion object {
         // Jedyna instancja PremisesRepository
         @Volatile
@@ -41,22 +49,43 @@ class PremisesRepository private  constructor(private val userData: LiveData<Use
         }
     }
 
-    fun getCurrentPremisesId(): String {
-        return userData.value?.houseRoles?.keys?.first() ?: "null"
+
+
+    fun getAllPremises(callback: (List<Premises>) -> Unit) {
+        val docRef = cloud.collection("premises")
+            .whereIn("premisesId", userData.value?.houseRoles?.keys?.toList()!!)
+
+        docRef.addSnapshotListener { querySnapshot, e ->
+            if (e != null) {
+                Log.d(DEBUG, "getAllPremises: ${e.message}")
+                return@addSnapshotListener
+            }
+
+            val premisesList = mutableListOf<Premises>()
+            for (document in querySnapshot!!) {
+                val premises = document.toObject(Premises::class.java)
+                premisesList.add(premises)
+            }
+
+            callback(premisesList)
+            Log.d(DEBUG, "getAllPremises: Success")
+        }
     }
 
-    override fun createNewPremises(premises: Premises, user: User, callback: CallBack) {
+
+    fun createNewPremises(premises: Premises, user: User, callback: CallBack) {
         cloud.collection("premises")
             .add(premises)
             .addOnSuccessListener { premisesDocumentReference ->
                 val premisesId = premisesDocumentReference.id
 
+                premisesDocumentReference.update("premisesId", premisesId)
                 val userRoleInNewHouse = mapOf(premisesId to "landlord")
 
                 val userDocumentReference = cloud.collection("users")
                     .document(user.userId!!)
 
-                userDocumentReference.update("houseRoles", userRoleInNewHouse)
+                userDocumentReference.set(mapOf("houseRoles" to userRoleInNewHouse), SetOptions.merge())
                     .addOnSuccessListener {
                         Log.d(DEBUG, "createNewPremises: Success")
                         callback.onSuccess()
@@ -75,9 +104,9 @@ class PremisesRepository private  constructor(private val userData: LiveData<Use
             }
     }
 
-    override fun editPremisesData(map: Map<String, String>) {
+     fun editPremisesData(map: Map<String, String>) {
         cloud.collection("premises")
-            .document(userData.value?.houseRoles?.keys?.first()!!)
+            .document(premises.value!!.premisesId!!)
             .update(map)
             .addOnSuccessListener { Log.d(DEBUG, "editPremisesData: Success") }
             .addOnFailureListener {
@@ -85,9 +114,9 @@ class PremisesRepository private  constructor(private val userData: LiveData<Use
             }
     }
 
-    override fun getPremisesData(): LiveData<Premises> {
+     fun getPremisesData(): LiveData<Premises> {
         val docRef = cloud.collection("premises")
-            .document(userData.value?.houseRoles?.keys?.first()!!)
+            .document(if (premises.value?.premisesId != null) premises.value!!.premisesId!! else userData.value!!.houseRoles!!.keys.first())
 
         docRef.addSnapshotListener { documentSnapshot, e ->
             if (e != null) {
@@ -95,22 +124,23 @@ class PremisesRepository private  constructor(private val userData: LiveData<Use
             }
             if (documentSnapshot != null && documentSnapshot.exists()) {
                 val premises = documentSnapshot.toObject(Premises::class.java)
-                premisesLiveData.postValue(premises!!)
+                _premisesLiveData.postValue(premises!!)
             }
         }
-        return premisesLiveData
+        return _premisesLiveData
     }
-
-    override fun addTemporaryCode(randomCode: String) {
+//    premises.value!!.premisesId
+//    userData.value?.houseRoles?.keys?.first()
+     fun addTemporaryCode(randomCode: String) {
         val data = hashMapOf(
             "code" to randomCode,
-            "premisesId" to (userData.value?.houseRoles?.keys?.first() ?: "null"),
+            "premisesId" to (premises.value!!.premisesId ?: "null"),
             "creationTime" to FieldValue.serverTimestamp()
         )
 
         val docRef = cloud.collection("temporaryCodes")
 
-        docRef.whereEqualTo("premisesId", userData.value?.houseRoles?.keys?.first() ?: "null")
+        docRef.whereEqualTo("premisesId", premises.value!!.premisesId ?: "null")
             .get()
             .addOnSuccessListener { querySnapshot ->
                 if (querySnapshot.isEmpty) {
@@ -137,7 +167,7 @@ class PremisesRepository private  constructor(private val userData: LiveData<Use
     }
 
 
-    override fun getUsersByIds(ids: List<String>): LiveData<List<User>> {
+     fun getUsersByIds(ids: List<String>): LiveData<List<User>> {
         val usersListData = MutableLiveData<List<User>>()
 
         val docRef = cloud.collection("users")
@@ -164,7 +194,7 @@ class PremisesRepository private  constructor(private val userData: LiveData<Use
     }
 
 
-    override fun fetchUsers(callback: (List<User>) -> Unit) {
+     fun fetchUsers(callback: (List<User>) -> Unit) {
 
         val docRef = cloud.collection("users")
             .whereIn("userId", premises.value!!.users!!.keys.toList())
@@ -188,10 +218,10 @@ class PremisesRepository private  constructor(private val userData: LiveData<Use
 
 
 
-    override fun uploadPremisesPhoto(bytes: ByteArray) {
+     fun uploadPremisesPhoto(bytes: ByteArray) {
         storage.getReference("premises")
-            .child(userData.value?.houseRoles?.keys?.first()!!)
-            .child("${userData.value?.houseRoles?.keys?.first()}.jpg")
+            .child(premises.value!!.premisesId!!)
+            .child("${premises.value!!.premisesId}.jpg")
             .putBytes(bytes)
             .addOnCompleteListener {
 
@@ -205,7 +235,7 @@ class PremisesRepository private  constructor(private val userData: LiveData<Use
             }
     }
 
-    override fun deleteUserFromPremises(users: User) {
+     fun deleteUserFromPremises(users: User) {
         TODO("Not yet implemented")
     }
 

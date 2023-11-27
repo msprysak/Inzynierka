@@ -41,6 +41,7 @@ class MenuFragment : BaseFragment(), BindUser {
         val editHomeInfoTextView = binding.editHomeTextView
         val usersTextView = binding.usersTextView
         val reportsTextView = binding.reportsTextView
+        val addHome = binding.addHomeCard
 
         menuViewModel.getUserData().observe(viewLifecycleOwner) { user ->
             bindUserData(user)
@@ -55,6 +56,8 @@ class MenuFragment : BaseFragment(), BindUser {
         val navController = findNavController()
         val currentDestinationId = navController.currentDestination?.id
         Log.d("CurrentDestination", "Current destination ID: $currentDestinationId")
+
+
 
         addUsersTextView.setOnClickListener {
             navController.navigate(MenuFragmentDirections.actionMenuFragmentToAddUsersFragment())
@@ -72,6 +75,10 @@ class MenuFragment : BaseFragment(), BindUser {
         reportsTextView.setOnClickListener{
             navController.navigate(MenuFragmentDirections.actionMenuFragmentToReportsFragment())
         }
+        addHome.setOnClickListener{
+            navController.navigate(MenuFragmentDirections.actionMenuFragmentToAddPremisesFragment())
+        }
+
 
     }
     override fun bindUserData(user: User) {

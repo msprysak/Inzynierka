@@ -9,24 +9,23 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
-import com.msprysak.rentersapp.data.interfaces.IChatRoomRepository
 import com.msprysak.rentersapp.data.model.Message
 import com.msprysak.rentersapp.data.model.User
 
-class ChatRepository: IChatRoomRepository {
+class ChatRepository{
 
     private val DEBUG = "ChatRoomRepository_DEBUG"
 
     private val storage = FirebaseStorage.getInstance()
     private val auth = FirebaseAuth.getInstance()
     private val cloud = FirebaseFirestore.getInstance()
-    override fun sendMessage(message: Message, premisesId: String) {
+    fun sendMessage(message: Message, premisesId: String) {
          cloud.collection("chatrooms").document(premisesId)
             .collection("message").document()
             .set(message)
     }
 
-    override fun fetchMessagesByPremisesId(premisesId: String): LiveData<List<Pair<Message, User>>> {
+     fun fetchMessagesByPremisesId(premisesId: String): LiveData<List<Pair<Message, User>>> {
         val messagesLiveData = MutableLiveData<List<Pair<Message, User>>>()
 
         cloud.collection("chatrooms").document(premisesId)

@@ -26,7 +26,7 @@ class ReportsViewModel: ViewModel() {
     fun createNewReport(report: Reports, uriList : List<Uri>, callBack: CallBack) {
         repository.createNewReport(
             report,
-            premisesInstance.getCurrentPremisesId(),
+            premisesInstance.premises.value!!.premisesId!!,
             userInstance.user.value!!.userId!!,
             uriList,
             callBack
@@ -34,6 +34,6 @@ class ReportsViewModel: ViewModel() {
     }
 
     fun setupObserver(): LiveData<List<Pair<Reports, User>>> {
-        return repository.setupReportsListener(premisesInstance.getCurrentPremisesId())
+        return repository.setupReportsListener(premisesInstance.premises.value!!.premisesId!!)
     }
 }

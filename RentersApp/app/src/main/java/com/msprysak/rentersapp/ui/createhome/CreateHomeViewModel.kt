@@ -9,12 +9,15 @@ import com.msprysak.rentersapp.data.model.Premises
 import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.data.repositories.JoinRequestRepository
 import com.msprysak.rentersapp.data.repositories.PremisesRepository
+import com.msprysak.rentersapp.utils.Utils
 
 
 class CreateHomeViewModel: ViewModel() {
 
 
 //    private val repository = RepositorySingleton.getInstance()
+
+    val utils = Utils.Utils
 
     private val repository = UserRepositoryInstance.getInstance()
     private val userData = repository.user

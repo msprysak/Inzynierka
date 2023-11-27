@@ -7,22 +7,22 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.msprysak.rentersapp.data.interfaces.CallBack
-import com.msprysak.rentersapp.data.interfaces.IJoinRequestRepository
 import com.msprysak.rentersapp.data.model.Request
 import com.msprysak.rentersapp.data.model.User
 
-class JoinRequestRepository(private val userData: LiveData<User>):
-    IJoinRequestRepository {
+class JoinRequestRepository(private val userData: LiveData<User>)
+     {
 
+         private val premisesRepository = PremisesRepository.getInstance(userData)
     private val DEBUG = "JoinRequestRepository_DEBUG"
 
     private val storage = FirebaseStorage.getInstance()
     private val auth = FirebaseAuth.getInstance()
     private val cloud = FirebaseFirestore.getInstance()
-    override val requestData: LiveData<List<Request>> = MutableLiveData()
+         val requestData: LiveData<List<Request>> = MutableLiveData()
 
 
-    override fun joinRequestListener(): LiveData<List<Request>> {
+     fun joinRequestListener(): LiveData<List<Request>> {
         val houseRoles = userData.value?.houseRoles
         if (!houseRoles.isNullOrEmpty()) {
             val premisesId = houseRoles.keys.first()
@@ -47,7 +47,7 @@ class JoinRequestRepository(private val userData: LiveData<User>):
         return requestData
     }
 
-    override fun acceptRequest(request: Request, callback: CallBack) {
+     fun acceptRequest(request: Request, callback: CallBack) {
         val requestCollectionRef = cloud.collection("requests")
             .whereEqualTo("premisesId", request.premisesId)
             .whereEqualTo("userId", request.userId)
@@ -93,7 +93,7 @@ class JoinRequestRepository(private val userData: LiveData<User>):
             }
     }
 
-    override fun rejectRequest(request: Request, callback: CallBack) {
+     fun rejectRequest(request: Request, callback: CallBack) {
         val requestRef = cloud.collection("requests")
             .whereEqualTo("premisesId", request.premisesId)
             .whereEqualTo("userId", request.userId)
@@ -114,7 +114,7 @@ class JoinRequestRepository(private val userData: LiveData<User>):
             }
     }
 
-    override fun sendJoinRequest(randomCode: String, callback: CallBack) {
+     fun sendJoinRequest(randomCode: String, callback: CallBack) {
         val userId = auth.currentUser?.uid
         val temporaryCodesRef = cloud.collection("temporaryCodes")
 
@@ -163,7 +163,7 @@ class JoinRequestRepository(private val userData: LiveData<User>):
             }
     }
 
-    override fun fetchJoinRequests() {
+     fun fetchJoinRequests() {
         val docRef = cloud.collection("requests")
             .whereEqualTo("premisesId", userData.value?.houseRoles?.keys?.first()!!)
             .whereEqualTo("status", "pending")

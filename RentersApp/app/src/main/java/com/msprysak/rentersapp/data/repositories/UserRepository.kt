@@ -7,10 +7,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.msprysak.rentersapp.data.interfaces.IUserRepository
 import com.msprysak.rentersapp.data.model.User
 
-class UserRepository : IUserRepository {
+class UserRepository {
 
     private val DEBUG = "UserRepository_DEBUG"
 
@@ -41,7 +40,7 @@ class UserRepository : IUserRepository {
             }
     }
 
-    override fun uploadUserPhoto(byteArray: ByteArray) {
+     fun uploadUserPhoto(byteArray: ByteArray) {
         storage.getReference("users")
             .child("${auth.currentUser!!.uid}.jpg")
             .putBytes(byteArray)
@@ -56,7 +55,7 @@ class UserRepository : IUserRepository {
             }
     }
 
-    override fun editProfileData(map: Map<String, String>) {
+     fun editProfileData(map: Map<String, String>) {
         cloud.collection("users")
             .document(auth.currentUser!!.uid)
             .update(map)
@@ -68,13 +67,13 @@ class UserRepository : IUserRepository {
             }
     }
 
-    override fun createNewUser(user: User) {
+     fun createNewUser(user: User) {
         cloud.collection("users")
             .document(user.userId!!)
             .set(user)
     }
 
-    override fun getUserData(): LiveData<User> {
+     fun getUserData(): LiveData<User> {
         val docRef = cloud.collection("users")
             .document(auth.currentUser!!.uid)
 
@@ -90,7 +89,7 @@ class UserRepository : IUserRepository {
         return user
     }
 
-    override fun fetchUserData() {
+     fun fetchUserData() {
         val docRef = cloud.collection("users")
             .document(auth.currentUser!!.uid)
 
@@ -106,7 +105,7 @@ class UserRepository : IUserRepository {
     }
 
 
-    override fun updatePassword(password: String) {
+     fun updatePassword(password: String) {
         auth.currentUser!!.updatePassword(password)
             .addOnSuccessListener {
                 Log.d(DEBUG, "updatePassword: Success")

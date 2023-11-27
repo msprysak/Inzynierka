@@ -1,6 +1,6 @@
 package com.msprysak.rentersapp.data.model
 
-import java.sql.Timestamp
+import java.util.Date
 
 data class Payment (
     var paymentId: String? = null,
@@ -8,8 +8,21 @@ data class Payment (
     var paymentTitle: String? = null,
     var paymentAmount: Double? = null,
     var paymentStatus: String? = null,
-    var paymentSince: Timestamp? = null,
-    var paymentTo: Timestamp? = null,
-    val creationDate : java.util.Date = java.util.Date(System.currentTimeMillis())
+    var paymentSince: Date? = null,
+    var paymentTo: Date? = null,
+    var modificationDate: Date? = null,
+    val creationDate : Date = Date()
 ){
-    constructor():this("","","",0.0,"", null, null)}
+    constructor():this("","","",0.0,"", null, null,null)
+
+    fun clear(){
+        paymentId = null
+        userId = null
+        paymentTitle = null
+        paymentAmount = null
+        paymentStatus = null
+        paymentSince = null
+        paymentTo = null
+    }
+
+}

@@ -45,6 +45,7 @@ class UsersFragment : BaseFragment(), OnItemClickListener {
 
 
         usersViewModel.fetchUsers().observe(viewLifecycleOwner) { users ->
+            println("users: $users")
 
             usersList.clear() // Wyczyść listę przed dodaniem nowych elementów
             // Konwersja do ArrayList

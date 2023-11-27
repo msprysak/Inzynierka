@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
 
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.calendarFragment,
@@ -56,15 +57,13 @@ class MainActivity : AppCompatActivity() {
             if (user != null && !::premisesRepository.isInitialized) {
                 // Inicjalizuj premisesRepository tylko jeśli nie zostało jeszcze zainicjowane
                 premisesRepository = PremisesRepository.getInstance(repository.getUserData())
-                premisesRepository.getPremisesData()
-            }
-
-            // Sprawdź, czy premisesRepository zostało zainicjowane przed dostępem
-            premisesRepository.premises.observe(this) { premises ->
-                if (premises != null && !::joinRequestRepository.isInitialized) {
-                    // Inicjalizuj joinRequestRepository tylko jeśli nie zostało jeszcze zainicjowane
-                    joinRequestRepository = JoinRequestRepository(repository.getUserData())
-                    joinRequestRepository.fetchJoinRequests()
+                premisesRepository.getPremisesData().observe(this) { premises ->
+                    binding.premisesName.text = premises.name
+                    if (premises != null && !::joinRequestRepository.isInitialized) {
+                        // Inicjalizuj joinRequestRepository tylko jeśli nie zostało jeszcze zainicjowane
+                        joinRequestRepository = JoinRequestRepository(repository.getUserData())
+                        joinRequestRepository.fetchJoinRequests()
+                    }
                 }
             }
         }

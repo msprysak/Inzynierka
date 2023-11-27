@@ -12,19 +12,18 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.msprysak.rentersapp.data.interfaces.CallBack
-import com.msprysak.rentersapp.data.interfaces.IReportsRepository
 import com.msprysak.rentersapp.data.model.Reports
 import com.msprysak.rentersapp.data.model.User
 import java.util.UUID
 
-class ReportsRepository : IReportsRepository {
+class ReportsRepository  {
 
     private val storage = FirebaseStorage.getInstance()
     private val cloud = FirebaseFirestore.getInstance()
 
 
     private val DEBUG = "ReportsRepository_DEBUG"
-    override fun createNewReport(
+     fun createNewReport(
         report: Reports,
         premisesId: String,
         userId: String,
@@ -108,11 +107,11 @@ class ReportsRepository : IReportsRepository {
     }
 
 
-    override fun editReport() {
+     fun editReport() {
         TODO("Not yet implemented")
     }
 
-    override fun deleteReport() {
+     fun deleteReport() {
         TODO("Not yet implemented")
     }
 
@@ -146,7 +145,7 @@ class ReportsRepository : IReportsRepository {
 //
 //
 //    }
-    override fun setupReportsListener(premisesId: String): LiveData<List<Pair<Reports, User>>> {
+     fun setupReportsListener(premisesId: String): LiveData<List<Pair<Reports, User>>> {
         val reportsLiveData = MutableLiveData<List<Pair<Reports, User>>>()
 
         cloud.collection("reports")

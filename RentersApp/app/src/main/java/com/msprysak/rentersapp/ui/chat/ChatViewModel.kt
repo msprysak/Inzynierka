@@ -19,9 +19,9 @@ class ChatViewModel : ViewModel() {
             senderId = UserRepositoryInstance.getInstance().user.value!!.userId.toString(),
             sentAt = Timestamp(System.currentTimeMillis())
         )
-        repository.sendMessage(message, premisesRepository.getCurrentPremisesId())
+        repository.sendMessage(message, premisesRepository.premises.value!!.premisesId!!)
     }
     fun fetchMessages(): LiveData<List<Pair<Message,User>>> {
-        return repository.fetchMessagesByPremisesId(premisesRepository.getCurrentPremisesId())
+        return repository.fetchMessagesByPremisesId(premisesRepository.premises.value!!.premisesId!!)
     }
 }

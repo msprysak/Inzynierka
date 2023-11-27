@@ -27,16 +27,16 @@ import com.msprysak.rentersapp.adapters.TenantsAdapter
 import com.msprysak.rentersapp.data.interfaces.CallBack
 import com.msprysak.rentersapp.data.interfaces.OnItemClickListener
 import com.msprysak.rentersapp.data.model.User
-import com.msprysak.rentersapp.databinding.FragmentPaymentsAdminBinding
+import com.msprysak.rentersapp.databinding.FragmentPaymentsLandlordBinding
+import java.sql.Date
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 @Suppress("DEPRECATION")
 class PaymentsLandlordFragment : BaseFragment(), OnItemClickListener {
 
-    private var _binding: FragmentPaymentsAdminBinding? = null
+    private var _binding: FragmentPaymentsLandlordBinding? = null
     private val binding get() = _binding!!
 
     private val paymentsViewModel by viewModels<PaymentsViewModel>()
@@ -47,7 +47,7 @@ class PaymentsLandlordFragment : BaseFragment(), OnItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPaymentsAdminBinding.inflate(inflater, container, false)
+        _binding = FragmentPaymentsLandlordBinding.inflate(inflater, container, false)
 
         val locale = Locale("pl", "PL")
         Locale.setDefault(locale)
@@ -76,12 +76,7 @@ class PaymentsLandlordFragment : BaseFragment(), OnItemClickListener {
                 binding.addToSelectedUsers.visibility = View.GONE
             }
         }
-        println("onviewCreated")
-//        println("paymentSince ${paymentsViewModel.payment.value?.paymentSince}" )
-//        println("paymentTo ${paymentsViewModel.payment.value?.paymentTo}" )
-//        println("paymentUserId ${paymentsViewModel.payment.value?.userId}" )
 
-        println(paymentsViewModel.selectedUsers.size)
 
         paymentsViewModel.payment.observe(viewLifecycleOwner){ payment ->
 
@@ -100,11 +95,7 @@ class PaymentsLandlordFragment : BaseFragment(), OnItemClickListener {
                     }
                 showPaymentsDates(formattedStartDate.toString(), formattedEndDate.toString())
             }
-            println("paymentsinceObserver")
-            println("paymentTitle ${payment.paymentTitle}")
-            println("paymentAmount ${payment.paymentAmount}")
-            println("paymentSince ${payment.paymentSince}" )
-            println("paymentTo ${payment.paymentTo}" )
+
         }
 
 
@@ -230,6 +221,7 @@ class PaymentsLandlordFragment : BaseFragment(), OnItemClickListener {
             paymentsViewModel.createNewPayment(paymentsViewModel.payment.value!!, paymentsViewModel.selectedUsers.toList(), object :
                 CallBack {
                 override fun onSuccess() {
+                    clearFields()
                     Toast.makeText(requireContext(), "Dzieki Działa", Toast.LENGTH_SHORT).show()
                 }
 
@@ -242,9 +234,20 @@ class PaymentsLandlordFragment : BaseFragment(), OnItemClickListener {
             Toast.makeText(requireContext(), "Uzupełnij wszystkie pola", Toast.LENGTH_SHORT).show()
         }
 
-
-
     }
+
+    private fun clearFields() {
+        binding.paymentTitle.text?.clear()
+        binding.paymentTitle.clearFocus()
+        binding.paymentAmount.text?.clear()
+        binding.paymentAmount.clearFocus()
+
+        paymentsViewModel.payment.value?.clear()
+        paymentsViewModel.clearSelectedUsers()
+        setupRecyclerView()
+        hidePaymentsDates()
+    }
+
 
     private fun buttonBindings() {
         if (paymentsViewModel.selectedUsers.isNotEmpty()) {
@@ -285,15 +288,23 @@ class PaymentsLandlordFragment : BaseFragment(), OnItemClickListener {
 
             if (startDate != null && endDate != null) {
 
-                paymentsViewModel.setPaymentDate(Timestamp(startDate), Timestamp(endDate))
+                paymentsViewModel.setPaymentDate(Date(startDate), Date(endDate))
 
                 val formattedStartDate =
-                    SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date(startDate))
+                    SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Timestamp(startDate))
                 val formattedEndDate =
-                    SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date(endDate))
+                    SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Timestamp(endDate))
                 showPaymentsDates(formattedStartDate, formattedEndDate)
             }
         }
+    }
+
+    private fun hidePaymentsDates() {
+        binding.startPaymentDateLabel.visibility = View.GONE
+        binding.endPaymentDateLabel.visibility = View.GONE
+        binding.startPaymentDate.visibility = View.GONE
+        binding.endPaymentDate.visibility = View.GONE
+        binding.calednarButton.text = resources.getString(R.string.select_payment_dates)
     }
 
     private fun showPaymentsDates(startDate: String, endDate: String) {

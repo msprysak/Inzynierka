@@ -1,9 +1,7 @@
 package com.msprysak.rentersapp.ui.createhome
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
@@ -14,14 +12,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.activities.MainActivity
 import com.msprysak.rentersapp.data.interfaces.CallBack
 import com.msprysak.rentersapp.databinding.DialogAddHomeBinding
@@ -39,7 +33,7 @@ class AddHomeDialogFragment : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = DialogAddHomeBinding.inflate(inflater, container, false)
 
         dialog?.window?.setLayout(
@@ -114,8 +108,10 @@ class AddHomeDialogFragment : DialogFragment() {
 
     private fun setupTakePictureClick() {
         binding.homeImageView.setOnClickListener {
-            if (hasCameraGalleryPermissions()) {
-                selectImage(pictureResult) { pictureResult ->
+
+
+            if (createHomeViewModel.utils.hasCameraGalleryPermissions(requireActivity())) {
+                 createHomeViewModel.utils.selectImage(pictureResult) { pictureResult ->
                     imageBitmap = pictureResult
                 }
             }
@@ -149,39 +145,5 @@ class AddHomeDialogFragment : DialogFragment() {
                 }
             }
         }
-    private fun hasCameraGalleryPermissions(): Boolean {
-        val cameraPermission = Manifest.permission.CAMERA
-        val readStoragePermission = Manifest.permission.READ_EXTERNAL_STORAGE
-        val hasCameraPermission =
-            PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
-                requireContext(),
-                cameraPermission
-            )
-        val hasStoragePermission =
-            PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
-                requireContext(),
-                readStoragePermission
-            )
 
-        if (!hasCameraPermission && !hasStoragePermission) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(cameraPermission, readStoragePermission),
-                BaseFragment.CAMERA_PERMISSION_REQUEST_CODE
-            )
-        } else {
-            return true
-        }
-        return false
-    }
-    private fun selectImage(takePicture: ActivityResultLauncher<Intent>, onImageSelected: (Bitmap) -> Unit) {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val mimeType = "image/jpeg"
-        val pickImageIntent = Intent(Intent.ACTION_PICK)
-        pickImageIntent.type = mimeType
-
-        val chooser = Intent.createChooser(Intent(), "Zrób zdjęcie lub wybierz z galerii")
-        chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(takePictureIntent, pickImageIntent))
-        takePicture.launch(chooser)
-    }
 }

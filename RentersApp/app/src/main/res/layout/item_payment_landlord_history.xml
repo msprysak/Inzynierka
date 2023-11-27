@@ -8,6 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:elevation="10dp"
         android:layout_height="wrap_content">
 
         <ImageView
@@ -55,8 +56,9 @@
             app:layout_constraintStart_toEndOf="@id/sent_payment_date_label"
             />
 
+
         <TextView
-            android:id="@+id/payment_label"
+            android:id="@+id/payment_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/payment"
@@ -76,9 +78,10 @@
             android:textStyle="bold"
             android:layout_margin="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/payment_label"
+            app:layout_constraintTop_toBottomOf="@id/payment_title"
             />
         <TextView
+            android:id="@+id/payment_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1000 zł"
@@ -153,28 +156,39 @@
             app:layout_constraintBottom_toBottomOf="@id/payment_date_since_label"
             />
         <TextView
-            android:id="@+id/payment_date_until_label"
+            android:id="@+id/payment_date_to_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:textSize="18sp"
             android:textStyle="bold"
             android:text="@string/until"
-            app:layout_constraintStart_toEndOf="@id/payment_date_label"
+            app:layout_constraintEnd_toEndOf="@id/payment_date_label"
             app:layout_constraintTop_toBottomOf="@id/payment_date_label"/>
 
         <TextView
-            android:id="@+id/payment_date_until"
+            android:id="@+id/payment_date_to"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:textSize="18sp"
+            android:layout_margin="10dp"
             android:textStyle="bold"
-
             android:text="@string/sample_date"
-            app:layout_constraintStart_toEndOf="@id/payment_date_until_label"
-            app:layout_constraintTop_toTopOf="@id/payment_date_until_label"
-            app:layout_constraintBottom_toBottomOf="@id/payment_date_until_label"
+            app:layout_constraintStart_toEndOf="@id/payment_date_to_label"
+            app:layout_constraintTop_toTopOf="@id/payment_date_to_label"
+            app:layout_constraintBottom_toBottomOf="@id/payment_date_to_label"
+            />
+
+        <Button
+            android:id="@+id/payment_paid_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/paid"
+            app:layout_constraintTop_toBottomOf="@id/payment_date_to"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

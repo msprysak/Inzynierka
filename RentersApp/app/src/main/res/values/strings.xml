@@ -153,6 +153,11 @@
     <string name="payment_date_since">Data płatności od</string>
     <string name="payment_date">Data płatności</string>
     <string name="since">Od:</string>
-    <string name="until">Do</string>
+    <string name="until">Do:</string>
     <string name="delete_report">Usuń zgłoszenie</string>
+    <string name="paid">Opłacono</string>
+    <string name="payment_paid">Opłacono płatność</string>
+    <string name="add_new_home">Dodaj nowe mieszkanie</string>
+    <string name="premises_name">Nazwa Domu\n</string>
+    <string name="choose">Wybierz</string>
 </resources>

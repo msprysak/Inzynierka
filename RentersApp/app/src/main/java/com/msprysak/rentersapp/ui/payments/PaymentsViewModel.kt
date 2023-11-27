@@ -6,10 +6,11 @@ import androidx.lifecycle.ViewModel
 import com.msprysak.rentersapp.data.UserRepositoryInstance
 import com.msprysak.rentersapp.data.interfaces.CallBack
 import com.msprysak.rentersapp.data.model.Payment
+import com.msprysak.rentersapp.data.model.PaymentWithUser
 import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.data.repositories.PaymentRepository
 import com.msprysak.rentersapp.data.repositories.PremisesRepository
-import java.sql.Timestamp
+import java.util.Date
 
 class PaymentsViewModel : ViewModel() {
 
@@ -19,10 +20,35 @@ class PaymentsViewModel : ViewModel() {
 
     val userRole = userRepository.user.value!!.houseRoles!!.entries.first().value
 
-    val usersListData: MutableLiveData<List<User>> = MutableLiveData()
+    private val _usersListData: MutableLiveData<List<User>> = MutableLiveData()
+    val usersListData: LiveData<List<User>> get() = _usersListData
+
 
     private val _selectedUsers: MutableSet<User> = HashSet()
     val selectedUsers: Set<User> get() = _selectedUsers
+
+
+    private val paymentRepository = PaymentRepository()
+
+    private val _payment = MutableLiveData<Payment>()
+
+    private val _paymentsHistoryList: MutableLiveData<List<PaymentWithUser> > = MutableLiveData()
+    val paymentsHistoryList: LiveData<List<PaymentWithUser> > get() = _paymentsHistoryList
+
+    val payment: LiveData<Payment> get() = _payment
+    init {
+        _payment.value = Payment()
+    }
+    private val _paymentUserList: MutableLiveData<List<PaymentWithUser> > = MutableLiveData()
+    val paymentUserList: LiveData<List<PaymentWithUser> > get() = _paymentUserList
+
+
+    fun updatePaymentStatus(paymentId: String, status: String, callback: CallBack){
+        paymentRepository.updatePaymentStatus(paymentId, status, callback)
+    }
+    fun clearSelectedUsers(){
+        _selectedUsers.clear()
+    }
     fun addSelectedUsers(usersList: MutableSet<User>){
         _selectedUsers.addAll(usersList)
     }
@@ -30,20 +56,14 @@ class PaymentsViewModel : ViewModel() {
         _selectedUsers.remove(user)
     }
 
-    private val paymentRepository = PaymentRepository()
 
-    private var _payment = MutableLiveData<Payment>()
-    val payment: LiveData<Payment> get() = _payment
-    init {
-        _payment.value = Payment()
-    }
     fun setPaymentTitle(title: String){
         _payment.value!!.paymentTitle = title
     }
     fun setPaymentAmount(amount: Double){
         _payment.value!!.paymentAmount = amount
     }
-    fun setPaymentDate(since: Timestamp, to: Timestamp){
+    fun setPaymentDate(since: Date, to: Date){
         _payment.value!!.paymentSince = since
         _payment.value!!.paymentTo = to
     }
@@ -55,13 +75,26 @@ class PaymentsViewModel : ViewModel() {
     }
 
 
+    fun getAllPayments(){
+        paymentRepository.getPaymentsForLandlord{
+            _paymentsHistoryList.postValue(it)
+
+        }
+    }
+
+    fun getPaymentsForUser(){
+        paymentRepository.getPaymentsForUser{
+            _paymentsHistoryList.postValue(it)
+        }
+    }
+
     fun checkData(){
-        println(paymentRepository.checkData())
+//        println(paymentRepository.checkData())
     }
     fun fetchUsers(){
 
-        premisesRepository.fetchUsers{ usersList ->
-            usersListData.postValue(usersList)
+        premisesRepository.fetchUsers{
+            _usersListData.postValue(it)
         }
     }
 }
