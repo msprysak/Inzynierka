@@ -73,7 +73,7 @@ class AddHomeDialogFragment : DialogFragment() {
 
         createButton.setOnClickListener{
             createButton.isEnabled = false
-            createHomeViewModel.createPremises("", localAddressEditText.text.toString(), localNameEditText.text.toString(), object :
+            createHomeViewModel.createPremises("", localAddressEditText.text!!.toString().trim(), localNameEditText.text.toString().trim(), object :
                 CallBack {
 
                 override fun onSuccess() {

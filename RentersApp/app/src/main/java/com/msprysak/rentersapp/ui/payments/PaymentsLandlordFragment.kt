@@ -1,7 +1,6 @@
 package com.msprysak.rentersapp.ui.payments
 
 import ItemsDecorator
-import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
@@ -48,13 +47,6 @@ class PaymentsLandlordFragment : BaseFragment(), OnItemClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPaymentsLandlordBinding.inflate(inflater, container, false)
-
-        val locale = Locale("pl", "PL")
-        Locale.setDefault(locale)
-        val config = Configuration(resources.configuration)
-        config.setLocale(locale)
-
-        resources.updateConfiguration(config, resources.displayMetrics)
 
         return _binding!!.root
 
@@ -226,7 +218,7 @@ class PaymentsLandlordFragment : BaseFragment(), OnItemClickListener {
                 }
 
                 override fun onFailure(errorMessage: String) {
-                    Toast.makeText(requireContext(), "Coś się wykurwiło", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Upss, coś poszło nie tak. Spróbuj ponownie później!", Toast.LENGTH_SHORT).show()
                 }
 
             })

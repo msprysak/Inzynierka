@@ -58,7 +58,9 @@ class ReportsRepository  {
                 storageRef.putFile(selectedImage)
                     .continueWithTask { task ->
                         if (!task.isSuccessful) {
-                            task.exception?.let { throw it }
+                            task.exception?.let {
+                                throw it
+                            }
                         }
                         storageRef.downloadUrl
                     }
@@ -84,7 +86,7 @@ class ReportsRepository  {
                                             DEBUG,
                                             "uploadReportPhotosAndAddToFirestore: ${exception.message}"
                                         )
-                                        callBack.onFailure("Ups, coś poszło nie tak, spróbuj ponownie później, lub skontaktuj się z administratorem.")
+                                        callBack.onFailure("Ups, coś poszło nie tak, spróbuj ponownie później.")
                                     }
                             }
                         }

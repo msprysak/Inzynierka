@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.msprysak.rentersapp.BaseFragment
@@ -28,7 +29,7 @@ class AddEditReportsFragment : BaseFragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var photoAdapter: ReportsPhotoAdapter
-    private val selectedImages = mutableListOf<Uri>()
+    private val selectedImages = MutableLiveData<List<Uri>>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,10 +53,12 @@ class AddEditReportsFragment : BaseFragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
 
-        photoAdapter = ReportsPhotoAdapter(selectedImages.toMutableList(), true, { image ->
-            selectedImages.remove(image)
-            photoAdapter.updateList(selectedImages)
-        },{})
+        photoAdapter = ReportsPhotoAdapter(selectedImages, true, { image ->
+            selectedImages.value?.let { images ->
+                selectedImages.value = images.filter { it != image }
+            }
+            photoAdapter.updateList(selectedImages.value!!)
+        }) {}
         recyclerView.adapter = photoAdapter
 
         addImagesButton.setOnClickListener {
@@ -68,16 +71,16 @@ class AddEditReportsFragment : BaseFragment() {
 
             if (titleText.text.isNotBlank() || descriptionText.text.isNotBlank()) {
                 val report = Reports(
-                    reportTitle = titleText.text.toString(),
-                    reportDescription = descriptionText.text.toString()
+                    reportTitle = titleText.text.toString().trim(),
+                    reportDescription = descriptionText.text.toString().trim()
                 )
                 binding.btnAddReport.isEnabled = false
-                reportsViewModel.createNewReport(report, selectedImages, object : CallBack {
+                reportsViewModel.createNewReport(report, selectedImages.value ?: emptyList(), object : CallBack {
                     override fun onSuccess() {
                         titleText.text.clear()
                         descriptionText.text.clear()
-                        selectedImages.clear()
-                        photoAdapter.updateList(selectedImages)
+                        selectedImages.postValue(listOf())
+                        photoAdapter.updateList(selectedImages.value.orEmpty())
                         Toast.makeText(
                             requireContext(),
                             "Pomyślnie utworzono zgłoszenie",
@@ -115,20 +118,25 @@ class AddEditReportsFragment : BaseFragment() {
             }
         }
 
-    fun handlePickedImages(data: Intent?) {
+    private fun handlePickedImages(data: Intent?) {
         val maxImagesCount = 5
+        val updatedList = mutableListOf<Uri>()
+
         if (data?.clipData != null) {
             val count = min(data.clipData!!.itemCount, maxImagesCount)
             for (i in 0 until count) {
                 val imageUri: Uri = data.clipData!!.getItemAt(i).uri
-                selectedImages.add(imageUri)
+                updatedList.add(imageUri)
             }
         } else if (data?.data != null) {
-            selectedImages.add(data.data!!)
+            updatedList.add(data.data!!)
         }
 
-        photoAdapter.updateList(selectedImages)
+        // Ustaw nową wartość dla selectedImages
+        selectedImages.value = updatedList
+        photoAdapter.updateList(selectedImages.value!!)
     }
+
 }
 
 

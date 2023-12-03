@@ -1,0 +1,102 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="10dp"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/media_date_created"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="14.11.2023"
+            android:textSize="15sp"
+            android:textStyle="bold|italic"
+            android:layout_margin="3dp"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+        <TextView
+            android:id="@+id/creation_date_static"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/media_date_created"
+            app:layout_constraintTop_toTopOf="@id/media_date_created"
+            app:layout_constraintBottom_toBottomOf="@id/media_date_created"
+            android:textSize="15sp"
+            android:textStyle="bold|italic"
+            android:textColor="?attr/colorPrimary"
+            android:layout_marginEnd="5dp"
+            android:text="@string/creation_date"
+            />
+
+        <ImageView
+            android:id="@+id/media_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_report"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/media_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="10dp"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintStart_toEndOf="@id/media_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/media_date_created"
+            />
+        <TextView
+            android:id="@+id/photo_taken_date_static"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorPrimary"
+            android:text="@string/date_photos_were_taken"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toEndOf="@id/media_image"
+            app:layout_constraintTop_toBottomOf="@id/media_title"
+            android:layout_marginStart="10dp"
+
+
+            />
+        <TextView
+            android:id="@+id/photo_taken_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="14.11.2023"
+            android:textSize="15sp"
+            android:textStyle="bold|italic"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/photo_taken_date_static"
+            app:layout_constraintBottom_toBottomOf="@id/photo_taken_date_static"
+            app:layout_constraintStart_toEndOf="@id/photo_taken_date_static"
+            android:layout_marginEnd="10dp"
+
+            />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

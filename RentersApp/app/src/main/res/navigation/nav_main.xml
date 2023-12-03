@@ -47,6 +47,9 @@
         <action
             android:id="@+id/action_menuFragment_to_addPremisesFragment"
             app:destination="@id/addPremisesFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_mediaFragment"
+            app:destination="@id/mediaFragment" />
     </fragment>
     <fragment
         android:id="@+id/addUsersFragment"
@@ -120,5 +123,17 @@
         android:id="@+id/addPremisesFragment"
         android:name="com.msprysak.rentersapp.ui.addpremises.AddPremisesFragment"
         android:label="AddPremisesFragment" />
+    <fragment
+        android:id="@+id/mediaFragment"
+        android:name="com.msprysak.rentersapp.ui.media.MediaFragment"
+        android:label="Media" >
+        <action
+            android:id="@+id/action_mediaFragment_to_addMediaFragment"
+            app:destination="@id/addMediaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addMediaFragment"
+        android:name="com.msprysak.rentersapp.ui.media.AddMediaFragment"
+        android:label="Dodaj media" />
 
 </navigation>

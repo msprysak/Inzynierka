@@ -192,16 +192,12 @@ class PaymentRepository {
         callback: CallBack
     ) {
         val transaction = cloud.runTransaction { transaction ->
-//            Pozyskujemy listę identyfikatorów użytkowników
             val existingUserIds = transaction.get(docRef).get("userIds") as? List<*>
             if (existingUserIds != null) {
-//                Jeżeli lista istnieje to dodajemy do niej nowe identyfikatory
                 transaction.update(
                     docRef,
-//                    Nazwa pola w bazie danych
                     "userIds",
-//                    Ta operacja dodaje do listy nowe elementy bez duplikatów
-//                    * odpakowuje listę do pojedynczych elementów
+//                   dodaje do listy nowe elementy bez duplikatów
                     FieldValue.arrayUnion(*userIds.toTypedArray())
                 )
             } else {

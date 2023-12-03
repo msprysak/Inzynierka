@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.menu.MenuFragment">
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <ImageView
         android:id="@+id/profileImage"
@@ -50,146 +59,177 @@
         />
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editProfileButton">
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/add_home_card"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:elevation="10dp"
-            app:cardCornerRadius="10dp">
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editProfileButton">
 
-            <TextView
-                android:id="@+id/add_home_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawablePadding="@dimen/menu_drawable_padding"
-                android:text="@string/add_new_home"
-                android:textSize="@dimen/menu_item_text_size"
-                android:textStyle="bold"
-                app:drawableLeftCompat="@drawable/ic_add_home" />
-        </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/add_user_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/card_space"
-            android:elevation="10dp"
-            app:cardCornerRadius="10dp">
-
-            <TextView
-                android:id="@+id/addUsersTextView"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/add_home_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawablePadding="@dimen/menu_drawable_padding"
-                android:text="@string/add_users"
-                android:textSize="@dimen/menu_item_text_size"
-                android:textStyle="bold"
-                app:drawableLeftCompat="@drawable/ic_group_add" />
-        </androidx.cardview.widget.CardView>
+                android:layout_marginTop="16dp"
+                android:elevation="10dp"
+                app:cardCornerRadius="10dp">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/edit_home_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/card_space"
-            android:elevation="10dp"
-            app:cardCornerRadius="10dp">
+                <TextView
+                    android:id="@+id/add_home_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:drawablePadding="@dimen/menu_drawable_padding"
+                    android:text="@string/add_new_home"
+                    android:textSize="@dimen/menu_item_text_size"
+                    android:textStyle="bold"
+                    app:drawableLeftCompat="@drawable/ic_add_home" />
+            </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/editHomeTextView"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/add_user_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawablePadding="@dimen/menu_drawable_padding"
-                android:text="@string/edit_home"
-                android:textSize="@dimen/menu_item_text_size"
-                android:textStyle="bold"
-                app:drawableLeftCompat="@drawable/ic_home" />
-        </androidx.cardview.widget.CardView>
+                android:layout_marginTop="@dimen/card_space"
+                android:elevation="10dp"
+                app:cardCornerRadius="10dp">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/users_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/card_space"
-            android:elevation="10dp"
-            app:cardCornerRadius="10dp">
+                <TextView
+                    android:id="@+id/addUsersTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:drawablePadding="@dimen/menu_drawable_padding"
+                    android:text="@string/add_users"
+                    android:textSize="@dimen/menu_item_text_size"
+                    android:textStyle="bold"
+                    app:drawableLeftCompat="@drawable/ic_group_add" />
+            </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/usersTextView"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/edit_home_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginTop="@dimen/card_space"
+                android:elevation="10dp"
+                app:cardCornerRadius="10dp">
+
+                <TextView
+                    android:id="@+id/editHomeTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:drawablePadding="@dimen/menu_drawable_padding"
+                    android:text="@string/edit_home"
+                    android:textSize="@dimen/menu_item_text_size"
+                    android:textStyle="bold"
+                    app:drawableLeftCompat="@drawable/ic_home" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/users_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/card_space"
+                android:elevation="10dp"
+                app:cardCornerRadius="10dp">
+
+                <TextView
+                    android:id="@+id/usersTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:drawablePadding="@dimen/menu_drawable_padding"
+                    android:text="@string/users"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:drawableLeftCompat="@drawable/ic_group" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/calendarTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/menu_item_margin"
                 android:drawablePadding="@dimen/menu_drawable_padding"
-                android:text="@string/users"
+                android:text="@string/calendar"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:drawableLeftCompat="@drawable/ic_group" />
-        </androidx.cardview.widget.CardView>
-        <TextView
-            android:id="@+id/calendarTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/calendar"
-            android:textSize="20sp"
-            android:layout_marginTop="@dimen/menu_item_margin"
-            android:textStyle="bold"
-            app:drawableLeftCompat="@drawable/ic_calendar"
-android:drawablePadding="@dimen/menu_drawable_padding"
-            />
-        <androidx.cardview.widget.CardView
-            android:id="@+id/reports_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/card_space"
-            android:elevation="10dp"
-            app:cardCornerRadius="10dp">
-        <TextView
-            android:id="@+id/reportsTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/reports"
-            android:layout_margin="5dp"
-            android:textSize="@dimen/menu_item_text_size"
-            android:textStyle="bold"
-            android:drawablePadding="@dimen/menu_drawable_padding"
-            app:drawableLeftCompat="@drawable/ic_report"
+app:drawableLeftCompat="@drawable/ic_calendar" />
 
-            />
-        </androidx.cardview.widget.CardView>
-        <TextView
-            android:id="@+id/invoicesTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/invoices"
-            android:layout_marginTop="@dimen/menu_item_margin"
-            android:textSize="@dimen/menu_item_text_size"
-            android:textStyle="bold"
-            android:drawablePadding="@dimen/menu_drawable_padding"
-            app:drawableLeftCompat="@drawable/ic_file" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/reports_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/card_space"
+                android:elevation="10dp"
+                app:cardCornerRadius="10dp">
 
-        <TextView
-            android:id="@+id/contractsTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/umowy"
-            android:layout_marginTop="@dimen/menu_item_margin"
-            android:textSize="@dimen/menu_item_text_size"
-            android:textStyle="bold"
-            android:drawablePadding="@dimen/menu_drawable_padding"
-            app:drawableLeftCompat="@drawable/ic_file" />
+                <TextView
+                    android:id="@+id/reportsTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:drawablePadding="@dimen/menu_drawable_padding"
+                    android:text="@string/reports"
+                    android:textSize="@dimen/menu_item_text_size"
+                    android:textStyle="bold"
+                    app:drawableLeftCompat="@drawable/ic_report"
+
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/invoicesTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/menu_item_margin"
+                android:drawablePadding="@dimen/menu_drawable_padding"
+                android:text="@string/invoices"
+                android:textSize="@dimen/menu_item_text_size"
+                android:textStyle="bold"
+                app:drawableLeftCompat="@drawable/ic_file" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/media_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:elevation="10dp"
+                app:cardCornerRadius="10dp">
+
+                <TextView
+                    android:id="@+id/media_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/media"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:drawableLeftCompat="@drawable/ic_perm_media"
+                    android:drawablePadding="10dp"
+                    android:layout_margin="5dp"
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/contractsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/menu_item_margin"
+                android:drawablePadding="@dimen/menu_drawable_padding"
+                android:text="@string/umowy"
+                android:textSize="@dimen/menu_item_text_size"
+                android:textStyle="bold"
+                app:drawableLeftCompat="@drawable/ic_file"
+                android:layout_marginBottom="10dp"/>
+
+
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+

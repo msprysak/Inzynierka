@@ -1,5 +1,6 @@
 package com.msprysak.rentersapp.activities
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import com.msprysak.rentersapp.data.UserRepositoryInstance
 import com.msprysak.rentersapp.data.repositories.JoinRequestRepository
 import com.msprysak.rentersapp.data.repositories.PremisesRepository
 import com.msprysak.rentersapp.databinding.ActivityMainBinding
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +27,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val locale = Locale("pl", "PL")
+        Locale.setDefault(locale)
+        val config = Configuration(resources.configuration)
+        config.setLocale(locale)
+
+        resources.updateConfiguration(config, resources.displayMetrics)
 
         setupNavigation()
         setupObservers()

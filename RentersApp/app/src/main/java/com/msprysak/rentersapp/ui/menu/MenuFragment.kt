@@ -42,6 +42,7 @@ class MenuFragment : BaseFragment(), BindUser {
         val usersTextView = binding.usersTextView
         val reportsTextView = binding.reportsTextView
         val addHome = binding.addHomeCard
+        val media = binding.mediaCard
 
         menuViewModel.getUserData().observe(viewLifecycleOwner) { user ->
             bindUserData(user)
@@ -78,6 +79,10 @@ class MenuFragment : BaseFragment(), BindUser {
         addHome.setOnClickListener{
             navController.navigate(MenuFragmentDirections.actionMenuFragmentToAddPremisesFragment())
         }
+        media.setOnClickListener{
+            navController.navigate(MenuFragmentDirections.actionMenuFragmentToMediaFragment())
+        }
+
 
 
     }

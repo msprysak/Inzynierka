@@ -4,12 +4,13 @@ import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.msprysak.rentersapp.data.recyclerview.item.ReportImageItem
 import com.msprysak.rentersapp.databinding.ItemReportImageBinding
 
 class ReportsPhotoAdapter(
-    private val photos: MutableList<Uri>,
+    private val photos: MutableLiveData<List<Uri>>,
     private val showCancelButton: Boolean,
     private val onDeleteClickListener: (Uri) -> Unit,
     private val onImageClick: (Uri) -> Unit
@@ -22,12 +23,11 @@ class ReportsPhotoAdapter(
     }
 
     override fun getItemCount(): Int {
-        return photos.size
-    }
+        return photos.value?.size ?: 0    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder as ReportImageItem
-        val item = photos[position]
+        val item = photos.value!![position]
         holder.bind(item)
         holder.setOnDeleteClickListener {
             onDeleteClickListener(item)
@@ -41,8 +41,7 @@ class ReportsPhotoAdapter(
 
     }
     fun updateList(newPhotos: List<Uri>) {
-        photos.clear()
-        photos.addAll(newPhotos)
+        photos.value = newPhotos
         notifyDataSetChanged()
     }
 

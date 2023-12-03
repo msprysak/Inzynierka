@@ -37,6 +37,7 @@
     <string name="cancel">Anuluj</string>
     <string name="change_dates">Edyuj daty płatności</string>
     <string name="select_payment_dates">Wybierz daty płatności</string>
+    <string name="select_payment_date">Wybierz date płatności</string>
     <string name="edit_selected_users">Edytuj wybranych użytkowników</string>
     <string name="create">Utwórz</string>
     <string name="Add_home_photo">Dodaj zdjęcie domu</string>
@@ -160,4 +161,11 @@
     <string name="add_new_home">Dodaj nowe mieszkanie</string>
     <string name="premises_name">Nazwa Domu\n</string>
     <string name="choose">Wybierz</string>
+    <string name="media">Media</string>
+    <string name="add_media">Dodaj media</string>
+    <string name="add_dates">Dodaj daty</string>
+    <string name="start_date">Data rozpoczęcia</string>
+    <string name="creation_date">Data utworzenia:</string>
+    <string name="date_photo_was_taken">Data wykonania zdjęcia:</string>
+    <string name="date_photos_were_taken">Data wykonania zdjęć:</string>
 </resources>

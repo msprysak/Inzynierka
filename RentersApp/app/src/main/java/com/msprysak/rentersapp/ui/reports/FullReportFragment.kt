@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,7 +32,7 @@ class FullReportFragment : BaseFragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var photoAdapter: ReportsPhotoAdapter
-    private val selectedImages = mutableListOf<Uri>()
+    private val selectedImages = MutableLiveData<List<Uri>>()
 
     private lateinit var report: Reports
     private lateinit var user: User
@@ -118,9 +119,9 @@ class FullReportFragment : BaseFragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         val uriList: List<Uri> = report.reportImages.map { Uri.parse(it) }
-        selectedImages.addAll(uriList)
+        selectedImages.value = uriList
 
-        photoAdapter = ReportsPhotoAdapter(selectedImages.toMutableList(), false, {}) { image ->
+        photoAdapter = ReportsPhotoAdapter(selectedImages, false, {}) { image ->
             val action =
                 FullReportFragmentDirections.actionFullReportFragmentToImageFullScreen(image.toString())
             findNavController().navigate(action)

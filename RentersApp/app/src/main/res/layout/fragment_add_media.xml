@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/images_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        tools:ignore="SpeakableTextPresentCheck"
+        tools:itemCount="1"
+        tools:listitem="@layout/item_report_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <LinearLayout
+        android:id="@+id/media_title_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/edit_text_rounded"
+        android:backgroundTint="?attr/colorSecondaryContainer"
+        android:elevation="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/images_recycler_view"
+        android:layout_centerHorizontal="true"
+        >
+
+        <EditText
+            android:id="@+id/media_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:maxLength="255"
+            android:minHeight="48dp"
+            android:textColor="?attr/colorOnSecondaryContainer"
+            android:textColorHint="?attr/colorOnSecondaryContainer"
+            android:background="@drawable/edit_text_rounded_transparent"
+            android:hint="@string/title" />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/start_payment_date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_date"
+        android:textColor="?attr/colorOnSurface"
+        android:textStyle="bold"
+        android:textSize="19sp"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/media_title_container"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/start_payment_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="19.11.2023"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="28sp"
+        android:textStyle="bold|italic"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:letterSpacing="0.3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/start_payment_date_label"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
+
+
+    <Button
+        android:id="@+id/add_dates_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/start_payment_date"
+        android:layout_centerHorizontal="true"
+        android:text="@string/add_dates"
+
+        />
+
+
+    <Button
+        android:id="@+id/add_images_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/add_dates_button"
+        android:text="@string/add_images"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_dates_button"
+        />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save_changes"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/add_images_button"
+        app:layout_constraintBottom_toBottomOf="@id/add_images_button"
+        tools:ignore="SpeakableTextPresentCheck"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
