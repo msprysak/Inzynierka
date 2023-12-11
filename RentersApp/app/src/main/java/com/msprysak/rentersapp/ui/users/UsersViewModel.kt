@@ -17,7 +17,7 @@ class UsersViewModel: ViewModel() {
         // Sprawdź, czy premisesRepository.premises i premisesRepository.premises.value nie są null
         val premises = premisesRepository.premises.value
         if (premises?.users != null) {
-            return premisesRepository.getUsersByIds(premises.users.keys.toList())
+            return premisesRepository.getUsersByIds(premisesRepository.premises.value!!.users!!.keys.toList())
         } else {
             return MutableLiveData<List<User>>().apply { value = emptyList() }
         }

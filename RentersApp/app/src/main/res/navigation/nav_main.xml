@@ -50,6 +50,12 @@
         <action
             android:id="@+id/action_menuFragment_to_mediaFragment"
             app:destination="@id/mediaFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_contractsFragment"
+            app:destination="@id/contractsFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_invoicesFragment"
+            app:destination="@id/invoicesFragment" />
     </fragment>
     <fragment
         android:id="@+id/addUsersFragment"
@@ -122,7 +128,7 @@
     <fragment
         android:id="@+id/addPremisesFragment"
         android:name="com.msprysak.rentersapp.ui.addpremises.AddPremisesFragment"
-        android:label="AddPremisesFragment" />
+        android:label="Dodaj mieszkanie" />
     <fragment
         android:id="@+id/mediaFragment"
         android:name="com.msprysak.rentersapp.ui.media.MediaFragment"
@@ -130,10 +136,43 @@
         <action
             android:id="@+id/action_mediaFragment_to_addMediaFragment"
             app:destination="@id/addMediaFragment" />
+        <action
+            android:id="@+id/action_mediaFragment_to_fullMediaFragment"
+            app:destination="@id/fullMediaFragment">
+
+            <argument
+                android:name="media"
+                app:argType="com.msprysak.rentersapp.data.model.Media" />
+
+
+        </action>
+
+
     </fragment>
     <fragment
         android:id="@+id/addMediaFragment"
         android:name="com.msprysak.rentersapp.ui.media.AddMediaFragment"
         android:label="Dodaj media" />
+    <fragment
+        android:id="@+id/fullMediaFragment"
+        android:name="com.msprysak.rentersapp.ui.media.FullMediaFragment"
+        android:label="Media" />
+    <fragment
+        android:id="@+id/contractsFragment"
+        android:name="com.msprysak.rentersapp.ui.contracts.ContractsFragment"
+        android:label="Umowy" />
+    <fragment
+        android:id="@+id/invoicesFragment"
+        android:name="com.msprysak.rentersapp.ui.invoices.InvoicesFragment"
+        android:label="Faktury"
+        tools:layout="@layout/fragment_invoices" >
+        <action
+            android:id="@+id/action_invoicesFragment_to_invoicesTemplateFragment"
+            app:destination="@id/invoicesTemplateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/invoicesTemplateFragment"
+        android:name="com.msprysak.rentersapp.ui.invoices.InvoicesTemplateFragment"
+        android:label="Faktury" />
 
 </navigation>

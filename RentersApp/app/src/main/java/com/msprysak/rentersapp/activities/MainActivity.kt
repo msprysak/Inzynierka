@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
                 premisesRepository = PremisesRepository.getInstance(repository.getUserData())
                 premisesRepository.getPremisesData().observe(this) { premises ->
                     binding.premisesName.text = premises.name
-                    if (premises != null && !::joinRequestRepository.isInitialized) {
+                    if (premises != null) {
                         // Inicjalizuj joinRequestRepository tylko jeśli nie zostało jeszcze zainicjowane
                         joinRequestRepository = JoinRequestRepository(repository.getUserData())
                         joinRequestRepository.fetchJoinRequests()

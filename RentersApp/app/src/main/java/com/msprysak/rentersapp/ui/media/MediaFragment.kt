@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.adapters.MediaAdapter
-import com.msprysak.rentersapp.data.interfaces.OnItemClickListener
+import com.msprysak.rentersapp.data.interfaces.OnItemClick
+import com.msprysak.rentersapp.data.model.Media
 import com.msprysak.rentersapp.databinding.FragmentReportsBinding
 
-class MediaFragment : BaseFragment(), OnItemClickListener{
+class MediaFragment : BaseFragment(), OnItemClick{
 
     private var _binding: FragmentReportsBinding? = null
     private val binding get() = _binding!!
@@ -57,15 +58,15 @@ class MediaFragment : BaseFragment(), OnItemClickListener{
         }
     }
 
-    override fun onLandlordClick(item: Any, anchorView: View) {
-
-    }
-
-    override fun onTenantClick(item: Any, anchorView: View) {
-        TODO("Not yet implemented")
-    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onItemClick(item: Any) {
+
+        val navController = findNavController()
+        val action = MediaFragmentDirections.actionMediaFragmentToFullMediaFragment(item as Media)
+        navController.navigate(action)
     }
 }

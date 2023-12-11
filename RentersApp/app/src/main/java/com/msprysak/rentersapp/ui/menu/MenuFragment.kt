@@ -43,12 +43,15 @@ class MenuFragment : BaseFragment(), BindUser {
         val reportsTextView = binding.reportsTextView
         val addHome = binding.addHomeCard
         val media = binding.mediaCard
+        val contracts = binding.contractsCard
+        val invoices = binding.invoicesCard
 
         menuViewModel.getUserData().observe(viewLifecycleOwner) { user ->
             bindUserData(user)
             if (user.houseRoles!!.containsValue("tenant")){
                 addUsersTextView.visibility = View.GONE
                 editHomeInfoTextView.text = resources.getString(R.string.show_home_info)
+                addHome.visibility = View.GONE
             }
         }
 
@@ -82,6 +85,13 @@ class MenuFragment : BaseFragment(), BindUser {
         media.setOnClickListener{
             navController.navigate(MenuFragmentDirections.actionMenuFragmentToMediaFragment())
         }
+        contracts.setOnClickListener{
+            navController.navigate(MenuFragmentDirections.actionMenuFragmentToContractsFragment())
+        }
+        invoices.setOnClickListener{
+            navController.navigate(MenuFragmentDirections.actionMenuFragmentToInvoicesFragment())
+        }
+
 
 
 

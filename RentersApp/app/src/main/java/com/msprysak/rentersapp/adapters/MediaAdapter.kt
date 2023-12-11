@@ -3,14 +3,14 @@ package com.msprysak.rentersapp.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.msprysak.rentersapp.data.interfaces.OnItemClickListener
+import com.msprysak.rentersapp.data.interfaces.OnItemClick
 import com.msprysak.rentersapp.data.model.Media
 import com.msprysak.rentersapp.data.recyclerview.item.MediaItem
 import com.msprysak.rentersapp.databinding.ItemMediaBinding
 
 class MediaAdapter(
     private val mediaList: List<Media>,
-    private val onMediaItemClickListener: OnItemClickListener
+    private val onMediaItemClickListener: OnItemClick
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -31,7 +31,7 @@ class MediaAdapter(
         holder.bindMediaRecyclerView(media)
 
         holder.itemView.setOnClickListener {
-            onMediaItemClickListener.onLandlordClick(media, holder.itemView)
+            onMediaItemClickListener.onItemClick(media)
         }
     }
 }

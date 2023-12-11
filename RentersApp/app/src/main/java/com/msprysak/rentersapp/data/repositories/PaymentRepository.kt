@@ -23,6 +23,8 @@ class PaymentRepository {
 
     private val currentUser = UserRepositoryInstance.getInstance().getUserData().value
 
+    private val userRepository = UserRepositoryInstance.getInstance()
+    private val premisesRepository = PremisesRepository.getInstance(userRepository.user)
 
     fun checkData() {
 //        println("checkdata")
@@ -153,7 +155,7 @@ class PaymentRepository {
 
     fun setPayment(payment: Payment, selectedUserList: List<User>, callback: CallBack) {
         val docRef = cloud.collection("payments")
-            .document(currentUser!!.houseRoles!!.keys.first())
+            .document(premisesRepository.premises.value!!.premisesId!!)
 
         payment.paymentId = UUID.randomUUID().toString()
 

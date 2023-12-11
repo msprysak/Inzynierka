@@ -20,5 +20,6 @@
     <dimen name="item_space">10dp</dimen>
     <dimen name="item_space_large">20dp</dimen>
     <dimen name="card_space">10dp</dimen>
+    <dimen name="invoice_item_space">10dp</dimen>
 
 </resources>

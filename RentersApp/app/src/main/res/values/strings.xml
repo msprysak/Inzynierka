@@ -49,6 +49,10 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="upload">Wgraj</string>
+    <string name="create_from_template">Utwórz z szablonu</string>
+    <string name="choose_add_inovice_option">Wybierz opcję dodania faktury</string>
+    <string name="add_invoice">Dodaj fakturę</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
@@ -119,7 +123,8 @@
     <string name="repeat_password">Powtórz hasło</string>
     <string name="save">Zapisz</string>
     <string name="enter_code">Wprowadź kod</string>
-    <string name="title">Wprowadź tytuł</string>
+    <string name="enter_title">Wprowadź tytuł</string>
+    <string name="title">Tytuł</string>
     <string name="join_to_group_request">Prośba o dołaczenie do grupy</string>
     <string name="accept">Akceptuj</string>
     <string name="delete">Usuń</string>
@@ -168,4 +173,24 @@
     <string name="creation_date">Data utworzenia:</string>
     <string name="date_photo_was_taken">Data wykonania zdjęcia:</string>
     <string name="date_photos_were_taken">Data wykonania zdjęć:</string>
+    <string name="download">Pobierz</string>
+    <string name="add_date_picture_was_taken">Dodaj date wykonania zdjęcia</string>
+    <string name="date_pictures_were_taken">Data wykonania zdjęć</string>
+    <string name="issue_place">Miejsce wystawienia</string>
+    <string name="issue_date">Data wystawienia</string>
+    <string name="sale_date">Data sprzedaży</string>
+    <string name="name_surname_seller">Imię i nazwisko sprzedawcy</string>
+    <string name="nip">NIP</string>
+    <string name="postal_code">Kod pocztowy</string>
+    <string name="street">Ulica</string>
+    <string name="town">Miejscowość</string>
+    <string name="seller_data">Dane sprzedawcy</string>
+    <string name="buyer_data">Dane nabywcy\n</string>
+    <string name="service_name">Nazwa towaru lub usługi</string>
+    <string name="attentions">Uwagi</string>
+    <string name="price_netto">Cena netto</string>
+    <string name="payment_deadline">Termin płatności</string>
+    <string name="name_surname_buyer">Imię i nazwisko nabywcy</string>
+    <string name="pesel">PESEL</string>
+    <string name="save_and_download">Zapisz i pobierz</string>
 </resources>

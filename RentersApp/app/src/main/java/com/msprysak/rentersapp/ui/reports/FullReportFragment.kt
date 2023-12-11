@@ -41,7 +41,7 @@ class FullReportFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFullReportBinding.inflate(inflater, container, false)
         return _binding!!.root
     }

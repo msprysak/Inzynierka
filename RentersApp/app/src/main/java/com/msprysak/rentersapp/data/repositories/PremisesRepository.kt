@@ -249,7 +249,7 @@ class PremisesRepository private  constructor(private val userData: LiveData<Use
 
     private fun updatePremisesPhoto(url: String?) {
         cloud.collection("premises")
-            .document(userData.value!!.houseRoles!!.keys.first())
+            .document(premises.value!!.premisesId!!)
             .update("premisesImageUrl", url)
             .addOnSuccessListener {
                 Log.d(DEBUG, "updatePremisesPhoto: Success")

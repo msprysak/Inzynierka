@@ -50,6 +50,16 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.annotation:annotation:1.6.0")
 
+//    Itext5
+    implementation("com.itextpdf:itextpdf:5.5.10")
+
+//    implementation("com.itextpdf:itextg:5.5.10")
+
+    implementation("org.slf4j:slf4j-api:1.7.36")
+    implementation("org.slf4j:slf4j-nop:1.7.36")
+    implementation("xerces:xercesImpl:2.12.0")
+
+
 //    Glide
     implementation("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
@@ -78,7 +88,6 @@ dependencies {
 //    Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-dynamic-features-fragment:2.3.5")
 
     // Date and time

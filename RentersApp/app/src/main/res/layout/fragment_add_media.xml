@@ -43,14 +43,14 @@
             android:textColor="?attr/colorOnSecondaryContainer"
             android:textColorHint="?attr/colorOnSecondaryContainer"
             android:background="@drawable/edit_text_rounded_transparent"
-            android:hint="@string/title" />
+            android:hint="@string/enter_title" />
 
     </LinearLayout>
     <TextView
         android:id="@+id/start_payment_date_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/start_date"
+        android:text="@string/date_pictures_were_taken"
         android:textColor="?attr/colorOnSurface"
         android:textStyle="bold"
         android:textSize="19sp"
@@ -86,7 +86,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/start_payment_date"
         android:layout_centerHorizontal="true"
-        android:text="@string/add_dates"
+        android:text="@string/add_date_picture_was_taken"
 
         />
 

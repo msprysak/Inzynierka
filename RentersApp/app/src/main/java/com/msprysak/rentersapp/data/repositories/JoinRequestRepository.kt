@@ -25,7 +25,7 @@ class JoinRequestRepository(private val userData: LiveData<User>)
      fun joinRequestListener(): LiveData<List<Request>> {
         val houseRoles = userData.value?.houseRoles
         if (!houseRoles.isNullOrEmpty()) {
-            val premisesId = houseRoles.keys.first()
+            val premisesId = premisesRepository.premises.value!!.premisesId!!
             val docRef = cloud.collection("requests")
                 .whereEqualTo("premisesId", premisesId)
             docRef.addSnapshotListener { querySnapshot, e ->
@@ -165,7 +165,7 @@ class JoinRequestRepository(private val userData: LiveData<User>)
 
      fun fetchJoinRequests() {
         val docRef = cloud.collection("requests")
-            .whereEqualTo("premisesId", userData.value?.houseRoles?.keys?.first()!!)
+            .whereEqualTo("premisesId", premisesRepository.premises.value!!.premisesId!!)
             .whereEqualTo("status", "pending")
 
         docRef.get()

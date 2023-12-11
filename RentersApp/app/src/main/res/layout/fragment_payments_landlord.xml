@@ -31,7 +31,7 @@
            android:id="@+id/payment_title"
            android:layout_width="match_parent"
            android:layout_height="match_parent"
-           android:hint="@string/title"
+           android:hint="@string/enter_title"
            android:textSize="20sp"
            />
 
