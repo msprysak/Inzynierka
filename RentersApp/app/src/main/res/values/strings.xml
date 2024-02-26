@@ -41,6 +41,8 @@
     <string name="edit_selected_users">Edytuj wybranych użytkowników</string>
     <string name="create">Utwórz</string>
     <string name="Add_home_photo">Dodaj zdjęcie domu</string>
+    <string name="home_photo">Zdjęcie domu</string>
+    <string name="no_address">Brak adresu</string>
     <string name="enter_access_code">Podaj 4 cyfrowy kod dostępu</string>
     <string name="confirm">Zatwierdź</string>
     <string name="title_activity_create_home">CreateHomeActivity</string>
@@ -193,4 +195,10 @@
     <string name="name_surname_buyer">Imię i nazwisko nabywcy</string>
     <string name="pesel">PESEL</string>
     <string name="save_and_download">Zapisz i pobierz</string>
+    <string name="forgot_password">Nie pamiętasz hasła?</string>
+    <string name="reset_password">Zresetuj hasło</string>
+    <string name="remind_password">Przypomnij hasło</string>
+    <string name="email_sent">Email z prośbą o resetowanie hasła został wysłany!</string>
+    <string name="enter_email_address">Wprowadź adres email</string>
+    <string name="main_page">Strona główna</string>
 </resources>

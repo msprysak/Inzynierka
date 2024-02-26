@@ -4,7 +4,7 @@ import ReportItem
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.msprysak.rentersapp.data.interfaces.OnReportItemClickListener
+import com.msprysak.rentersapp.interfaces.OnReportItemClickListener
 import com.msprysak.rentersapp.data.model.Reports
 import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.databinding.ItemReportBinding

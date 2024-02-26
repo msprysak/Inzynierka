@@ -4,10 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.msprysak.rentersapp.data.interfaces.OnItemClickListener
 import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.data.recyclerview.item.TenantItem
 import com.msprysak.rentersapp.databinding.ItemTenatBinding
+import com.msprysak.rentersapp.interfaces.OnItemClickListener
 
 class TenantsAdapter(
     private val tenants: List<User>,

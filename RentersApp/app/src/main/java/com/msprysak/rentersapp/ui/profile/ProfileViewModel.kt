@@ -14,7 +14,6 @@ class ProfileViewModel: ViewModel() {
     fun editProfileData(map: Map<String, String>){
         repository.editProfileData(map)
     }
-
     fun getUserData(): LiveData<User> {
         return repository.getUserData()
     }

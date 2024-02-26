@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.msprysak.rentersapp.data.UserRepositoryInstance
-import com.msprysak.rentersapp.data.interfaces.CallBack
+import com.msprysak.rentersapp.interfaces.CallBack
 import com.msprysak.rentersapp.data.model.Payment
 import com.msprysak.rentersapp.data.model.PaymentWithUser
 import com.msprysak.rentersapp.data.model.User

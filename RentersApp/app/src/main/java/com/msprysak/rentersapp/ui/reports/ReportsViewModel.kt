@@ -4,7 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.msprysak.rentersapp.data.UserRepositoryInstance
-import com.msprysak.rentersapp.data.interfaces.CallBack
+import com.msprysak.rentersapp.interfaces.CallBack
 import com.msprysak.rentersapp.data.model.Reports
 import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.data.repositories.PremisesRepository

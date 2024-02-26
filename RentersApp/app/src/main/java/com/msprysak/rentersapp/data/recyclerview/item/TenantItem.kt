@@ -6,9 +6,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.msprysak.rentersapp.R
-import com.msprysak.rentersapp.data.interfaces.OnItemClickListener
 import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.databinding.ItemTenatBinding
+import com.msprysak.rentersapp.interfaces.OnItemClickListener
 
 class TenantItem(
     private val binding: ItemTenatBinding,

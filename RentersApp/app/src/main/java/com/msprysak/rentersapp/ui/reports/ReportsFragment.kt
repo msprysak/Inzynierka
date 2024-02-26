@@ -13,7 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.adapters.ReportsAdapter
-import com.msprysak.rentersapp.data.interfaces.OnReportItemClickListener
+import com.msprysak.rentersapp.interfaces.OnReportItemClickListener
 import com.msprysak.rentersapp.data.model.Reports
 import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.databinding.FragmentReportsBinding

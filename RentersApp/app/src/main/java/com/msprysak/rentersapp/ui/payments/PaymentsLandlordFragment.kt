@@ -23,8 +23,8 @@ import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.adapters.PaymentsSelectUsersAdapter
 import com.msprysak.rentersapp.adapters.TenantsAdapter
-import com.msprysak.rentersapp.data.interfaces.CallBack
-import com.msprysak.rentersapp.data.interfaces.OnItemClickListener
+import com.msprysak.rentersapp.interfaces.CallBack
+import com.msprysak.rentersapp.interfaces.OnItemClickListener
 import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.databinding.FragmentPaymentsLandlordBinding
 import java.sql.Date

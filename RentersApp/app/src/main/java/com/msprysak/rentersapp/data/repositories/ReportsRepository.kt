@@ -11,7 +11,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
-import com.msprysak.rentersapp.data.interfaces.CallBack
+import com.msprysak.rentersapp.interfaces.CallBack
 import com.msprysak.rentersapp.data.model.Reports
 import com.msprysak.rentersapp.data.model.User
 import java.util.UUID

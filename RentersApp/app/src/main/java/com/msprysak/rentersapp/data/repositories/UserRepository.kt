@@ -18,8 +18,7 @@ class UserRepository {
     private val auth = FirebaseAuth.getInstance()
     private val cloud = FirebaseFirestore.getInstance()
     val user: LiveData<User> = MutableLiveData()
-
-
+    
     private fun updateUserPhoto(url: String?) {
         cloud.collection("users")
             .document(auth.currentUser!!.uid)

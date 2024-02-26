@@ -3,9 +3,9 @@ package com.msprysak.rentersapp.data.recyclerview.item
 import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
 import androidx.recyclerview.widget.RecyclerView
-import com.msprysak.rentersapp.data.interfaces.PaymentClickListener
 import com.msprysak.rentersapp.data.model.PaymentWithUser
 import com.msprysak.rentersapp.databinding.ItemPaymentUserHistoryBinding
+import com.msprysak.rentersapp.interfaces.PaymentClickListener
 import java.util.Date
 import java.util.Locale
 

@@ -15,7 +15,7 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.activities.RegistrationActivity
-import com.msprysak.rentersapp.data.interfaces.BindUser
+import com.msprysak.rentersapp.interfaces.BindUser
 import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.databinding.FragmentProfileBinding
 import java.io.ByteArrayOutputStream

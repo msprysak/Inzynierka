@@ -1,4 +1,4 @@
-package com.msprysak.rentersapp.data.interfaces
+package com.msprysak.rentersapp.interfaces
 
 import com.msprysak.rentersapp.data.model.Reports
 import com.msprysak.rentersapp.data.model.User
