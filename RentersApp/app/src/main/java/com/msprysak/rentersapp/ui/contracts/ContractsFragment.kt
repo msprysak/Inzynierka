@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.adapters.FilesAdapter
-import com.msprysak.rentersapp.data.interfaces.CallBack
-import com.msprysak.rentersapp.data.interfaces.OnItemClickListener
+import com.msprysak.rentersapp.interfaces.CallBack
+import com.msprysak.rentersapp.interfaces.OnItemClickListener
 import com.msprysak.rentersapp.data.model.PdfFile
 import com.msprysak.rentersapp.databinding.FragmentReportsBinding
 
@@ -51,10 +51,10 @@ class ContractsFragment: BaseFragment(), OnItemClickListener {
         recyclerView.layoutManager = LinearLayoutManager(this.context)
 
         contractsViewModel.contractsList.observe(viewLifecycleOwner){
-            println("contracts: $it")
-
-            val itemDecoration = ItemsDecorator(requireContext(), R.dimen.item_space)
-            recyclerView.addItemDecoration(itemDecoration)
+            if (recyclerView.itemDecorationCount == 0) {
+                val itemDecoration = ItemsDecorator(requireContext(), R.dimen.item_space)
+                recyclerView.addItemDecoration(itemDecoration)
+            }
             filesAdapter = FilesAdapter(
                 it,
                 this,

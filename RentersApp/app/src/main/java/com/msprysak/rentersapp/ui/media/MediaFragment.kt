@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.adapters.MediaAdapter
-import com.msprysak.rentersapp.data.interfaces.OnItemClick
+import com.msprysak.rentersapp.interfaces.OnItemClick
 import com.msprysak.rentersapp.data.model.Media
 import com.msprysak.rentersapp.databinding.FragmentReportsBinding
 
-class MediaFragment : BaseFragment(), OnItemClick{
+class MediaFragment : BaseFragment(), OnItemClick {
 
     private var _binding: FragmentReportsBinding? = null
     private val binding get() = _binding!!

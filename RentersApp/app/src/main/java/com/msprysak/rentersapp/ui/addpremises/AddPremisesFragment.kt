@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.adapters.PremisesAdapter
-import com.msprysak.rentersapp.data.interfaces.OnPremisesClickListener
 import com.msprysak.rentersapp.data.model.Premises
 import com.msprysak.rentersapp.databinding.FragmentAddNewHomeBinding
+import com.msprysak.rentersapp.interfaces.OnPremisesClickListener
 import com.msprysak.rentersapp.ui.createhome.AddHomeDialogFragment
 
 class AddPremisesFragment: BaseFragment(), OnPremisesClickListener {

@@ -1,4 +1,4 @@
-package com.msprysak.rentersapp.data.interfaces
+package com.msprysak.rentersapp.interfaces
 
 import android.view.View
 import com.msprysak.rentersapp.data.model.Premises

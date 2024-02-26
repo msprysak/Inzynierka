@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.data.UserRepositoryInstance
-import com.msprysak.rentersapp.data.interfaces.OnItemClickListener
+import com.msprysak.rentersapp.interfaces.OnItemClickListener
 import com.msprysak.rentersapp.data.model.Reports
 import com.msprysak.rentersapp.data.model.Request
 import com.msprysak.rentersapp.data.recyclerview.item.JoinRequestItem

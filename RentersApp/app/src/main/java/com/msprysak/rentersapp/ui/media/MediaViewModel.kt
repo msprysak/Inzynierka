@@ -3,9 +3,9 @@ package com.msprysak.rentersapp.ui.media
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.msprysak.rentersapp.data.interfaces.CallBack
 import com.msprysak.rentersapp.data.model.Media
 import com.msprysak.rentersapp.data.repositories.MediaRepository
+import com.msprysak.rentersapp.interfaces.CallBack
 import java.sql.Date
 
 class MediaViewModel: ViewModel() {

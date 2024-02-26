@@ -17,8 +17,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.msprysak.rentersapp.activities.MainActivity
-import com.msprysak.rentersapp.data.interfaces.CallBack
 import com.msprysak.rentersapp.databinding.DialogAddHomeBinding
+import com.msprysak.rentersapp.interfaces.CallBack
 import java.io.ByteArrayOutputStream
 
 class AddHomeDialogFragment : DialogFragment() {

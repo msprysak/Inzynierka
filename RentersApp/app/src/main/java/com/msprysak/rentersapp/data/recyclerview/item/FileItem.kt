@@ -1,7 +1,7 @@
 package com.msprysak.rentersapp.data.recyclerview.item
 
 import androidx.recyclerview.widget.RecyclerView
-import com.msprysak.rentersapp.data.interfaces.OnItemClickListener
+import com.msprysak.rentersapp.interfaces.OnItemClickListener
 import com.msprysak.rentersapp.data.model.PdfFile
 import com.msprysak.rentersapp.databinding.ItemFileBinding
 

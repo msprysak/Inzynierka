@@ -2,7 +2,7 @@ package com.msprysak.rentersapp.ui.notifications
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.msprysak.rentersapp.data.interfaces.CallBack
+import com.msprysak.rentersapp.interfaces.CallBack
 import com.msprysak.rentersapp.data.UserRepositoryInstance
 import com.msprysak.rentersapp.data.model.Request
 import com.msprysak.rentersapp.data.repositories.JoinRequestRepository

@@ -3,7 +3,7 @@ package com.msprysak.rentersapp.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.msprysak.rentersapp.data.interfaces.OnItemClickListener
+import com.msprysak.rentersapp.interfaces.OnItemClickListener
 import com.msprysak.rentersapp.data.model.PdfFile
 import com.msprysak.rentersapp.data.recyclerview.item.FileItem
 import com.msprysak.rentersapp.databinding.ItemFileBinding

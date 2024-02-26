@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.msprysak.rentersapp.data.interfaces.CallBack
+import com.msprysak.rentersapp.interfaces.CallBack
 import com.msprysak.rentersapp.data.model.Request
 import com.msprysak.rentersapp.data.model.User
 

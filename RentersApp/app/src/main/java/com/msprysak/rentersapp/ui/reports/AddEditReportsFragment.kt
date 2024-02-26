@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.ImageHelper
 import com.msprysak.rentersapp.adapters.ReportsPhotoAdapter
-import com.msprysak.rentersapp.data.interfaces.CallBack
+import com.msprysak.rentersapp.interfaces.CallBack
 import com.msprysak.rentersapp.data.model.Reports
 import com.msprysak.rentersapp.databinding.FragmentAddReportBinding
 import kotlin.math.min
@@ -75,7 +75,8 @@ class AddEditReportsFragment : BaseFragment() {
                     reportDescription = descriptionText.text.toString().trim()
                 )
                 binding.btnAddReport.isEnabled = false
-                reportsViewModel.createNewReport(report, selectedImages.value ?: emptyList(), object : CallBack {
+                reportsViewModel.createNewReport(report, selectedImages.value ?: emptyList(), object :
+                    CallBack {
                     override fun onSuccess() {
                         titleText.text.clear()
                         descriptionText.text.clear()

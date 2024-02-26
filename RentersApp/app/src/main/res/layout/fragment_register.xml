@@ -185,13 +185,12 @@
             android:id="@+id/accountSetTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:longClickable="false"
             android:text="@string/account_set"
             android:textIsSelectable="false"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center"
-            android:textSize="15sp"
-            android:longClickable="false"
-            />
+            android:textSize="15sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

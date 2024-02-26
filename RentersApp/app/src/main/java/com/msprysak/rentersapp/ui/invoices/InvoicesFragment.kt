@@ -1,5 +1,6 @@
 package com.msprysak.rentersapp.ui.invoices
 
+import ItemsDecorator
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
@@ -7,33 +8,46 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.view.LayoutInflater
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.R
-import com.msprysak.rentersapp.data.interfaces.CallBack
+import com.msprysak.rentersapp.adapters.FilesAdapter
+import com.msprysak.rentersapp.data.model.PdfFile
+import com.msprysak.rentersapp.data.repositories.room.UserApplication
 import com.msprysak.rentersapp.databinding.FragmentReportsBinding
+import com.msprysak.rentersapp.interfaces.CallBack
+import com.msprysak.rentersapp.interfaces.OnItemClickListener
 
-class InvoicesFragment : BaseFragment() {
+class InvoicesFragment : BaseFragment(), OnItemClickListener {
 
 
-    private val invoicesViewModel by viewModels<InvoicesViewModel>()
+    private val invoicesViewModel: InvoicesViewModel by viewModels {
+        InvoicesViewModelFactory((requireActivity().application as UserApplication).roomRepository)
+    }
 
     private var _binding: FragmentReportsBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var filesAdapter: FilesAdapter
+    private lateinit var recyclerView: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentReportsBinding.inflate(inflater, container, false)
+        invoicesViewModel.getInvoices()
         return _binding!!.root
     }
 
@@ -48,6 +62,23 @@ class InvoicesFragment : BaseFragment() {
                 invociceDialog(requireContext())
             }
         }
+
+        recyclerView = binding.reportsRecyclerView
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
+
+        invoicesViewModel.invoicesList.observe(viewLifecycleOwner){
+            if (recyclerView.itemDecorationCount == 0) {
+                val itemDecoration = ItemsDecorator(requireContext(), R.dimen.item_space)
+                recyclerView.addItemDecoration(itemDecoration)
+            }
+            filesAdapter = FilesAdapter(
+                it,
+                this,
+                invoicesViewModel.userRole
+            )
+            recyclerView.adapter = filesAdapter
+            filesAdapter.notifyDataSetChanged()        }
     }
 
     private fun selectPdf() {
@@ -94,12 +125,110 @@ class InvoicesFragment : BaseFragment() {
             .show()
     }
 
+    override fun onLandlordClick(item: Any, anchorView: View) {
+        item as PdfFile
+        val popupMenu = PopupMenu(requireContext(), anchorView)
+        val inflater: MenuInflater = popupMenu.menuInflater
+        inflater.inflate(R.menu.files_landlord_popup, popupMenu.menu)
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.download -> {
+                    invoicesViewModel.downloadFile(item, requireContext(),  object : CallBack {
+                        override fun onSuccess() {
+                            Toast.makeText(
+                                requireContext(),
+                                "Plik został pobrany",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
 
+                        override fun onFailure(message: String) {
+                            Toast.makeText(
+                                requireContext(),
+                                message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    })
+                    true
+                }
+                R.id.delete -> {
+                    invoicesViewModel.deleteFile(item, object : CallBack {
+                        override fun onSuccess() {
+                            Toast.makeText(
+                                requireContext(),
+                                "Plik został usunięty",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
 
+                        override fun onFailure(message: String) {
+                            Toast.makeText(
+                                requireContext(),
+                                message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    })
 
+                    true
+                }
+                R.id.preview -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Podgląd pliku",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    true
+                }
 
+                else -> false
+            }
+        }
+        popupMenu.show()
+    }
 
+    override fun onTenantClick(item: Any, anchorView: View) {
+        item as PdfFile
+        val popupMenu = PopupMenu(requireContext(), anchorView)
+        val inflater: MenuInflater = popupMenu.menuInflater
+        inflater.inflate(R.menu.files_user_popup, popupMenu.menu)
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.download -> {
+                    invoicesViewModel.downloadFile(item,requireContext(), object : CallBack {
+                        override fun onSuccess() {
+                            Toast.makeText(
+                                requireContext(),
+                                "Plik został pobrany",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
 
+                        override fun onFailure(message: String) {
+                            Toast.makeText(
+                                requireContext(),
+                                message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    })
+                    true
+                }
+                R.id.preview -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Podgląd pliku",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    true
+                }
+
+                else -> false
+            }
+        }
+        popupMenu.show()
+    }
 
 
 }

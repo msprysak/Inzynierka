@@ -53,11 +53,16 @@ dependencies {
 //    Itext5
     implementation("com.itextpdf:itextpdf:5.5.10")
 
-//    implementation("com.itextpdf:itextg:5.5.10")
+//    Room
+    implementation("androidx.room:room-ktx:2.4.0")
+    kapt("androidx.room:room-compiler:2.4.0")
 
     implementation("org.slf4j:slf4j-api:1.7.36")
     implementation("org.slf4j:slf4j-nop:1.7.36")
     implementation("xerces:xercesImpl:2.12.0")
+
+//    zCustomCalendar
+    implementation ("com.kizitonwose.calendar:view:2.3.0")
 
 
 //    Glide

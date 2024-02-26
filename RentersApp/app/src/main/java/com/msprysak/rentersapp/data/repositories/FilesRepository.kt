@@ -6,10 +6,11 @@ import android.net.Uri
 import android.os.Environment
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.msprysak.rentersapp.data.UserRepositoryInstance
-import com.msprysak.rentersapp.data.interfaces.CallBack
 import com.msprysak.rentersapp.data.model.PdfFile
+import com.msprysak.rentersapp.interfaces.CallBack
 import java.io.File
 import java.util.Date
 
@@ -28,6 +29,7 @@ class FilesRepository {
         if (premisesId != null) {
             val contractsCollectionRef = cloud.collection("files").document(premisesId)
                 .collection(collection)
+                .orderBy("creationDate", Query.Direction.DESCENDING)
 
             contractsCollectionRef.addSnapshotListener { snapshot, e ->
                 if (e != null) {
@@ -89,13 +91,13 @@ class FilesRepository {
         }
     }
 
-    fun downloadFile(file: PdfFile, context: Context, callBack: CallBack) {
+    fun downloadFile(file: PdfFile, context: Context, callBack: CallBack, collection: String) {
         val premisesId = premisesRepository.premises.value?.premisesId
 
         val storageRef = storage.reference
             .child("premises")
             .child(premisesId!!)
-            .child("contracts")
+            .child(collection)
             .child(file.fileId.toString())
 
         storageRef.downloadUrl.addOnSuccessListener { downloadUri ->
@@ -125,18 +127,18 @@ class FilesRepository {
 
 
 
-    fun deletePdfFile(fileId: String, callBack: CallBack) {
+    fun deletePdfFile(fileId: String, callBack: CallBack, collection: String) {
         val premisesId = premisesRepository.premises.value?.premisesId
 
         if (premisesId != null) {
             val contractsCollectionRef = cloud.collection("files").document(premisesId)
-                .collection("contracts")
+                .collection(collection)
 
             val storageRef = storage.reference
                 .child("premises")
                 .child(premisesId)
 
-            val storageFilePath = "contracts/$fileId"
+            val storageFilePath = "$collection/$fileId"
 
             // Usunięcie dokumentu z kolekcji Firestore
             contractsCollectionRef.document(fileId).delete()

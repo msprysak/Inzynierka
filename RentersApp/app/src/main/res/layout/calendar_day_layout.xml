@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardViewLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="?attr/colorPrimaryContainer"
+    android:layout_margin="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+                <!-- TextView ustawione w prawym górnym rogu -->
+                <TextView
+                    android:id="@+id/dayText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="8dp"
+                    android:gravity="center"
+                    android:textColor="?attr/colorOnPrimaryContainer"
+                    android:textSize="16sp"
+                    tools:text="22" />
+        </RelativeLayout>
+
+
+
+        <View
+            android:id="@+id/rectangleView"
+            android:layout_width="20dp"
+            android:layout_height="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@drawable/today_bg" />
+</androidx.cardview.widget.CardView>

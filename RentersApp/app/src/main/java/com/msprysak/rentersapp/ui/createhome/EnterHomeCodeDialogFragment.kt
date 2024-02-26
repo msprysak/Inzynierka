@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import com.msprysak.rentersapp.data.interfaces.CallBack
 import com.msprysak.rentersapp.databinding.DialogHomeEnterCodeBinding
+import com.msprysak.rentersapp.interfaces.CallBack
 
 class EnterHomeCodeDialogFragment: DialogFragment() {
     private val LOG_DEBUG = "EnterHomeCodeDialogFragment"

@@ -21,7 +21,7 @@ import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.ImageHelper
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.adapters.ReportsPhotoAdapter
-import com.msprysak.rentersapp.data.interfaces.CallBack
+import com.msprysak.rentersapp.interfaces.CallBack
 import com.msprysak.rentersapp.databinding.FragmentAddMediaBinding
 import java.sql.Date
 import java.text.SimpleDateFormat

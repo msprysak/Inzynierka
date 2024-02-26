@@ -1,8 +1,13 @@
 package com.msprysak.rentersapp.ui.login
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
+import android.text.SpannableStringBuilder
 import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.firebase.auth.FirebaseAuth
 import com.msprysak.rentersapp.BaseFragment
+import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.databinding.FragmentLoginBinding
 
 class LoginFragment : BaseFragment() {
@@ -45,9 +51,11 @@ class LoginFragment : BaseFragment() {
 
         val emailEditText = binding.email
         val passwordEditText = binding.password
-        passwordEditText.hint = getString(com.msprysak.rentersapp.R.string.password)
+        passwordEditText.hint = getString(R.string.password)
         val loginButton = binding.login
         loginButton.isEnabled = false
+
+        forgotPassword()
 
         loginViewModel.loginFormState.observe(viewLifecycleOwner,
             Observer { loginFormState ->
@@ -88,6 +96,50 @@ class LoginFragment : BaseFragment() {
             setupLoginClick(emailEditText.text?.trim().toString(), passwordEditText.text?.trim().toString())
         }
 
+    }
+
+    private fun forgotPassword(){
+        val textView = binding.forgotPasswordTextView
+
+        val spannableString = SpannableStringBuilder(textView.text.toString())
+        val clickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                openForgotPasswordDialog(widget.context)
+                Toast.makeText(requireContext(), resources.getString(R.string.forgot_password), Toast.LENGTH_LONG).show()
+            }
+        }
+
+        spannableString.setSpan(clickableSpan, 0, textView.text.length, 0)
+        textView.text = spannableString
+        textView.movementMethod = LinkMovementMethod.getInstance()
+    }
+
+    private fun openForgotPasswordDialog(context: Context?) {
+        val view = LayoutInflater.from(context).inflate(R.layout.dialog_forgot_password, null)
+        val alertDialog = AlertDialog.Builder(context)
+            .setTitle(resources.getString(R.string.remind_password))
+            .setView(view)
+            .setPositiveButton(resources.getString(R.string.reset_password)) { dialog, _ ->
+                val email = view.findViewById<androidx.appcompat.widget.AppCompatEditText>(R.id.emailEditText).text.toString()
+                if (email.isEmpty() || email.isBlank()){
+                    Toast.makeText(context, "Niepoprawny adres email!", Toast.LENGTH_LONG).show()
+                    return@setPositiveButton
+                } else{
+                    fbAuth.sendPasswordResetEmail(email)
+                        .addOnSuccessListener {
+                            Toast.makeText(context, resources.getString(R.string.email_sent), Toast.LENGTH_LONG).show()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(context, it.message.toString(), Toast.LENGTH_LONG).show()
+                        }
+                    dialog.dismiss()
+                }
+            }
+            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+        alertDialog.show()
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {
