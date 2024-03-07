@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.msprysak.rentersapp.data.UserRepositoryInstance
 import com.msprysak.rentersapp.data.repositories.JoinRequestRepository
 import com.msprysak.rentersapp.data.repositories.PremisesRepository
+import java.time.LocalDate
 
 class CalendarViewModel: ViewModel() {
 
@@ -13,5 +14,9 @@ class CalendarViewModel: ViewModel() {
     private val premisesRepository = PremisesRepository.getInstance(userData)
 
     fun getPremisesData() = premisesRepository.getPremisesData()
+
+    fun addTask(task: String, date: LocalDate){
+        premisesRepository.addTask(task, date)
+    }
 
 }

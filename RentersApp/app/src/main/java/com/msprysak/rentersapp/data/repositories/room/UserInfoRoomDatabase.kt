@@ -23,7 +23,7 @@ public abstract class UserInfoRoomDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     UserInfoRoomDatabase::class.java,
-                    "user_info_database"
+                    "users_info_database"
                 )
                     .fallbackToDestructiveMigration()
                     .addCallback(UserInfoDatabaseCallback(scope))

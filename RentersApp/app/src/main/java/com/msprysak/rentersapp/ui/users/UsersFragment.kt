@@ -9,14 +9,15 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.adapters.TenantsAdapter
-import com.msprysak.rentersapp.interfaces.OnItemClickListener
 import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.databinding.FragmentUsersListBinding
+import com.msprysak.rentersapp.interfaces.OnItemClickListener
 
 class UsersFragment : BaseFragment(), OnItemClickListener {
     private var _binding: FragmentUsersListBinding? = null
@@ -78,6 +79,10 @@ class UsersFragment : BaseFragment(), OnItemClickListener {
                         "Usunięto użytkownika",
                         Toast.LENGTH_SHORT
                     ).show()
+                    true
+                }
+                R.id.preview -> {
+                    findNavController().navigate(UsersFragmentDirections.actionUsersFragmentToUserInfoFragment(item))
                     true
                 }
 

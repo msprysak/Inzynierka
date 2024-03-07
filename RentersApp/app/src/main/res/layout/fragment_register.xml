@@ -14,39 +14,13 @@
         android:layout_marginTop="40dp"
         android:gravity="top|center"
         android:text="@string/create_account"
+        android:textColor="?attr/colorPrimary"
         android:textSize="30sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/googleIconImageView"
-        android:layout_width="@dimen/icon_size_large"
-
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:adjustViewBounds="true"
-
-        android:src="@drawable/google_icon"
-        app:layout_constraintEnd_toStartOf="@id/incognitoIconImageView"
-        app:layout_constraintStart_toStartOf="@id/createAccountTextView"
-        app:layout_constraintTop_toBottomOf="@id/createAccountTextView"
-        tools:ignore="ContentDescription" />
-
-    <ImageView
-        android:id="@+id/incognitoIconImageView"
-        android:layout_width="@dimen/icon_size_large"
-
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:src="@drawable/incognito_icon"
-
-        app:layout_constraintBottom_toBottomOf="@id/googleIconImageView"
-        app:layout_constraintEnd_toEndOf="@id/createAccountTextView"
-        app:layout_constraintStart_toEndOf="@id/googleIconImageView"
-        app:layout_constraintTop_toTopOf="@id/googleIconImageView"
-        tools:ignore="ContentDescription" />
 
 
     <LinearLayout
@@ -56,102 +30,98 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/googleIconImageView">
+        app:layout_constraintTop_toBottomOf="@id/createAccountTextView">
 
 
-
-        <TextView
-            android:id="@+id/orTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:hint="@string/or"
-            android:textAlignment="center"
-
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/googleIconImageView" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/usernameTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="50dp"
-
             android:layout_marginTop="30dp"
             android:layout_marginEnd="50dp"
-            android:hint="@string/username"
-            app:errorIconDrawable="@drawable/ic_warning">
+            app:helperTextEnabled="false"
+            app:helperTextTextColor="?attr/colorError"
+            android:hint="@string/username">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="20"
-                android:ems="10"
-                android:inputType="textPersonName"
+                android:maxLength="40"
+                android:inputType="text"
                 tools:ignore="VisualLintTextFieldSize" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="50dp"
-
             android:layout_marginTop="30dp"
+            app:errorEnabled="true"
+            app:helperTextEnabled="false"
+            app:helperTextTextColor="?attr/colorError"
             android:layout_marginEnd="50dp"
             android:hint="@string/email"
-            app:errorIconDrawable="@drawable/ic_warning">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="40"
                 android:ems="10"
                 android:inputType="textEmailAddress"
+                android:maxLength="40"
                 tools:ignore="VisualLintTextFieldSize" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="50dp"
-
             android:layout_marginTop="30dp"
             android:layout_marginEnd="50dp"
             android:hint="@string/password"
+            app:errorEnabled="true"
+            app:helperTextEnabled="false"
+            app:helperTextTextColor="?attr/colorError"
             app:passwordToggleEnabled="true"
+            app:errorIconDrawable="@null"
             app:counterMaxLength="15"
             app:counterEnabled="true"
+
+
             >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="15"
                 android:ems="10"
                 android:inputType="textPassword"
-                tools:ignore="VisualLintTextFieldSize"
-                app:errorIconDrawable="@drawable/ic_warning"
-                app:passwordToggleEnabled="true"
-                />
+                android:maxLength="15"
+                tools:ignore="VisualLintTextFieldSize" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/confirmPasswordTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="50dp"
-
             android:layout_marginTop="30dp"
             android:layout_marginEnd="50dp"
+            app:helperTextEnabled="false"
+            app:helperTextTextColor="?attr/colorError"
             android:hint="@string/confirm_password"
             app:passwordToggleEnabled="true"
+            app:errorEnabled="true"
             app:counterMaxLength="15"
             >
 
@@ -160,8 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:maxLength="15"
-                app:errorIconDrawable="@drawable/ic_warning" />
+                android:maxLength="15" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

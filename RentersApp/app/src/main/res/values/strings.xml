@@ -2,26 +2,30 @@
     <string name="app_name">RentersApp</string>
     <string name="create_account">Utwórz konto</string>
     <string name="email">Email</string>
+    <string name="name_surname">Imie i nazwisko</string>
+    <string name="pesel_nip">Pesel lub NIP</string>
     <string name="name">Nazwa</string>
     <string name="password">Hasło</string>
-    <string name="or">──────── lub ────────</string>
+    <string name="or">─────────────────────</string>
+    <string name="send">Wyślij</string>
     <string name="register">Zarejestruj się</string>
     <string name="account_set">Masz już konto? Zaloguj się!</string>
 
     <!-- Strings related to registration -->
-    <string name="invalid_email">Proszę wprowadzić poprawny adres email</string>
+    <string name="invalid_email">Adres email jest nieprawidłowy!</string>
     <string name="empty_password">Proszę wprowadź hasło</string>
     <string name="welcome_message">Witaj %s,\ndziękujemy za wybór naszej aplikacji!</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="select_user">Wybierz użytkownika</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome!"</string>
     <string name="select_users">Wybierz użytkowników</string>
     <string name="select_all_users">Wybierz wszystkich</string>
-    <string name="invalid_username">Nieprawidłowa nazwa użytkownika!</string>
-    <string name="invalid_password">Hasło nie spełnia wymogów bezpieczeństwa.</string>
+    <string name="invalid_username">Nazwa użytkownika musi zawierać co najmniej 3 znaki!</string>
+    <string name="invalid_password">Hasło nie spełnia wymogów bezpieczeństwa</string>
     <string name="invalid_confirm_password">Hasła nie są takie same!</string>
     <string name="login_failed">"Login failed"</string>
     <string name="register_success">Rejestracja zakończona sukcesem</string>
@@ -30,8 +34,8 @@
     <string name="login">Zaloguj się</string>
     <string name="nie_masz_jeszcze_konta_zarejestruj_si">Nie masz jeszcze konta? Zarejestruj się!</string>
     <string name="username">Nazwa użytkownika</string>
-    <string name="join_home_button">Dołącz do istniejącego domu</string>
-    <string name="create_home_button">Utwórz nowy dom</string>
+    <string name="join_home_button">Dołącz do istniejącego lokalu</string>
+    <string name="create_home_button">Utwórz nowy lokal</string>
     <string name="home_name">Nazwa domu</string>
     <string name="home_address">Adres (opcjonalnie)</string>
     <string name="cancel">Anuluj</string>
@@ -117,7 +121,10 @@
     <string name="create_temporary_code_to_join">Utwórz jednorazowy kod, aby użytkownik mógł dołączyć do domu!</string>
     <string name="place_holder_time">00:00:00</string>
     <string name="calendar">Kalendarz</string>
+    <string name="delete_event">Usuń wydarzenie</string>
+    <string name="new_event">Nowe wydarzenie</string>
     <string name="phone_number">Numer telefonu</string>
+    <string name="peselOrNip">PESEL lub NIP</string>
     <string name="save_changes">Zapisz zmiany</string>
     <string name="change_password">Zmień hasło</string>
     <string name="changing_password">Zmiana hasła</string>
@@ -198,7 +205,8 @@
     <string name="forgot_password">Nie pamiętasz hasła?</string>
     <string name="reset_password">Zresetuj hasło</string>
     <string name="remind_password">Przypomnij hasło</string>
-    <string name="email_sent">Email z prośbą o resetowanie hasła został wysłany!</string>
+    <string name="email_sent">Wysłano prośbę o zresetowanie hasła!</string>
     <string name="enter_email_address">Wprowadź adres email</string>
     <string name="main_page">Strona główna</string>
+    <string name="upload_buyer_data">Wczytaj dane nabywcy</string>
 </resources>

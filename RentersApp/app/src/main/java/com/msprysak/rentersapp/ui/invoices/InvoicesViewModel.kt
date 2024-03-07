@@ -6,15 +6,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.msprysak.rentersapp.data.UserRepositoryInstance
 import com.msprysak.rentersapp.data.model.PdfFile
+import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.data.repositories.FilesRepository
+import com.msprysak.rentersapp.data.repositories.PremisesRepository
 import com.msprysak.rentersapp.data.repositories.room.UserInfo
 import com.msprysak.rentersapp.data.repositories.room.UserInfoRepository
 import com.msprysak.rentersapp.interfaces.CallBack
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class InvoicesViewModel(private val roomRepository: UserInfoRepository) : ViewModel() {
 
@@ -22,14 +25,52 @@ class InvoicesViewModel(private val roomRepository: UserInfoRepository) : ViewMo
 
     private val _invoicesList: MutableLiveData<List<PdfFile>> = MutableLiveData()
     val invoicesList: LiveData<List<PdfFile>> get() = _invoicesList
+
+    private val userId = UserRepositoryInstance.getInstance().user.value!!.userId
+    val premises = PremisesRepository.getInstance(UserRepositoryInstance.getInstance().user)
     val userRole = UserRepositoryInstance.getInstance().user.value!!.houseRoles!!.values.first()
 
-    val userInfo = roomRepository.userInfo.asLiveData()
-    suspend fun updateUserInfo(userInfo: UserInfo){
-        withContext(Dispatchers.IO) {
-            roomRepository.updateUserInfo(userInfo)
+    private val _usersListData: MutableLiveData<List<User>> = MutableLiveData()
+    val usersListData: LiveData<List<User>> get() = _usersListData
+
+
+
+    private val _userInfoFlow = MutableStateFlow<UserInfo?>(null)
+    val userInfoFlow: StateFlow<UserInfo?> get() = _userInfoFlow
+
+    fun fetchUsers(){
+
+        premises.fetchUsers{
+            _usersListData.postValue(it)
         }
     }
+    init {
+        getUserInfo(userId!!)
+    }
+    fun getUserInfo(id: String) {
+        viewModelScope.launch {
+            roomRepository.getUserInfoFlow(id).collect {
+                _userInfoFlow.value = it
+            }
+        }
+    }
+
+
+
+    suspend fun updateUserInfo(sellerNameSurname: String, sellerNip: String, sellerStreet: String, sellerPostalCode: String, sellerCity: String) {
+        val userInfo = com.msprysak.rentersapp.data.repositories.room.UserInfo(
+            id = userId!!,
+            userNameSurname = sellerNameSurname,
+            userNipPesel = sellerNip,
+            userStreet = sellerStreet,
+            userPostalCode = sellerPostalCode,
+            userCity = sellerCity,
+            premisesId = premises.premises.value!!.premisesId.toString()
+        )
+
+        println("User info: ${userInfo.userCity}")
+    }
+
 
     fun uploadPdfFile(fileName: String, pdfUri: Uri, callBack: CallBack) {
         repository.uploadPdfFile(fileName, pdfUri, "invoices", callBack)

@@ -455,6 +455,16 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
+            android:id="@+id/upload_buyer_data_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/upload_buyer_data"
+            app:layout_constraintTop_toBottomOf="@id/buyer_town_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
             android:id="@+id/save_download_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -469,7 +479,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="@string/save"
-            app:layout_constraintTop_toBottomOf="@id/buyer_town_layout"
+            app:layout_constraintTop_toBottomOf="@id/upload_buyer_data_btn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/save_download_button"

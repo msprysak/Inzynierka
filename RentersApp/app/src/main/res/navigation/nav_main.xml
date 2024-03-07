@@ -76,7 +76,16 @@
         android:id="@+id/usersFragment"
         android:name="com.msprysak.rentersapp.ui.users.UsersFragment"
         android:label="@string/users"
-        tools:layout="@layout/fragment_users_list" />
+        tools:layout="@layout/fragment_users_list" >
+        <action
+            android:id="@+id/action_usersFragment_to_userInfoFragment"
+            app:destination="@id/userInfoFragment">
+
+            <argument
+                android:name="user"
+                app:argType="com.msprysak.rentersapp.data.model.User" />
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/reportsFragment"
         android:name="com.msprysak.rentersapp.ui.reports.ReportsFragment"
@@ -174,5 +183,10 @@
         android:id="@+id/invoicesTemplateFragment"
         android:name="com.msprysak.rentersapp.ui.invoices.InvoicesTemplateFragment"
         android:label="Faktury" />
+    <fragment
+        android:id="@+id/userInfoFragment"
+        android:name="com.msprysak.rentersapp.ui.users.UserInfoFragment"
+        android:label="Podgląd użytkownika"
+        tools:layout="@layout/fragment_user_info" />
 
 </navigation>

@@ -5,7 +5,10 @@ import kotlinx.coroutines.flow.Flow
 
 class UserInfoRepository(private val userInfoDao: UserInfoDao) {
 
-    val userInfo: Flow<UserInfo> = userInfoDao.getUserInfo()
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    fun getUserInfoFlow(id: String): Flow<UserInfo> = userInfoDao.getUserInfo(id)
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread

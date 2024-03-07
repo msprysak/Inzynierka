@@ -12,12 +12,11 @@ import javax.annotation.Nullable
 @Dao
 interface UserInfoDao {
 
-    @Query("SELECT * FROM user_info_table")
-    fun getUserInfo(): Flow<UserInfo>
+    @Query("SELECT * FROM users_info_table Where id = :id")
+    fun getUserInfo(id: String): Flow<UserInfo>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun updateUserInfo(userInfo: UserInfo)
-
 
     @Delete
     fun deleteUserInfo(@Nullable userInfo: UserInfo?): Int

@@ -63,12 +63,6 @@ class LoginFragment : BaseFragment() {
                     return@Observer
                 }
                 loginButton.isEnabled = loginFormState.isDataValid
-                loginFormState.emailError?.let {
-                    emailEditText.error = getString(it)
-                }
-                loginFormState.passwordError?.let {
-                    passwordEditText.error = getString(it)
-                }
             })
 
 
@@ -105,7 +99,6 @@ class LoginFragment : BaseFragment() {
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
                 openForgotPasswordDialog(widget.context)
-                Toast.makeText(requireContext(), resources.getString(R.string.forgot_password), Toast.LENGTH_LONG).show()
             }
         }
 
@@ -119,7 +112,7 @@ class LoginFragment : BaseFragment() {
         val alertDialog = AlertDialog.Builder(context)
             .setTitle(resources.getString(R.string.remind_password))
             .setView(view)
-            .setPositiveButton(resources.getString(R.string.reset_password)) { dialog, _ ->
+            .setPositiveButton(resources.getString(R.string.send)) { dialog, _ ->
                 val email = view.findViewById<androidx.appcompat.widget.AppCompatEditText>(R.id.emailEditText).text.toString()
                 if (email.isEmpty() || email.isBlank()){
                     Toast.makeText(context, "Niepoprawny adres email!", Toast.LENGTH_LONG).show()
@@ -130,9 +123,9 @@ class LoginFragment : BaseFragment() {
                             Toast.makeText(context, resources.getString(R.string.email_sent), Toast.LENGTH_LONG).show()
                         }
                         .addOnFailureListener {
-                            Toast.makeText(context, it.message.toString(), Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, "Podane konto nie istnieje!", Toast.LENGTH_LONG).show()
                         }
-                    dialog.dismiss()
+
                 }
             }
             .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
@@ -156,7 +149,7 @@ class LoginFragment : BaseFragment() {
                 }
             }
             .addOnFailureListener { exc ->
-                Toast.makeText(requireContext(), exc.message.toString(), Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Nieprawidłowy adres Email lub hasło!", Toast.LENGTH_LONG).show()
                 Log.d(LOG_DEBUG, "setupLoginClick: ${exc.message}")
             }
     }

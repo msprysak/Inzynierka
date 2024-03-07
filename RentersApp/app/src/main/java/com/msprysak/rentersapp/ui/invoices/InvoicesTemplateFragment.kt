@@ -12,20 +12,24 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.itextpdf.text.pdf.PdfReader
 import com.itextpdf.text.pdf.PdfStamper
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.R
+import com.msprysak.rentersapp.adapters.PaymentsSelectUsersAdapter
+import com.msprysak.rentersapp.adapters.TenantsAdapter
+import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.data.repositories.room.UserApplication
-import com.msprysak.rentersapp.data.repositories.room.UserInfo
 import com.msprysak.rentersapp.databinding.FragmentInvoicesPdftemplateBinding
 import com.msprysak.rentersapp.interfaces.CallBack
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -39,6 +43,8 @@ class InvoicesTemplateFragment: BaseFragment() {
 
     private var _binding: FragmentInvoicesPdftemplateBinding? = null
     private val binding get() = _binding!!
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var tenantsAdapter: TenantsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,38 +58,55 @@ class InvoicesTemplateFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        invoicesViewModel.fetchUsers()
+        invoicesViewModel.usersListData.observe(viewLifecycleOwner) { usersList ->
+            if (usersList.isNotEmpty()) {
+                binding.uploadBuyerDataBtn.visibility = View.VISIBLE
+                binding.uploadBuyerDataBtn.setOnClickListener {
+                    showUsersAlertDialog(usersList)
+                }
 
-        // Assuming roomRepository.userInfo returns a Flow<UserInfo>
-        invoicesViewModel.userInfo.observe(viewLifecycleOwner) { user ->
-            println("OBSERVER")
-            if (user != null) {
-                binding.sellerNameSurname.setText(user.userNameSurname)
-                binding.sellerNip.setText(user.userNip)
-                binding.sellerStreet.setText(user.userStreet)
-                binding.sellerPostalCode.setText(user.userPostalCode)
-                binding.sellerTown.setText(user.userCity)
+            } else {
+                binding.uploadBuyerDataBtn.visibility = View.GONE
             }
         }
 
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                invoicesViewModel.userInfoFlow.collect { user ->
+                    if (user != null) {
+                        binding.sellerNameSurname.setText(user.userNameSurname)
+                        binding.sellerNip.setText(user.userNipPesel)
+                        binding.sellerStreet.setText(user.userStreet)
+                        binding.sellerPostalCode.setText(user.userPostalCode)
+                        binding.sellerTown.setText(user.userCity)
+                    }
+                }
+            }
+        }
 
         bindData()
     }
 
 
-    private suspend fun updateUserInfo() {
-        val userInfo = UserInfo(
-            userNameSurname = binding.sellerNameSurname.text.toString(),
-            userNip = binding.sellerNip.text.toString(),
-            userStreet = binding.sellerStreet.text.toString(),
-            userPostalCode = binding.sellerPostalCode.text.toString(),
-            userCity = binding.sellerTown.text.toString()
-        )
 
-        println("User info: ${userInfo.userCity}")
+    private fun showUsersAlertDialog(userList: List<User>) {
 
-        withContext(Dispatchers.IO) {
-            invoicesViewModel.updateUserInfo(userInfo)
+        val filteredUsers = userList.filter { user ->
+            !user.houseRoles!!.values.contains("landlord")
         }
+
+        val userAdapter = PaymentsSelectUsersAdapter(requireContext(), filteredUsers)
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(resources.getString(R.string.select_user))
+            .setAdapter(userAdapter, null)
+            .setPositiveButton(resources.getString(R.string.save)) { _, _ ->
+//                TODO: uploadBuyerData() from Room
+            }
+            .setNegativeButton(resources.getString(R.string.cancel), null)
+            .show()
     }
 
     private fun bindData() {
@@ -103,7 +126,13 @@ class InvoicesTemplateFragment: BaseFragment() {
         binding.saveButton.setOnClickListener {
             generatePdfAWithTemplate(requireContext(), false)
             lifecycleScope.launch {
-                updateUserInfo()
+                invoicesViewModel.updateUserInfo(
+                    binding.sellerNameSurname.text.toString(),
+                    binding.sellerNip.text.toString(),
+                    binding.sellerStreet.text.toString(),
+                    binding.sellerPostalCode.text.toString(),
+                    binding.sellerTown.text.toString()
+                )
             }
 
         }
@@ -111,7 +140,13 @@ class InvoicesTemplateFragment: BaseFragment() {
         binding.saveDownloadButton.setOnClickListener {
             generatePdfAWithTemplate(requireContext(), true)
             lifecycleScope.launch {
-                updateUserInfo()
+                invoicesViewModel.updateUserInfo(
+                    binding.sellerNameSurname.text.toString(),
+                    binding.sellerNip.text.toString(),
+                    binding.sellerStreet.text.toString(),
+                    binding.sellerPostalCode.text.toString(),
+                    binding.sellerTown.text.toString()
+                )
             }
         }
     }
@@ -132,6 +167,10 @@ class InvoicesTemplateFragment: BaseFragment() {
                 date.setText(formattedDate)
             }
         }
+    }
+
+    fun uploadBuyerData(){
+
     }
 
 

@@ -36,20 +36,27 @@ class RegisterViewModel : ViewModel() {
     }
 
     private fun isUsernameValid(username: String): Boolean {
-        return username.length >= 3 && Regex("^[a-zA-Z0-9]+$").matches(username)
+        return username.length >= 3 && Regex("^[a-zA-Z0-9\\s]+$").matches(username)
     }
 
-    fun registerDataChanged(username: String, email: String, password: String, confirmPassword: String){
+    fun usernameDataChanged(username: String) {
         if (!isUsernameValid(username)) {
-            _registerForm.value = RegisterFormState(usernameError  = R.string.invalid_username)
-        } else if (!isEmailValid(email)){
+            _registerForm.value = RegisterFormState(usernameError = R.string.invalid_username)
+        }
+    }
+    fun emailDataChanged(email: String) {
+        if (!isEmailValid(email)) {
             _registerForm.value = RegisterFormState(emailAddressError = R.string.invalid_email)
-        } else if (!isPasswordValid(password)){
+        }
+    }
+    fun passwordDataChanged(password: String) {
+        if (!isPasswordValid(password)) {
             _registerForm.value = RegisterFormState(passwordError = R.string.invalid_password)
-        } else if (!isConfirmPasswordValid(password, confirmPassword)){
+        }
+    }
+    fun confirmPasswordDataChanged(password: String, confirmPassword: String) {
+        if (!isConfirmPasswordValid(password, confirmPassword)) {
             _registerForm.value = RegisterFormState(confirmPasswordError = R.string.invalid_confirm_password)
-        } else {
-            _registerForm.value = RegisterFormState(isDataValid = true)
         }
     }
     fun signupClicked(username: String, email: String, password: String){

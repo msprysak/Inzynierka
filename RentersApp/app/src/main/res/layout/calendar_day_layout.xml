@@ -9,6 +9,7 @@
     app:cardBackgroundColor="?attr/colorPrimaryContainer"
     android:layout_margin="4dp">
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -31,9 +32,9 @@
 
         <View
             android:id="@+id/rectangleView"
-            android:layout_width="20dp"
-            android:layout_height="5dp"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
             android:layout_marginBottom="5dp"
             android:layout_gravity="bottom|center_horizontal"
-            android:background="@drawable/today_bg" />
+            android:background="@drawable/selected_bg" />
 </androidx.cardview.widget.CardView>

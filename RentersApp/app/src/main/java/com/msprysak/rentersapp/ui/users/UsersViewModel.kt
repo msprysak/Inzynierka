@@ -11,7 +11,7 @@ class UsersViewModel: ViewModel() {
 
     val userRepository = UserRepositoryInstance.getInstance()
 
-    private val premisesRepository = PremisesRepository.getInstance(userRepository.user)
+    val premisesRepository = PremisesRepository.getInstance(userRepository.user)
 
     fun fetchUsers(): LiveData<List<User>> {
         // Sprawdź, czy premisesRepository.premises i premisesRepository.premises.value nie są null

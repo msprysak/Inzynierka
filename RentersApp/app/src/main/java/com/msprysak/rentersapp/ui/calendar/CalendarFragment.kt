@@ -3,6 +3,7 @@ package com.msprysak.rentersapp.ui.calendar
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorRes
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.children
 import androidx.core.view.isVisible
@@ -73,14 +76,7 @@ class CalendarFragment: BaseFragment() {
             addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
         }
 
-        val daysOfWeek = daysOfWeek()
-        val currentMonth = YearMonth.now()
-        val startMonth = currentMonth.minusMonths(200)
-        val endMonth = currentMonth.plusMonths(200)
-        binding.calendarRecyclerView.setup(startMonth, endMonth, daysOfWeek.first())
-        binding.calendarRecyclerView.scrollToMonth(currentMonth)
-        configureBinders(daysOfWeek)
-
+       updateAdapterForDate(today)
         binding.calendarRecyclerView.monthScrollListener = { month ->
             val monthDisplayName =
                 month.yearMonth.month.getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault())
@@ -89,13 +85,8 @@ class CalendarFragment: BaseFragment() {
             val result = "$formattedMonth ${month.yearMonth.year}"
             binding.monthYearText.text = result
 
-            selectDate(month.yearMonth.atDay(1))
-            selectedDate?.let {
-                // Clear selection if we scroll to a new month.
-                selectedDate = null
-                binding.calendarRecyclerView.notifyDateChanged(it)
-            }
         }
+
         binding.nextMonthImage.setOnClickListener {
             binding.calendarRecyclerView.findFirstVisibleMonth()?.let {
                 binding.calendarRecyclerView.smoothScrollToMonth(it.yearMonth.nextMonth)
@@ -106,6 +97,16 @@ class CalendarFragment: BaseFragment() {
             binding.calendarRecyclerView.findFirstVisibleMonth()?.let {
                 binding.calendarRecyclerView.smoothScrollToMonth(it.yearMonth.previousMonth)
             }
+        }
+
+        val daysOfWeek = daysOfWeek()
+        val currentMonth = YearMonth.now()
+        val startMonth = currentMonth.minusMonths(200)
+        val endMonth = currentMonth.plusMonths(200)
+        configureBinders(daysOfWeek)
+        binding.calendarRecyclerView.apply {
+            setup(startMonth, endMonth, daysOfWeek.first())
+            scrollToMonth(currentMonth)
         }
 
         binding.addButton.setOnClickListener{inputDialog.show()}
@@ -123,11 +124,13 @@ class CalendarFragment: BaseFragment() {
     }
     private val eventsAdapter = CalendarAdapter {
         AlertDialog.Builder(requireContext())
-            .setMessage(R.string.calendar)
+            .setMessage(R.string.delete_event)
             .setPositiveButton(R.string.delete) { _, _ ->
                 deleteEvent(it)
             }
-            .setNegativeButton(R.string.cancel, null)
+            .setNegativeButton(R.string.cancel){
+                dialog, _ -> dialog.dismiss()
+            }
             .show()
     }
     private fun deleteEvent(event: CalendarEvent) {
@@ -184,18 +187,21 @@ class CalendarFragment: BaseFragment() {
 
                             cardViewLayout.setCardBackgroundColor(colorTertiaryContainer!!)
                             rectangleView.isVisible = calendarEvents[today].orEmpty().isNotEmpty()
+                            if (selectedDate == today) {
+                                textView.setTextColor(getColorFromAttribute(com.google.android.material.R.attr.colorOnSecondary))
+                                cardViewLayout.setCardBackgroundColor(setColor(com.google.android.material.R.attr.colorSecondary))
+                                rectangleView.isVisible = calendarEvents[selectedDate].orEmpty().isNotEmpty()
+                            }
                         }
                         selectedDate -> {
-                            textView.setTextColorRes(R.color.md_theme_dark_background)
-
-                            rectangleView.setBackgroundResource(R.drawable.selected_bg)
+                            textView.setTextColor(getColorFromAttribute(com.google.android.material.R.attr.colorOnSecondary))
+                            cardViewLayout.setCardBackgroundColor(setColor(com.google.android.material.R.attr.colorSecondary))
                             rectangleView.isVisible = calendarEvents[selectedDate].orEmpty().isNotEmpty()
-
 
                         }
                         else -> {
-                            textView.setTextColorRes(context?.obtainStyledAttributes(intArrayOf(
-                                com.google.android.material.R.attr.colorOnPrimaryContainer)) ?.getResourceId(0, 0) ?: 0)
+                            textView.setTextColor(getColorFromAttribute(com.google.android.material.R.attr.colorOnPrimaryContainer))
+                            cardViewLayout.setCardBackgroundColor(setColor(com.google.android.material.R.attr.colorPrimaryContainer))
                             rectangleView.isVisible = calendarEvents[data.date].orEmpty().isNotEmpty()
                         }
                     }
@@ -230,14 +236,27 @@ class CalendarFragment: BaseFragment() {
             }
     }
 
+    private fun getColorFromAttribute(@AttrRes colorAttribute: Int): Int {
+        val typedValue = TypedValue()
+        context?.theme?.resolveAttribute(colorAttribute, typedValue, true)
+        return typedValue.data
+    }
+    private fun setColor(@ColorRes colorAttributes: Int): Int {
+        val attrs = intArrayOf(colorAttributes)
+        val typedArray = context?.obtainStyledAttributes(attrs)
+        val color = typedArray?.getColor(0, 0)
+        typedArray?.recycle()
+        return color!!
+    }
+
     private fun selectionFormatter(date: LocalDate, withDay: Boolean) : String {
         val monthDisplayName = date.month.getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault())
         val formattedMonth = monthDisplayName.substring(0, 1).toUpperCase(Locale.getDefault()) +
                 monthDisplayName.substring(1)
-        if (withDay)
-            return "${date.dayOfMonth} $formattedMonth ${date.year}"
+        return if (withDay)
+            "${date.dayOfMonth} $formattedMonth ${date.year}"
         else
-            return "$formattedMonth ${date.yearMonth.year}"
+            "$formattedMonth ${date.yearMonth.year}"
     }
 
 
@@ -249,11 +268,10 @@ class CalendarFragment: BaseFragment() {
             addView(editText, FrameLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
         }
         AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.calendar))
+            .setTitle(getString(R.string.new_event))
             .setView(layout)
             .setPositiveButton(R.string.save) { _, _ ->
                 saveEvent(editText.text.toString())
-                // Prepare EditText for reuse.
                 editText.setText("")
             }
             .setNegativeButton(R.string.cancel, null)
@@ -281,6 +299,8 @@ class CalendarFragment: BaseFragment() {
             selectedDate?.let {
                 calendarEvents[it] =
                     calendarEvents[it].orEmpty().plus(CalendarEvent(UUID.randomUUID().toString(), text, it))
+                println("Calendar event date: $it and text: $text")
+                calendarViewModel.addTask(text, it)
                 updateAdapterForDate(it)
             }
         }

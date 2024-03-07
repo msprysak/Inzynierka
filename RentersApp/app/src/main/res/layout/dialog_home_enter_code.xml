@@ -56,21 +56,23 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/cancelButton"
             android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:hint="@string/cancel"
             android:layout_marginEnd="30dp"
             android:layout_marginTop="30dp"
+            android:textColorHint="?attr/colorOnPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/confirmButton"
             app:layout_constraintTop_toBottomOf="@id/enterCodeInputContainer"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/confirmButton"
             android:layout_width="115dp"
             android:layout_height="wrap_content"
+            android:textColorHint="?attr/colorOnPrimary"
             android:hint="@string/confirm"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/cancelButton"

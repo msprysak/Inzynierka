@@ -57,22 +57,30 @@ class RegisterFragment : BaseFragment() {
             if (registerFormState == null) {
                 return@observe
             }
-            registerButton.isEnabled = registerFormState.isDataValid
+            registerButton.isEnabled = true
+
             registerFormState.usernameError?.let {
-                usernameEditText.error = getString(it)
+                binding.usernameTextInputLayout.helperText = getString(it)
             }
             registerFormState.emailAddressError?.let {
-                binding.emailEditText.error = getString(it)
+                binding.emailTextInputLayout.helperText = getString(it)
             }
             registerFormState.passwordError?.let {
-                binding.passwordEditText.error = getString(it)
+                binding.passwordTextInputLayout.helperText = getString(it)
             }
             registerFormState.confirmPasswordError?.let {
-                binding.confirmPasswordEditText.error = getString(it)
+                binding.confirmPasswordTextInputLayout.helperText = getString(it)
             }
             registerFormState.signupError?.let {
                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
             }
+            if (registerFormState.signupSuccess != null)
+                registerFormState.signupSuccess?.let {
+                    if (it) {
+                        startApp()
+                        Toast.makeText(context, R.string.register_success, Toast.LENGTH_SHORT).show()
+                    }
+                }
             registerFormState.signupSuccess?.let {
                 if (it) {
                     startApp()
@@ -95,17 +103,20 @@ class RegisterFragment : BaseFragment() {
 
             override fun afterTextChanged(s: Editable) {
                 val username = usernameEditText.text.toString()
+                binding.usernameTextInputLayout.isHelperTextEnabled = false
                 val email = emailEditText.text.toString()
+                binding.emailTextInputLayout.isHelperTextEnabled = false
                 val password = passwordEditText.text.toString()
+                binding.passwordTextInputLayout.isHelperTextEnabled = false
                 val confirmPassword = confirmPasswordEditText.text.toString()
-                registerViewModel.registerDataChanged(
-                    username,
-                    email,
-                    password,
-                    confirmPassword
-                )
+                binding.confirmPasswordTextInputLayout.isHelperTextEnabled = false
+                registerViewModel.usernameDataChanged(username)
+                registerViewModel.emailDataChanged(email)
+                registerViewModel.passwordDataChanged(password)
+                registerViewModel.confirmPasswordDataChanged(password, confirmPassword)
             }
         }
+
         usernameEditText.addTextChangedListener(afterTextChangedListener)
         emailEditText.addTextChangedListener(afterTextChangedListener)
         passwordEditText.addTextChangedListener(afterTextChangedListener)

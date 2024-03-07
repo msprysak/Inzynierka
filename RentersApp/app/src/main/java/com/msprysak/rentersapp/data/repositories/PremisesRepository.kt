@@ -9,9 +9,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.msprysak.rentersapp.interfaces.CallBack
 import com.msprysak.rentersapp.data.model.Premises
 import com.msprysak.rentersapp.data.model.User
+import com.msprysak.rentersapp.interfaces.CallBack
+import java.time.LocalDate
 
 class PremisesRepository private  constructor(private val userData: LiveData<User>) {
 
@@ -113,6 +114,7 @@ class PremisesRepository private  constructor(private val userData: LiveData<Use
                 Log.d(DEBUG, "editPremisesData: ${it.message}")
             }
     }
+
 
      fun getPremisesData(): LiveData<Premises> {
         val docRef = cloud.collection("premises")
@@ -239,6 +241,29 @@ class PremisesRepository private  constructor(private val userData: LiveData<Use
         TODO("Not yet implemented")
     }
 
+    fun addTask(title: String, date: LocalDate) {
+
+        val taskData = mapOf("title" to title, "date" to date.atStartOfDay())
+        cloud.collection("calendarTasks")
+            .document(premises.value!!.premisesId!!)
+            .collection("calendarTask")
+            .document()
+            .set(taskData)
+    }
+
+    fun getCalendarTasks(){
+        cloud.collection("calendarTasks")
+            .document(premises.value!!.premisesId!!)
+            .collection("tasks")
+            .addSnapshotListener { querySnapshot, e ->
+                if (e != null) {
+                    return@addSnapshotListener
+                }
+                for (document in querySnapshot!!) {
+                    Log.d(DEBUG, "getCalendarTasks: ${document.data}")
+                }
+            }
+    }
     private fun getPremisesPhotoDownloadUrl(storage: StorageReference) {
         storage.downloadUrl
             .addOnSuccessListener { updatePremisesPhoto(it.toString()) }
@@ -246,6 +271,7 @@ class PremisesRepository private  constructor(private val userData: LiveData<Use
                 Log.d(DEBUG, "getPhotoDownloadUrl: ${it.message}")
             }
     }
+
 
     private fun updatePremisesPhoto(url: String?) {
         cloud.collection("premises")
