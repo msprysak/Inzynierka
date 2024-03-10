@@ -101,7 +101,7 @@
     <string name="home">Dom</string>
     <string name="show_home_info">Pokaż informacje o mieszkaniu</string>
     <string name="payments">Płatności</string>
-    <string name="chat">Chat</string>
+    <string name="chat">Czat</string>
     <string name="profile">Profil</string>
     <string name="notifications">Powiadomienia</string>
     <string name="settings">Ustawienia</string>
@@ -134,7 +134,7 @@
     <string name="enter_code">Wprowadź kod</string>
     <string name="enter_title">Wprowadź tytuł</string>
     <string name="title">Tytuł</string>
-    <string name="join_to_group_request">Prośba o dołaczenie do grupy</string>
+    <string name="join_to_group_request">Prośba o dołaczenie do lokalu</string>
     <string name="accept">Akceptuj</string>
     <string name="delete">Usuń</string>
     <string name="preview">Podgląd</string>
@@ -170,7 +170,7 @@
     <string name="since">Od:</string>
     <string name="until">Do:</string>
     <string name="delete_report">Usuń zgłoszenie</string>
-    <string name="paid">Opłacono</string>
+    <string name="paid">Zapłacono</string>
     <string name="payment_paid">Opłacono płatność</string>
     <string name="add_new_home">Dodaj nowe mieszkanie</string>
     <string name="premises_name">Nazwa Domu\n</string>

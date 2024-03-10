@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/calendarFragment"
-        android:title="@string/main_page"
+        android:title="@string/calendar"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_calendar"
         />
     <item
         android:id="@+id/paymentsFragment"

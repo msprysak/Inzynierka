@@ -31,6 +31,7 @@ class PaymentLandlordHistoryItem(
             binding.sentPaymentDate.text = formatDate(payment.modificationDate!!)
             binding.sentPaymentDateLabel.visibility = RecyclerView.VISIBLE
         } else {
+            binding.sentPaymentDateLabel.visibility = RecyclerView.GONE
             binding.sentPaymentDate.visibility = RecyclerView.GONE
         }
         Glide.with(binding.root)
@@ -50,7 +51,7 @@ class PaymentLandlordHistoryItem(
     fun changeStatus(paymentStatus: String){
         when(paymentStatus){
             "paid" -> binding.paymentStatus.text = "Zapłacono"
-            "pending" -> binding.paymentStatus.text = "Oczekuje"
+            "pending" -> binding.paymentStatus.text = "Oczekuje na zatwierdzenie"
             else -> binding.paymentStatus.text = "Nie zapłacono"
         }
     }

@@ -32,7 +32,7 @@ class TenantItem(
             binding.phoneNumberPlaceholder.text = user.phoneNumber
         }
         if (user.houseRoles?.containsValue("landlord") != true) {
-            binding.roleTextView.text = "Wynajmujący"
+            binding.roleTextView.text = "Najemca"
         }
 
         binding.emailTextView.text = user.email

@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/calendarFragment"
         android:name="com.msprysak.rentersapp.ui.calendar.CalendarFragment"
-        android:label="@string/main_page"
+        android:label="@string/calendar"
         tools:layout="@layout/fragment_calendar" />
     <fragment
         android:id="@+id/chatFragment"
