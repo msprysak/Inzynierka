@@ -137,7 +137,7 @@
     <fragment
         android:id="@+id/addPremisesFragment"
         android:name="com.msprysak.rentersapp.ui.addpremises.AddPremisesFragment"
-        android:label="Dodaj mieszkanie" />
+        android:label="Zarządzaj mieszkaniami" />
     <fragment
         android:id="@+id/mediaFragment"
         android:name="com.msprysak.rentersapp.ui.media.MediaFragment"
@@ -153,6 +153,10 @@
                 android:name="media"
                 app:argType="com.msprysak.rentersapp.data.model.Media" />
 
+            <argument
+                android:name="user"
+                app:argType="com.msprysak.rentersapp.data.model.User" />
+
 
         </action>
 
@@ -165,7 +169,16 @@
     <fragment
         android:id="@+id/fullMediaFragment"
         android:name="com.msprysak.rentersapp.ui.media.FullMediaFragment"
-        android:label="Media" />
+        android:label="Media" >
+        <action
+            android:id="@+id/action_fullMediaFragment_to_imageFullScreen"
+            app:destination="@id/imageFullScreen">
+
+            <argument
+                android:name="imageUri"
+                app:argType="string" />
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/contractsFragment"
         android:name="com.msprysak.rentersapp.ui.contracts.ContractsFragment"
@@ -178,6 +191,15 @@
         <action
             android:id="@+id/action_invoicesFragment_to_invoicesTemplateFragment"
             app:destination="@id/invoicesTemplateFragment" />
+        <action
+            android:id="@+id/action_invoicesFragment_to_pdfViewerFragment"
+            app:destination="@id/pdfViewerFragment"
+            >
+
+            <argument
+                android:name="item"
+                app:argType="com.msprysak.rentersapp.data.model.PdfFile" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/invoicesTemplateFragment"
@@ -188,5 +210,10 @@
         android:name="com.msprysak.rentersapp.ui.users.UserInfoFragment"
         android:label="Podgląd użytkownika"
         tools:layout="@layout/fragment_user_info" />
+    <fragment
+        android:id="@+id/pdfViewerFragment"
+        android:name="com.msprysak.rentersapp.ui.invoices.PdfViewerFragment"
+        android:label="Podgląd faktury"
+        tools:layout="@layout/fragment_pdf_viewer" />
 
 </navigation>

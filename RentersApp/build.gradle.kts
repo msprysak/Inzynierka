@@ -6,6 +6,7 @@ buildscript {
         mavenCentral()
         maven("https://jitpack.io")
         maven("https://repo.itextsupport.com/android")
+        maven("https://jcenter.bintray.com")
     }
     dependencies {
         classpath("com.google.gms:google-services:4.4.0")

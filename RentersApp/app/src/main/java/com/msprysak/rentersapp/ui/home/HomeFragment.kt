@@ -71,7 +71,6 @@ class HomeFragment : BaseFragment() {
         val address = binding.addressEditText.text.toString()
 
         if (imageBitmap != null) {
-            // Zapisz zdjęcie tylko, jeśli zostało wybrane
             val stream = ByteArrayOutputStream()
             val result = imageBitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             val byteArray = stream.toByteArray()
@@ -92,7 +91,6 @@ class HomeFragment : BaseFragment() {
     private fun setupTextChangeListeners() {
         binding.homeNameEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Niepotrzebna implementacja
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -100,13 +98,11 @@ class HomeFragment : BaseFragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                // Niepotrzebna implementacja
             }
         })
 
         binding.addressEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Niepotrzebna implementacja
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -114,7 +110,6 @@ class HomeFragment : BaseFragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                // Niepotrzebna implementacja
             }
         })
 

@@ -2,12 +2,19 @@ package com.msprysak.rentersapp.data.repositories
 
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.msprysak.rentersapp.data.UserRepositoryInstance
-import com.msprysak.rentersapp.interfaces.CallBack
 import com.msprysak.rentersapp.data.model.Media
+import com.msprysak.rentersapp.data.model.Reports
+import com.msprysak.rentersapp.data.model.User
+import com.msprysak.rentersapp.interfaces.CallBack
 import java.util.Date
 import java.util.UUID
 
@@ -23,6 +30,43 @@ class MediaRepository {
     private val currentUserId = userInstance.getUserData().value!!.userId
 
 
+    fun mediaListenerV2(): LiveData<List<Pair<Media,User>>>{
+        val mediaLiveData = MutableLiveData<List<Pair<Media, User>>>()
+
+        cloud.collection("media")
+            .whereEqualTo("premisesId", premisesInstance.premises.value!!.premisesId!!)
+            .orderBy("creationDate", Query.Direction.DESCENDING)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.w(DEBUG, "Listen failed.", e)
+                    return@addSnapshotListener
+                }
+                val reports = mutableListOf<Pair<Media, User>>()
+
+                val tasks = mutableListOf<Task<DocumentSnapshot>>()
+
+                for (doc in snapshot!!) {
+                    val report = doc.toObject(Reports::class.java)
+                    val userTask = cloud.collection("users").document(report.userId!!)
+                        .get()
+
+                    tasks.add(userTask)
+                }
+                Tasks.whenAllSuccess<DocumentSnapshot>(tasks)
+                    .addOnSuccessListener { userSnapshots ->
+                        for ((index, doc) in snapshot.withIndex()) {
+                            val media = doc.toObject(Media::class.java)
+                            val user = userSnapshots[index].toObject(User::class.java)
+                            reports.add(Pair(media, user!!))
+                        }
+                        mediaLiveData.postValue(reports)
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.d(DEBUG, "setupReportsObserver: ${exception.message}")
+                    }
+            }
+        return mediaLiveData
+    }
     fun setupMediaListener(callBack: (List<Media>) -> Unit){
 
         cloud.collection("media")
@@ -102,7 +146,6 @@ class MediaRepository {
 
                                 mediaDocRef.set(mediaData)
                                     .addOnSuccessListener {
-                                        //Log.d(DEBUG, "DocumentSnapshot successfully written!")
                                         callBack.onSuccess()
                                     }
                                     .addOnFailureListener { e ->

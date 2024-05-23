@@ -23,10 +23,10 @@ import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.adapters.PaymentsSelectUsersAdapter
 import com.msprysak.rentersapp.adapters.TenantsAdapter
-import com.msprysak.rentersapp.interfaces.CallBack
-import com.msprysak.rentersapp.interfaces.OnItemClickListener
 import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.databinding.FragmentPaymentsLandlordBinding
+import com.msprysak.rentersapp.interfaces.CallBack
+import com.msprysak.rentersapp.interfaces.OnItemClickListener
 import java.sql.Date
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
@@ -111,11 +111,9 @@ class PaymentsLandlordFragment : BaseFragment(), OnItemClickListener {
     private fun setupTextChangeListeners() {
         binding.paymentTitle.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Niepotrzebna implementacja
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Niepotrzebna implementacja
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -128,11 +126,9 @@ class PaymentsLandlordFragment : BaseFragment(), OnItemClickListener {
 
         binding.paymentAmount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Niepotrzebna implementacja
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Niepotrzebna implementacja
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -140,7 +136,6 @@ class PaymentsLandlordFragment : BaseFragment(), OnItemClickListener {
                 if (!amountString.isNullOrBlank()) {
                     paymentsViewModel.setPaymentAmount(amountString.toDouble())
                 } else {
-                    // Ustaw wartość domyślną lub obsłuż, co chcesz zrobić dla pustego stringa
                     paymentsViewModel.setPaymentAmount(0.0)
                 }
             }
@@ -335,7 +330,6 @@ class PaymentsLandlordFragment : BaseFragment(), OnItemClickListener {
     }
 
     override fun onTenantClick(item: Any, anchorView: View) {
-//        NIEPOTRZEBNA IMPLEMENTACJA
     }
 
 }

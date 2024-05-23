@@ -11,7 +11,7 @@ import java.util.Locale
 class ReportItem(private val binding: ItemReportBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bindReportsRecyclerView(report: Reports) {
         binding.reportTitle.text = report.reportTitle
-        binding.reportDescription.text = report.reportDescription
+        binding.reportDescription.text = "Opis: ${report.reportDescription}"
         binding.reportDate.text = formatReportDate(report.reportDate!!.toDate())
         if (report.reportImages.isNotEmpty()){
             Glide.with(binding.root)

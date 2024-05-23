@@ -121,12 +121,12 @@
                 android:id="@+id/media_title_static"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title"
+                android:text="Tytuł:"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
                 app:layout_constraintTop_toBottomOf="@id/photo_taken_date_static"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/reporter_image"
                 app:layout_constraintEnd_toEndOf="parent"
 
                 />
@@ -139,7 +139,7 @@
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
                 app:layout_constraintTop_toBottomOf="@id/media_title_static"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/reporter_image"
                 app:layout_constraintEnd_toEndOf="parent"
 
                 />
@@ -164,7 +164,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:enabled="true"
-            android:text="@string/delete"
+            android:text="Usuń media"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/images_recycler_view"

@@ -1,9 +1,11 @@
 package com.msprysak.rentersapp.ui.media
 
 import android.net.Uri
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.msprysak.rentersapp.data.model.Media
+import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.data.repositories.MediaRepository
 import com.msprysak.rentersapp.interfaces.CallBack
 import java.sql.Date
@@ -26,6 +28,9 @@ class MediaViewModel: ViewModel() {
         _media.value = Media()
     }
 
+    fun setupObserver(): LiveData<List<Pair<Media, User>>> {
+        return mediaRepository.mediaListenerV2()
+    }
     fun setupMediaListener(){
         mediaRepository.setupMediaListener {
             _mediaList.value = it

@@ -29,7 +29,6 @@ class RegisterFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
         auth = Firebase.auth
@@ -51,7 +50,6 @@ class RegisterFragment : BaseFragment() {
 
         registerButton.isEnabled = false
 
-//        RegisterViewModel.registerFormState.observe observes the LiveData object in the RegisterViewModel class.
         registerViewModel.registerFormState.observe(viewLifecycleOwner
         ) { registerFormState ->
             if (registerFormState == null) {
@@ -94,11 +92,9 @@ class RegisterFragment : BaseFragment() {
 
         val afterTextChangedListener = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // ignore
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // ignore
             }
 
             override fun afterTextChanged(s: Editable) {

@@ -1,6 +1,8 @@
 package com.msprysak.rentersapp.ui.users
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +33,16 @@ class UserInfoFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         user = arguments?.getParcelable("user")!!
         setupUI()
+
+        setupSavebutton()
+        _binding!!.usernameText.addTextChangedListener(afterTextChangedListener)
+        _binding!!.peselNipText.addTextChangedListener(afterTextChangedListener)
+        _binding!!.emailAddressText.addTextChangedListener(afterTextChangedListener)
+        _binding!!.phoneNumberEditText.addTextChangedListener(afterTextChangedListener)
+        _binding!!.sellerStreet.addTextChangedListener(afterTextChangedListener)
+        _binding!!.sellerPostalCode.addTextChangedListener(afterTextChangedListener)
+        _binding!!.sellerTown.addTextChangedListener(afterTextChangedListener)
+
     }
 
     suspend fun updateUserInfo(sellerNameSurname: String, sellerNip: String, sellerStreet: String, sellerPostalCode: String, sellerCity: String) {
@@ -45,8 +57,20 @@ class UserInfoFragment: BaseFragment() {
         )
     }
 
+    val afterTextChangedListener = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        }
+
+        override fun afterTextChanged(s: Editable) {
+            _binding!!.saveButton.isEnabled = true
+        }
+    }
     private fun setupSavebutton() {
         val binding = _binding!!
+        binding.saveButton.isEnabled = false
         binding.saveButton.setOnClickListener {
             val sellerNameSurname = binding.usernameText.text.toString()
             val sellerNip = binding.peselNipText.text.toString()
@@ -57,6 +81,7 @@ class UserInfoFragment: BaseFragment() {
             CoroutineScope(Dispatchers.Main).launch {
                 updateUserInfo(sellerNameSurname, sellerNip, sellerStreet, sellerPostalCode, sellerCity)
             }
+            binding.saveButton.isEnabled = false
         }
     }
     private fun setupUI() {

@@ -8,7 +8,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.badge.BadgeDrawable
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.data.UserRepositoryInstance
 import com.msprysak.rentersapp.data.repositories.JoinRequestRepository
@@ -65,28 +64,12 @@ class MainActivity : AppCompatActivity() {
         repository.fetchUserData()
         repository.getUserData().observe(this) { user ->
             if (user != null && !::premisesRepository.isInitialized) {
-                // Inicjalizuj premisesRepository tylko jeśli nie zostało jeszcze zainicjowane
                 premisesRepository = PremisesRepository.getInstance(repository.getUserData())
                 premisesRepository.getPremisesData().observe(this) { premises ->
                     binding.premisesName.text = premises.name
                     if (premises != null) {
-                        // Inicjalizuj joinRequestRepository tylko jeśli nie zostało jeszcze zainicjowane
                         joinRequestRepository = JoinRequestRepository(repository.getUserData())
                         joinRequestRepository.fetchJoinRequests()
-                        val badgeDrawable = BadgeDrawable.create(this)
-                        joinRequestRepository.joinRequestListener().observe(this) { joinRequests ->
-                            if (joinRequests.isNotEmpty()) {
-//                                badgeDrawable.isVisible = true
-//                                binding.bottomNavigationView.getOrCreateBadge(R.id.notificationsFragment)
-//                                    .apply {
-//                                        badgeDrawable.isVisible = true
-//                                        badgeDrawable.number = joinRequests.size
-//                                    }
-                            } else {
-//                                badgeDrawable.isVisible = false
-//                                binding.bottomNavigationView.removeBadge(R.id.notificationsFragment)
-                            }
-                        }
                     }
                 }
             }

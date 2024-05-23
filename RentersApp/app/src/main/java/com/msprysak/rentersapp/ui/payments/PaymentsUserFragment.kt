@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.adapters.PaymentHistoryAdapter
-import com.msprysak.rentersapp.interfaces.PaymentClickListener
 import com.msprysak.rentersapp.data.model.PaymentWithUser
 import com.msprysak.rentersapp.databinding.FragmentPaymentsUserBinding
 import com.msprysak.rentersapp.interfaces.CallBack
+import com.msprysak.rentersapp.interfaces.PaymentClickListener
 
 class PaymentsUserFragment: BaseFragment(), PaymentClickListener {
 
@@ -72,7 +72,6 @@ class PaymentsUserFragment: BaseFragment(), PaymentClickListener {
         paymentsViewModel.updatePaymentStatus(payment.payment.paymentId!!, "pending", object :
             CallBack {
             override fun onSuccess() {
-//                paymentsViewModel.getPaymentsForUser()
                 Toast.makeText(context, "Wysłano prośbę w celu potwierdzenia płatności", Toast.LENGTH_SHORT).show()
             }
 

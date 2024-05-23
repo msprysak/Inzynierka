@@ -15,7 +15,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.databinding.FragmentAddUsersBinding
-import com.msprysak.rentersapp.ui.menu.MenuViewModel
 
 class AddUsersFragment : BaseFragment() {
 
@@ -76,7 +75,7 @@ class AddUsersFragment : BaseFragment() {
             }
 
             override fun onFinish() {
-                timer.text = "0 s"
+                timer.text = "Wygeneruj nowy kod!"
             }
         }
 
@@ -94,15 +93,12 @@ class AddUsersFragment : BaseFragment() {
         codeTextView: View,
         createCodeButton: View
     ) {
-        // Przywróć widoczność placeholderTime i codeTextView
         chronometer.visibility = View.VISIBLE
         codeTextView.visibility = View.VISIBLE
-
 
         val params = createCodeButton.layoutParams as ConstraintLayout.LayoutParams
         params.topToBottom = codeTextView.id
         createCodeButton.layoutParams = params
-
 
     }
 }

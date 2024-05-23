@@ -151,7 +151,7 @@ class CalendarFragment: BaseFragment() {
 
     private fun configureBinders(daysOfWeek: List<DayOfWeek>) {
         class DayViewContainer(view: View) : ViewContainer(view) {
-            lateinit var day: CalendarDay // Will be set when this container is bound.
+            lateinit var day: CalendarDay
             val binding = CalendarDayLayoutBinding.bind(view)
 
             init {
@@ -221,7 +221,6 @@ class CalendarFragment: BaseFragment() {
             object : MonthHeaderFooterBinder<MonthViewContainer> {
                 override fun create(view: View) = MonthViewContainer(view)
                 override fun bind(container: MonthViewContainer, data: CalendarMonth) {
-                    // Setup each header day text if we have not done that already.
                     if (container.legendLayout.tag == null) {
                         container.legendLayout.tag = data.yearMonth
                         container.legendLayout.children.map { it as TextView }
@@ -278,13 +277,11 @@ class CalendarFragment: BaseFragment() {
             .create()
             .apply {
                 setOnShowListener {
-                    // Show the keyboard
                     editText.requestFocus()
                     context.inputMethodManager
                         .toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
                 }
                 setOnDismissListener {
-                    // Hide the keyboard
                     dismiss()
                 }
             }

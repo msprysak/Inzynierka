@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.ImageHelper
 import com.msprysak.rentersapp.adapters.ReportsPhotoAdapter
-import com.msprysak.rentersapp.interfaces.CallBack
 import com.msprysak.rentersapp.data.model.Reports
 import com.msprysak.rentersapp.databinding.FragmentAddReportBinding
+import com.msprysak.rentersapp.interfaces.CallBack
 import kotlin.math.min
 
 class AddEditReportsFragment : BaseFragment() {
@@ -111,7 +111,6 @@ class AddEditReportsFragment : BaseFragment() {
         galleryLauncher.launch(galleryIntent)
     }
 
-    // Definicja launcher'a do obsługi wyników z galerii
     private val galleryLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -133,7 +132,6 @@ class AddEditReportsFragment : BaseFragment() {
             updatedList.add(data.data!!)
         }
 
-        // Ustaw nową wartość dla selectedImages
         selectedImages.value = updatedList
         photoAdapter.updateList(selectedImages.value!!)
     }

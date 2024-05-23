@@ -90,9 +90,6 @@ class PaymentsViewModel : ViewModel() {
         }
     }
 
-    fun checkData(){
-//        println(paymentRepository.checkData())
-    }
     fun fetchUsers(){
 
         premisesRepository.fetchUsers{

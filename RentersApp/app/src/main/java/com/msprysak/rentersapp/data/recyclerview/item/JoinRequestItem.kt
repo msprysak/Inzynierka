@@ -2,9 +2,9 @@ package com.msprysak.rentersapp.data.recyclerview.item
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.msprysak.rentersapp.interfaces.OnItemClickListener
 import com.msprysak.rentersapp.data.model.Request
 import com.msprysak.rentersapp.databinding.ItemNotificationsJoinRequestBinding
+import com.msprysak.rentersapp.interfaces.OnItemClickListener
 
 class JoinRequestItem(
     private val binding: ItemNotificationsJoinRequestBinding,

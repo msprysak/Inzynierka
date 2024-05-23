@@ -87,7 +87,7 @@ class InvoicesViewModel(private val roomRepository: UserInfoRepository) : ViewMo
     }
 
     fun deleteFile(item: PdfFile, callBack: CallBack) {
-        repository.deletePdfFile(item.fileId.toString(), callBack, "invoices")
+        repository.deletePdfFile(item.fileId.toString(), callBack)
     }
 
 

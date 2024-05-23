@@ -69,7 +69,6 @@ class NotificationsFragment : BaseFragment(), OnItemClickListener {
         if (item is Request) {
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
-//                    Zaakceptuj prośbę o dołączenie
                     R.id.accept -> {
                          notificationsViewModel.acceptJoinRequest(item, object: CallBack {
                              override fun onSuccess() {
@@ -83,7 +82,6 @@ class NotificationsFragment : BaseFragment(), OnItemClickListener {
                          })
                         true
                     }
-//                    Odrzuć prośbę o dołączenie
 
                     R.id.decline -> {
                          notificationsViewModel.rejectJoinRequest(item, object: CallBack {
@@ -103,7 +101,6 @@ class NotificationsFragment : BaseFragment(), OnItemClickListener {
                 }
             }
 
-            // Pokaż PopupMenu obok przycisku
             popupMenu.show()
         }
     }

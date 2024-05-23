@@ -20,7 +20,6 @@ class RegistrationActivity : AppCompatActivity() {
         isCurrentUser()
     }
 
-// Function isCurrentUser() checks if the user is already logged in. If the user is logged in, the user is redirected to the MainActivity.
     private fun isCurrentUser() {
         fbAuth.currentUser?.let { auth ->
             val intent = Intent(this, CreateHomeActivity::class.java).apply{

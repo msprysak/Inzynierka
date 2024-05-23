@@ -50,6 +50,8 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.annotation:annotation:1.6.0")
 
+//pdfviewer
+    implementation("com.github.mhiew:android-pdf-viewer:3.2.0-beta.1")
 //    Itext5
     implementation("com.itextpdf:itextpdf:5.5.10")
 

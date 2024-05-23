@@ -15,9 +15,9 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.activities.RegistrationActivity
-import com.msprysak.rentersapp.interfaces.BindUser
 import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.databinding.FragmentProfileBinding
+import com.msprysak.rentersapp.interfaces.BindUser
 import java.io.ByteArrayOutputStream
 
 class ProfileFragment : BaseFragment(), BindUser {
@@ -93,7 +93,6 @@ class ProfileFragment : BaseFragment(), BindUser {
     private fun setupTextChangeListeners() {
         binding.username.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Niepotrzebna implementacja
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -101,13 +100,11 @@ class ProfileFragment : BaseFragment(), BindUser {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                // Niepotrzebna implementacja
             }
         })
 
         binding.phoneNumberEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Niepotrzebna implementacja
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -115,7 +112,6 @@ class ProfileFragment : BaseFragment(), BindUser {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                // Niepotrzebna implementacja
             }
         })
 
@@ -173,7 +169,6 @@ class ProfileFragment : BaseFragment(), BindUser {
         val phoneNumber = binding.phoneNumberEditText.text.toString()
 
         if (imageBitmap != null) {
-            // Zapisz zdjęcie tylko, jeśli zostało wybrane
             val stream = ByteArrayOutputStream()
             val result = imageBitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             val byteArray = stream.toByteArray()

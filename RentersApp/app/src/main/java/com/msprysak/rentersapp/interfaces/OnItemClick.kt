@@ -1,5 +1,5 @@
 package com.msprysak.rentersapp.interfaces
 
 interface OnItemClick {
-    fun onItemClick(item: Any)
+    fun onItemClick(pair: Pair<Any, Any>)
 }

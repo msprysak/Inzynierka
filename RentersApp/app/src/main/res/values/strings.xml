@@ -42,6 +42,7 @@
     <string name="change_dates">Edyuj daty płatności</string>
     <string name="select_payment_dates">Wybierz daty płatności</string>
     <string name="select_payment_date">Wybierz date płatności</string>
+    <string name="select_picture_take_date">Wybierz datę wykonania zdjęć</string>
     <string name="edit_selected_users">Edytuj wybranych użytkowników</string>
     <string name="create">Utwórz</string>
     <string name="Add_home_photo">Dodaj zdjęcie domu</string>
@@ -55,7 +56,7 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <string name="upload">Wgraj</string>
+    <string name="upload">Wczytaj</string>
     <string name="create_from_template">Utwórz z szablonu</string>
     <string name="choose_add_inovice_option">Wybierz opcję dodania faktury</string>
     <string name="add_invoice">Dodaj fakturę</string>
@@ -118,7 +119,7 @@
     <string name="edit_home">Edytuj informacje o mieszkaniu</string>
     <string name="create_code">Utwórz kod</string>
     <string name="_0000">0000</string>
-    <string name="create_temporary_code_to_join">Utwórz jednorazowy kod, aby użytkownik mógł dołączyć do domu!</string>
+    <string name="create_temporary_code_to_join">Utwórz jednorazowy kod, aby użytkownik mógł dołączyć do lokalu!</string>
     <string name="place_holder_time">00:00:00</string>
     <string name="calendar">Kalendarz</string>
     <string name="delete_event">Usuń wydarzenie</string>
@@ -172,7 +173,7 @@
     <string name="delete_report">Usuń zgłoszenie</string>
     <string name="paid">Zapłacono</string>
     <string name="payment_paid">Opłacono płatność</string>
-    <string name="add_new_home">Dodaj nowe mieszkanie</string>
+    <string name="add_new_home">Zarządzaj mieszkaniami</string>
     <string name="premises_name">Nazwa Domu\n</string>
     <string name="choose">Wybierz</string>
     <string name="media">Media</string>
@@ -208,5 +209,8 @@
     <string name="email_sent">Wysłano prośbę o zresetowanie hasła!</string>
     <string name="enter_email_address">Wprowadź adres email</string>
     <string name="main_page">Strona główna</string>
+    <string name="upload_">Wczytaj</string>
     <string name="upload_buyer_data">Wczytaj dane nabywcy</string>
+    <string name="invoice_name">Nazwa faktury</string>
+    <string name="load_your_data">Wczytaj swoje dane</string>
 </resources>

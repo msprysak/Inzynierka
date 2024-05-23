@@ -1,6 +1,7 @@
 package com.msprysak.rentersapp.ui.addpremises
 
 import ItemsDecorator
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuInflater
@@ -67,8 +68,7 @@ class AddPremisesFragment: BaseFragment(), OnPremisesClickListener {
     }
 
     override fun onPremisesClick(premises: Premises, anchorView: View) {
-        val anchorView: View = requireView().findViewById(R.id.popupMenu)
-        val popupMenu = PopupMenu(this.context, anchorView)
+        val popupMenu = PopupMenu(requireContext(), anchorView)
         val inflater: MenuInflater = popupMenu.menuInflater
         inflater.inflate(R.menu.premises_popup, popupMenu.menu)
 
@@ -80,12 +80,21 @@ class AddPremisesFragment: BaseFragment(), OnPremisesClickListener {
                     true
                 }
                 R.id.delete -> {
-//                    addPremisesViewModel.deletePremises(premises)
-                    Toast.makeText(requireContext(), "Usunięto nieruchomość", Toast.LENGTH_SHORT).show()
+
+                    AlertDialog.Builder(requireContext())
+                        .setMessage("Czy na pewno chcesz usunąć nieruchomość ,,${premises.name}''?")
+                        .setPositiveButton(R.string.delete) { _, _ ->
+                            Toast.makeText(requireContext(), "Pomyślnie usunięto nieruchomość.", Toast.LENGTH_SHORT).show()
+                        }
+                        .setNegativeButton(R.string.cancel){
+                                dialog, _ -> dialog.dismiss()
+                        }
+                        .show()
                     true
                 }
                 else -> false
             }
+
         }
         popupMenu.show()
     }

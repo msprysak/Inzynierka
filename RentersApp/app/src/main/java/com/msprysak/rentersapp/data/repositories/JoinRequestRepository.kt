@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.msprysak.rentersapp.interfaces.CallBack
 import com.msprysak.rentersapp.data.model.Request
 import com.msprysak.rentersapp.data.model.User
+import com.msprysak.rentersapp.interfaces.CallBack
 
 class JoinRequestRepository(private val userData: LiveData<User>)
      {
@@ -31,7 +31,6 @@ class JoinRequestRepository(private val userData: LiveData<User>)
             docRef.addSnapshotListener { querySnapshot, e ->
                 if (e != null) {
                     Log.d(DEBUG, "getJoinRequests: ${e.message}")
-                    // Dodaj obsługę błędów tutaj, jeśli to konieczne.
                     return@addSnapshotListener
                 }
                 if (querySnapshot != null) {
@@ -60,7 +59,6 @@ class JoinRequestRepository(private val userData: LiveData<User>)
                     val requestDocRef = querySnapshot.documents[0].reference
 
                     cloud.runTransaction { transaction ->
-                        // Odczytaj dane z requestDocRef i premisesDocRef
                         val requestData = transaction.get(requestDocRef)
                         val userId = requestData.getString("userId")
                         val premisesId = requestData.getString("premisesId")
@@ -69,7 +67,6 @@ class JoinRequestRepository(private val userData: LiveData<User>)
                         val newUsers = users.toMutableMap()
                         newUsers[userId!!] = "tenant"
 
-                        // Wykonaj operacje zapisu
                         transaction.delete(requestDocRef)
                         transaction.update(premisesDocRef, "users", newUsers)
 

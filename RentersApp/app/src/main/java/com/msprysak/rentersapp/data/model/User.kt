@@ -3,10 +3,6 @@ package com.msprysak.rentersapp.data.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-/**
- * Data class that captures user information for logged in users retrieved from FirebaseRepository
- */
-
 @Parcelize
 data class User(
     val userId: String? = null,
@@ -14,6 +10,6 @@ data class User(
     val email: String? = null,
     val phoneNumber: String? = null,
     val profilePictureUrl: String? = null,
-    val houseRoles: Map<String,String>? = null // Key: premisesId, Value: role
+    val houseRoles: Map<String,String>? = null
 
 ):Parcelable

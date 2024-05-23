@@ -7,7 +7,7 @@ data class Premises(
     val premisesImageUrl: String? = null,
     val address: String? = null,
     val name: String? = null,
-    val users: Map<String, String>? = null, // Key: userId, Value: role
+    val users: Map<String, String>? = null,
     val creationDate: Timestamp? = null,
     val contracts: List<String>? = null,
     val invoices: List<String>? = null

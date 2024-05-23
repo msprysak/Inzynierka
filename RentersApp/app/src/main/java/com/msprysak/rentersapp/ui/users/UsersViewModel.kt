@@ -14,7 +14,6 @@ class UsersViewModel: ViewModel() {
     val premisesRepository = PremisesRepository.getInstance(userRepository.user)
 
     fun fetchUsers(): LiveData<List<User>> {
-        // Sprawdź, czy premisesRepository.premises i premisesRepository.premises.value nie są null
         val premises = premisesRepository.premises.value
         if (premises?.users != null) {
             return premisesRepository.getUsersByIds(premisesRepository.premises.value!!.users!!.keys.toList())
@@ -24,8 +23,7 @@ class UsersViewModel: ViewModel() {
     }
 
     fun deleteUser(user: User) {
-        println("deleteUser: $user")
-//        premisesRepository.deleteUserFromPremises(user)
+        //TODO
     }
 
 }

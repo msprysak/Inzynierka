@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.adapters.PaymentHistoryAdapter
-import com.msprysak.rentersapp.interfaces.PaymentClickListener
 import com.msprysak.rentersapp.data.model.PaymentWithUser
 import com.msprysak.rentersapp.databinding.FragmentPaymentsHistoryBinding
+import com.msprysak.rentersapp.interfaces.PaymentClickListener
 
 class PaymentsHistoryFragment: BaseFragment(), PaymentClickListener {
 
@@ -75,7 +75,6 @@ class PaymentsHistoryFragment: BaseFragment(), PaymentClickListener {
     }
 
     override fun onPaidButtonClick(payment: PaymentWithUser) {
-//        TODO("Not yet implemented")
     }
 
 }

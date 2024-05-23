@@ -8,7 +8,6 @@ class UserApplication: Application() {
 
     val applicationScope = CoroutineScope(SupervisorJob())
 
-        // Inicjalizacja bazy danych
         val database by lazy { UserInfoRoomDatabase.getDatabase(this, applicationScope) }
         val roomRepository by lazy { UserInfoRepository(database.userInfoDao()) }
 

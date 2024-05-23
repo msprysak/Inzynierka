@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.viewModels
@@ -67,6 +68,8 @@ class FullReportFragment : BaseFragment() {
         binding.reporterName.text = user.username
         binding.reporterPhoneNumber.text = user.phoneNumber
 
+        binding.saveButton.isEnabled = false
+
 
         if (reportComment.text.isNullOrBlank() && reportsViewModel.getUserData()!!.houseRoles!!.containsValue("tenant")) {
             reportComment.visibility = View.GONE
@@ -85,6 +88,11 @@ class FullReportFragment : BaseFragment() {
         setupReportDate()
         setupReporterImage()
         setupImagesRecyclerView()
+
+        saveButton.setOnClickListener {
+            saveButton.isEnabled = false
+        }
+
     }
 
     private fun setupStatusSpinner() {
@@ -96,6 +104,15 @@ class FullReportFragment : BaseFragment() {
         )
         stringAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item )
         statusSpinner.adapter = stringAdapter
+
+        statusSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                binding.saveButton.isEnabled = true
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
     }
 
     private fun setupReportDate() {
@@ -103,7 +120,6 @@ class FullReportFragment : BaseFragment() {
         val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
         binding.reportDate.text = dateFormat.format(javaUtilDate)
     }
-
     private fun setupReporterImage() {
         Glide.with(this)
             .load(user.profilePictureUrl)

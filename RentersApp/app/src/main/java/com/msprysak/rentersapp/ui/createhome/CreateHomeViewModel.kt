@@ -14,9 +14,6 @@ import com.msprysak.rentersapp.utils.Utils
 
 class CreateHomeViewModel: ViewModel() {
 
-
-//    private val repository = RepositorySingleton.getInstance()
-
     val utils = Utils.Utils
 
     private val repository = UserRepositoryInstance.getInstance()
@@ -46,14 +43,9 @@ class CreateHomeViewModel: ViewModel() {
         premisesRepository.uploadPremisesPhoto(byteArray)
     }
 
-    // Funkcja do sprawdzania i tworzenia prośby o dołączenie do grupy
     fun sendJoinRequest(code: String, callback: CallBack){
         requestRepository.sendJoinRequest(code, callback)
     }
-
-
-
-    val DEBUG = "CreateHomeViewModel"
 
 
 }

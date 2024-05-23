@@ -94,16 +94,34 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="SpeakableTextPresentCheck"
             tools:itemCount="1"
             tools:listitem="@layout/item_report_image" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/report_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/images_recycler_view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+
+            >
+            <TextView
+                android:id="@+id/report_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tytuł zgłoszenia"
+                app:layout_constraintStart_toStartOf="@id/report_title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/report_title"
+
+                />
         <TextView
             android:id="@+id/report_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
             android:background="@drawable/edit_text_rounded"
             android:backgroundTint="?attr/colorSecondaryContainer"
             android:elevation="20dp"
@@ -114,49 +132,76 @@
             android:textColor="?attr/colorOnSecondaryContainer"
             android:textColorHint="?attr/colorOnSecondaryContainer"
             android:textSize="20sp"
-            android:layout_below="@id/images_recycler_view"/>
+            app:layout_constraintTop_toBottomOf="@id/report_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/report_description_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/report_layout"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp"
+            >
+
+            <TextView
+                android:id="@+id/report_description_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Opis zgłoszenia"
+                app:layout_constraintStart_toStartOf="@id/report_description"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/report_description"
+                />
 
         <TextView
             android:id="@+id/report_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/report_title"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
             android:background="@drawable/edit_text_rounded"
             android:backgroundTint="?attr/colorSecondaryContainer"
-            android:elevation="10dp"
-
+            android:enabled="false"
             android:hint="@string/enter_report_description"
             android:maxLength="255"
             android:minHeight="48dp"
             android:padding="10dp"
             android:textColor="?attr/colorOnSecondaryContainer"
             android:textColorHint="?attr/colorOnSecondaryContainer"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/report_description_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <EditText
             android:id="@+id/report_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/report_description"
+            android:layout_below="@id/report_description_container"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/edit_text_rounded"
-            android:backgroundTint="?attr/colorSecondaryContainer"
+            android:backgroundTint="?attr/colorPrimaryContainer"
             android:elevation="10dp"
             android:hint="@string/enter_comment_to_report"
             android:maxLength="255"
             android:minHeight="48dp"
             android:padding="10dp"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textColorHint="?attr/colorOnSecondaryContainer"
+            android:textColor="?attr/colorOnPrimaryContainer"
             android:textSize="20sp" />
         <Button
             android:id="@+id/save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="30dp"
             android:text="@string/save_changes"
             android:layout_below="@id/report_comment"
@@ -167,7 +212,7 @@
             android:layout_height="wrap_content"
             android:text="@string/delete_report"
             android:enabled="false"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_below="@id/report_comment"
             android:layout_toEndOf="@id/save_button"
             android:layout_marginStart="20dp"

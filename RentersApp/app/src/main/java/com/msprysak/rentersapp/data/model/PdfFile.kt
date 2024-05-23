@@ -1,5 +1,9 @@
 package com.msprysak.rentersapp.data.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class PdfFile(
     var fileName: String? = null,
     var fileId: String? = null,
@@ -8,4 +12,4 @@ data class PdfFile(
     var content: String? = null,
     var fileOwner: String? = null,
     var fileAssignedUser: User? = null
-)
+) : Parcelable

@@ -32,6 +32,8 @@ import com.msprysak.rentersapp.interfaces.OnItemClickListener
 
 class InvoicesFragment : BaseFragment(), OnItemClickListener {
 
+    private val STORAGE_PERMISSION_CODE = 101
+
 
     private val invoicesViewModel: InvoicesViewModel by viewModels {
         InvoicesViewModelFactory((requireActivity().application as UserApplication).roomRepository)
@@ -54,14 +56,27 @@ class InvoicesFragment : BaseFragment(), OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.addReportButton.setOnClickListener {
-            val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
-            if (ContextCompat.checkSelfPermission(requireContext(), permission) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(requireActivity(), arrayOf(permission), 1)
-            } else {
-                invociceDialog(requireContext())
+
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                STORAGE_PERMISSION_CODE
+            )
+        } else {
+            binding.addReportButton.setOnClickListener {
+                val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
+                if (ContextCompat.checkSelfPermission(requireContext(), permission) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(requireActivity(), arrayOf(permission), 1)
+                } else {
+                    invociceDialog(requireContext())
+                }
             }
         }
+
+
 
         recyclerView = binding.reportsRecyclerView
         recyclerView.setHasFixedSize(true)
@@ -100,7 +115,6 @@ class InvoicesFragment : BaseFragment(), OnItemClickListener {
         }
     }
     private fun getFileName(uri: Uri): String {
-        // Pobierz nazwę pliku z URI
         val cursor = context?.contentResolver?.query(uri, null, null, null, null)
         val nameIndex = cursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)
         cursor?.moveToFirst()
@@ -120,7 +134,6 @@ class InvoicesFragment : BaseFragment(), OnItemClickListener {
                 navController.navigate(R.id.action_invoicesFragment_to_invoicesTemplateFragment)
             }
             .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
-                // Respond to neutral button press
             }
             .show()
     }
@@ -174,11 +187,10 @@ class InvoicesFragment : BaseFragment(), OnItemClickListener {
                     true
                 }
                 R.id.preview -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Podgląd pliku",
-                        Toast.LENGTH_SHORT
-                    ).show()
+
+                    val navController = findNavController()
+                    val action = InvoicesFragmentDirections.actionInvoicesFragmentToPdfViewerFragment(item)
+                    navController.navigate(action)
                     true
                 }
 

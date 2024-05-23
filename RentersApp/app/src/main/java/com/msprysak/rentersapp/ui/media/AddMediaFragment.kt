@@ -14,15 +14,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.ImageHelper
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.adapters.ReportsPhotoAdapter
-import com.msprysak.rentersapp.interfaces.CallBack
 import com.msprysak.rentersapp.databinding.FragmentAddMediaBinding
+import com.msprysak.rentersapp.interfaces.CallBack
 import java.sql.Date
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -96,11 +94,18 @@ class AddMediaFragment : BaseFragment() {
                     mediaViewModel.selectedImages.value!!,
                     object : CallBack {
                         override fun onSuccess() {
+                            binding.mediaTitle.text.clear()
+                            mediaViewModel.selectedImages.value = mutableListOf()
+                            photoAdapter.updateList(mediaViewModel.selectedImages.value!!)
+                            binding.startPaymentDateLabel.visibility = View.GONE
+                            binding.startPaymentDate.visibility = View.GONE
                             Toast.makeText(
                                 requireContext(),
-                                "Dodano media",
+                                "Pomyślnie dodano media",
                                 Toast.LENGTH_SHORT
                             ).show()
+
+
                         }
 
                         override fun onFailure(errorMessage: String) {
@@ -128,12 +133,9 @@ class AddMediaFragment : BaseFragment() {
     private fun titleTextWatcher() {
         binding.mediaTitle.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Niepotrzebna implementacja
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Niepotrzebna implementacja
-
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -147,7 +149,6 @@ class AddMediaFragment : BaseFragment() {
         galleryLauncher.launch(galleryIntent)
     }
 
-    //     Definicja launcher'a do obsługi wyników z galerii
     private val galleryLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -169,7 +170,6 @@ class AddMediaFragment : BaseFragment() {
             updatedList.add(data.data!!)
         }
 
-        // Ustaw nową wartość dla selectedImages
         mediaViewModel.selectedImages.value = updatedList
         mediaViewModel.media.value!!.mediaImages = updatedList.map { it.toString() }
         photoAdapter.updateList(mediaViewModel.selectedImages.value!!)
@@ -179,15 +179,8 @@ class AddMediaFragment : BaseFragment() {
         val minDate = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(365)
 
         val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText(resources.getString(R.string.select_payment_date))
+            .setTitleText(resources.getString(R.string.select_picture_take_date))
             .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-            .setCalendarConstraints(
-                CalendarConstraints.Builder()
-                    .setStart(minDate)
-                    .setEnd(System.currentTimeMillis())
-                    .setValidator(DateValidatorPointForward.now())
-                    .build()
-            )
             .build()
 
         datePicker.show(childFragmentManager, "date_range_picker")

@@ -12,9 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.msprysak.rentersapp.BaseFragment
 import com.msprysak.rentersapp.R
 import com.msprysak.rentersapp.adapters.MediaAdapter
-import com.msprysak.rentersapp.interfaces.OnItemClick
 import com.msprysak.rentersapp.data.model.Media
+import com.msprysak.rentersapp.data.model.User
 import com.msprysak.rentersapp.databinding.FragmentReportsBinding
+import com.msprysak.rentersapp.interfaces.OnItemClick
 
 class MediaFragment : BaseFragment(), OnItemClick {
 
@@ -25,7 +26,6 @@ class MediaFragment : BaseFragment(), OnItemClick {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var reportsAdapter: MediaAdapter
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,7 +35,6 @@ class MediaFragment : BaseFragment(), OnItemClick {
         mediaViewModel.setupMediaListener()
         return _binding!!.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.addReportButton.setOnClickListener {
@@ -51,22 +50,19 @@ class MediaFragment : BaseFragment(), OnItemClick {
         val itemDecoration = ItemsDecorator(requireContext(), R.dimen.item_space)
         recyclerView.addItemDecoration(itemDecoration)
 
-        mediaViewModel.mediaList.observe(viewLifecycleOwner) {medialist ->
+        mediaViewModel.setupObserver().observe(viewLifecycleOwner) {medialist ->
             reportsAdapter = MediaAdapter(medialist,this )
             recyclerView.adapter = reportsAdapter
             reportsAdapter.notifyDataSetChanged()
         }
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-    override fun onItemClick(item: Any) {
-
+    override fun onItemClick(pair: Pair<Any, Any>) {
         val navController = findNavController()
-        val action = MediaFragmentDirections.actionMediaFragmentToFullMediaFragment(item as Media)
+        val action = MediaFragmentDirections.actionMediaFragmentToFullMediaFragment(pair.first as Media, pair.second as User)
         navController.navigate(action)
     }
 }

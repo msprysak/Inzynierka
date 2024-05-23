@@ -149,16 +149,6 @@
                     app:drawableLeftCompat="@drawable/ic_group" />
             </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/calendarTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/menu_item_margin"
-                android:drawablePadding="@dimen/menu_drawable_padding"
-                android:text="@string/calendar"
-                android:textSize="20sp"
-                android:textStyle="bold"
-app:drawableLeftCompat="@drawable/ic_calendar" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/reports_card"

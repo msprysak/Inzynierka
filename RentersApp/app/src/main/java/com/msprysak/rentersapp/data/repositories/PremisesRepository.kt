@@ -38,11 +38,9 @@ class PremisesRepository private  constructor(private val userData: LiveData<Use
         Log.d(DEBUG, "Premises updated: ${premises.name}")
     }
     companion object {
-        // Jedyna instancja PremisesRepository
         @Volatile
         private var instance: PremisesRepository? = null
 
-        // Metoda do uzyskania instancji PremisesRepository
         fun getInstance(userData: LiveData<User>): PremisesRepository {
             return instance ?: synchronized(this) {
                 instance ?: PremisesRepository(userData).also { instance = it }
@@ -131,8 +129,6 @@ class PremisesRepository private  constructor(private val userData: LiveData<Use
         }
         return _premisesLiveData
     }
-//    premises.value!!.premisesId
-//    userData.value?.houseRoles?.keys?.first()
      fun addTemporaryCode(randomCode: String) {
         val data = hashMapOf(
             "code" to randomCode,

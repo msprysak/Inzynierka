@@ -106,16 +106,13 @@ class FilesRepository {
                 .setDescription("Pobieranie pliku...")
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
 
-            // Ustal lokalizację docelową na zewnętrznym katalogu publicznym
             val destinationDir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-            val localFilePath = File(destinationDir, file.fileName)
+            val localFilePath = file.fileName?.let { File(destinationDir, it) }
             request.setDestinationUri(Uri.fromFile(localFilePath))
 
-            // Wymagane uprawnienia
             request.setAllowedOverMetered(true)
             request.setAllowedOverRoaming(true)
 
-            // Uruchom DownloadManager
             val dm = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
             dm.enqueue(request)
         }
@@ -127,23 +124,21 @@ class FilesRepository {
 
 
 
-    fun deletePdfFile(fileId: String, callBack: CallBack, collection: String) {
+    fun deletePdfFile(fileId: String, callBack: CallBack) {
         val premisesId = premisesRepository.premises.value?.premisesId
 
         if (premisesId != null) {
             val contractsCollectionRef = cloud.collection("files").document(premisesId)
-                .collection(collection)
+                .collection("invoices")
 
             val storageRef = storage.reference
                 .child("premises")
                 .child(premisesId)
 
-            val storageFilePath = "$collection/$fileId"
+            val storageFilePath = "invoices/$fileId"
 
-            // Usunięcie dokumentu z kolekcji Firestore
             contractsCollectionRef.document(fileId).delete()
                 .addOnSuccessListener {
-                    // Usunięcie pliku z Storage
                     storageRef.child(storageFilePath).delete()
                         .addOnSuccessListener {
                             callBack.onSuccess()

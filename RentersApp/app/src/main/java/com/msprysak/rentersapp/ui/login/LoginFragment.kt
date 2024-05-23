@@ -27,12 +27,9 @@ class LoginFragment : BaseFragment() {
     private val  LOG_DEBUG = "LoginFragment"
     private val fbAuth = FirebaseAuth.getInstance()
 
-//    private lateinit var loginViewModel: LoginViewModel
     private val loginViewModel by viewModels<LoginViewModel>()
     private var _binding: FragmentLoginBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -68,11 +65,9 @@ class LoginFragment : BaseFragment() {
 
         val afterTextChangedListener = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // ignore
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // ignore
             }
 
             override fun afterTextChanged(s: Editable) {

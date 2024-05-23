@@ -87,7 +87,6 @@ class ContractsFragment: BaseFragment(), OnItemClickListener {
         }
     }
     private fun getFileName(uri: Uri): String {
-        // Pobierz nazwę pliku z URI
         val cursor = context?.contentResolver?.query(uri, null, null, null, null)
         val nameIndex = cursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)
         cursor?.moveToFirst()

@@ -11,9 +11,9 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
-import com.msprysak.rentersapp.interfaces.CallBack
 import com.msprysak.rentersapp.data.model.Reports
 import com.msprysak.rentersapp.data.model.User
+import com.msprysak.rentersapp.interfaces.CallBack
 import java.util.UUID
 
 class ReportsRepository  {
@@ -69,9 +69,7 @@ class ReportsRepository  {
                             val downloadUrl = downloadUrlTask.result.toString()
                             uploadedPhotoUrls.add(downloadUrl)
 
-                            // Jeśli wszystkie zdjęcia zostały przesłane, dodaj raport do Firestore
                             if (uploadedPhotoUrls.size == selectedImages.size) {
-                                // Przygotuj dane do Firestore
                                 val finalPhotoUrls = uploadedPhotoUrls.toList()
 
                                 reportData["reportImages"] = finalPhotoUrls
@@ -117,36 +115,6 @@ class ReportsRepository  {
         TODO("Not yet implemented")
     }
 
-//    fun setupReportsListener(premisesId: String) {
-//        cloud.collection("reports")
-//            .whereEqualTo("premisesId", premisesId)
-//            .orderBy("reportDate")
-//
-//            .addSnapshotListener{ documentSnapshot, error ->
-//                if (error != null){
-//                    Log.d(DEBUG, "setupReportsObserver: ${error.message}")
-//                    return@addSnapshotListener
-//                }
-//                val reports = mutableListOf<Reports>()
-//                for (doc in documentSnapshot!!){
-//                    val report = doc.toObject(Reports::class.java)
-//                    reports.add(report)
-//                }
-//                reportsLiveData.value = reports
-//            }
-//    }
-//
-//    override fun getReports(): LiveData<List<Reports>> {
-//        return reportsLiveData
-//    }
-
-    //    override fun getFullReportById(reportId: String): LiveData<FullReport> {
-//        val reportDocRef = cloud.collection("reports").document(reportId)
-//            .get()
-//            .addOnSuccessListener { documentSnapshot -> }
-//
-//
-//    }
      fun setupReportsListener(premisesId: String): LiveData<List<Pair<Reports, User>>> {
         val reportsLiveData = MutableLiveData<List<Pair<Reports, User>>>()
 
@@ -186,9 +154,5 @@ class ReportsRepository  {
 
         return reportsLiveData
     }
-
-//    override fun getReports(): LiveData<List<Pair<Reports, User>>> {
-//        return reportsLiveData
-//    }
 
 }

@@ -1,6 +1,7 @@
 package com.msprysak.rentersapp.ui.users
 
 import ItemsDecorator
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuInflater
@@ -48,8 +49,7 @@ class UsersFragment : BaseFragment(), OnItemClickListener {
         usersViewModel.fetchUsers().observe(viewLifecycleOwner) { users ->
             println("users: $users")
 
-            usersList.clear() // Wyczyść listę przed dodaniem nowych elementów
-            // Konwersja do ArrayList
+            usersList.clear()
             usersList.addAll(users)
             val itemDecoration = ItemsDecorator(requireContext(), R.dimen.item_space)
             recyclerView.addItemDecoration(itemDecoration)
@@ -73,12 +73,18 @@ class UsersFragment : BaseFragment(), OnItemClickListener {
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.delete -> {
-                    usersViewModel.deleteUser(item)
-                    Toast.makeText(
-                        this.context,
-                        "Usunięto użytkownika",
-                        Toast.LENGTH_SHORT
-                    ).show()
+
+
+                    AlertDialog.Builder(requireContext())
+                        .setMessage("Czy na pewno chcesz usunąć użytkownika ,,${item.username}''?")
+                        .setPositiveButton(R.string.delete) { _, _ ->
+                            usersViewModel.deleteUser(item)
+                            Toast.makeText(requireContext(), "Pomyślnie usunięto użytkownika.", Toast.LENGTH_SHORT).show()
+                        }
+                        .setNegativeButton(R.string.cancel){
+                                dialog, _ -> dialog.dismiss()
+                        }
+                        .show()
                     true
                 }
                 R.id.preview -> {

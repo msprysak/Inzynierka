@@ -37,6 +37,7 @@ import java.util.Locale
 
 class InvoicesTemplateFragment: BaseFragment() {
 
+
     private val invoicesViewModel: InvoicesViewModel by viewModels {
         InvoicesViewModelFactory((requireActivity().application as UserApplication).roomRepository)
     }
@@ -96,14 +97,12 @@ class InvoicesTemplateFragment: BaseFragment() {
         val filteredUsers = userList.filter { user ->
             !user.houseRoles!!.values.contains("landlord")
         }
-
         val userAdapter = PaymentsSelectUsersAdapter(requireContext(), filteredUsers)
 
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(resources.getString(R.string.select_user))
             .setAdapter(userAdapter, null)
-            .setPositiveButton(resources.getString(R.string.save)) { _, _ ->
-//                TODO: uploadBuyerData() from Room
+            .setPositiveButton(resources.getString(R.string.upload)) { _, _ ->
             }
             .setNegativeButton(resources.getString(R.string.cancel), null)
             .show()
@@ -137,18 +136,7 @@ class InvoicesTemplateFragment: BaseFragment() {
 
         }
 
-        binding.saveDownloadButton.setOnClickListener {
-            generatePdfAWithTemplate(requireContext(), true)
-            lifecycleScope.launch {
-                invoicesViewModel.updateUserInfo(
-                    binding.sellerNameSurname.text.toString(),
-                    binding.sellerNip.text.toString(),
-                    binding.sellerStreet.text.toString(),
-                    binding.sellerPostalCode.text.toString(),
-                    binding.sellerTown.text.toString()
-                )
-            }
-        }
+
     }
 
     private fun showDatePickerDialog(date: TextInputEditText) {
@@ -221,8 +209,7 @@ class InvoicesTemplateFragment: BaseFragment() {
                 }
 
             val factureName = ("Faktura VAT $formattedDate")
-            val filename = factureName.replace("/", "-")
-            val outputFile = File(destinationDir, "$filename.pdf")
+            val outputFile = File(destinationDir, "${binding.serviceName.text}.pdf")
 
 
             val outputStream = FileOutputStream(outputFile)
@@ -295,7 +282,6 @@ class InvoicesTemplateFragment: BaseFragment() {
             println("Exception: $e")
             println("Failed to create file. Reason: $e")
 
-            // Dodaj odpowiednią obsługę błędu, jeśli to konieczne
         }
 
 
@@ -374,21 +360,18 @@ class InvoicesTemplateFragment: BaseFragment() {
         var numberInWords = ""
         var rest = totalPart
 
-        // tysiące
         val tysiace = rest / 1_000
         if (tysiace > 0) {
             numberInWords += "${numberInWords(tysiace.toDouble())} tysięcy "
             rest %= 1_000
         }
 
-        // setki
         val hundredsIndex = rest / 100
         if (hundredsIndex > 0) {
             numberInWords += "${hundreds[hundredsIndex]} "
             rest %= 100
         }
 
-        // dziesiątki i jedności
         val douzensIndex = rest / 10
         if (douzensIndex >= 2) {
             numberInWords += "${douzens[douzensIndex]} "
@@ -398,7 +381,6 @@ class InvoicesTemplateFragment: BaseFragment() {
             rest = 0
         }
 
-        // jedności
         if (rest > 0) {
             numberInWords += "${unity[rest]} "
         }

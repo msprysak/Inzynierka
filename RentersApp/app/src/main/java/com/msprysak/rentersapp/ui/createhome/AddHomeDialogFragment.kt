@@ -57,7 +57,6 @@ class AddHomeDialogFragment : DialogFragment() {
         createButton.isEnabled = false
         localNameEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-//
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -78,7 +77,6 @@ class AddHomeDialogFragment : DialogFragment() {
 
                 override fun onSuccess() {
                     if (imageBitmap != null) {
-                        // Zapisz zdjęcie tylko, jeśli zostało wybrane
                         val stream = ByteArrayOutputStream()
                         val result = imageBitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, stream)
                         val byteArray = stream.toByteArray()

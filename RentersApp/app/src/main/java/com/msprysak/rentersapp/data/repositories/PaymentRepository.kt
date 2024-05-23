@@ -7,10 +7,10 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.msprysak.rentersapp.data.UserRepositoryInstance
-import com.msprysak.rentersapp.interfaces.CallBack
 import com.msprysak.rentersapp.data.model.Payment
 import com.msprysak.rentersapp.data.model.PaymentWithUser
 import com.msprysak.rentersapp.data.model.User
+import com.msprysak.rentersapp.interfaces.CallBack
 import java.util.UUID
 
 class PaymentRepository {
@@ -26,14 +26,8 @@ class PaymentRepository {
     private val userRepository = UserRepositoryInstance.getInstance()
     private val premisesRepository = PremisesRepository.getInstance(userRepository.user)
 
-    fun checkData() {
-//        println("checkdata")
-//        println(currentUser)
-    }
 
-
-
-    fun getPaymentsForUser(callback: (List<PaymentWithUser>)-> Unit) {
+    fun getPaymentsForUser(callback: (List<PaymentWithUser>) -> Unit) {
         val currentUser = currentUser
 
         if (currentUser?.houseRoles != null) {
@@ -72,7 +66,7 @@ class PaymentRepository {
                 .collection(currentUser.userId.toString())
                 .document(paymentId)
 
-            cloud.runTransaction{
+            cloud.runTransaction {
                 it.update(docRef, "paymentStatus", paymentStatus)
                 it.update(docRef, "modificationDate", FieldValue.serverTimestamp())
                 null
@@ -82,7 +76,7 @@ class PaymentRepository {
                 .addOnFailureListener { exception ->
                     Log.d(DEBUG, " ${exception.message}")
                     callback.onFailure("Ups, coś poszło nie tak. Spróbuj ponownie później.")
-            }
+                }
 
         }
     }
@@ -110,12 +104,10 @@ class PaymentRepository {
                         userIds.forEach { userId ->
                             val userDocRef = cloud.collection("users").document(userId.toString())
 
-                            // Pobierz dane użytkownika
                             userDocRef.get().addOnSuccessListener { userSnapshot ->
                                 val userData = userSnapshot.toObject(User::class.java)
 
                                 if (userData != null) {
-                                    // Pobierz dane płatności
                                     val userPaymentsDocRef = docRef.collection(userId.toString())
                                     userPaymentsDocRef.get()
                                         .addOnSuccessListener { userPaymentsSnapshot ->
@@ -123,24 +115,22 @@ class PaymentRepository {
                                                 val payment = document.toObject(Payment::class.java)
 
                                                 if (payment != null) {
-                                                    // Twórz obiekt PaymentWithUserData, łącząc dane użytkownika i płatności
                                                     val paymentWithUserData =
                                                         PaymentWithUser(payment, userData)
                                                     paymentsList.add(paymentWithUserData)
                                                 }
                                             }
 
-                                            // Wywołaj callback po przetworzeniu wszystkich płatności
                                             if (userId == userIds.last()) {
                                                 callback(paymentsList)
                                             }
                                         }.addOnFailureListener { exception ->
-                                        Log.w(
-                                            DEBUG,
-                                            "Error getting user payments documents: ",
-                                            exception
-                                        )
-                                    }
+                                            Log.w(
+                                                DEBUG,
+                                                "Error getting user payments documents: ",
+                                                exception
+                                            )
+                                        }
                                 }
                             }.addOnFailureListener { exception ->
                                 Log.w(DEBUG, "Error getting user document: ", exception)
@@ -162,7 +152,6 @@ class PaymentRepository {
         val userIds = mutableListOf<String>()
 
         cloud.runTransaction { transaction ->
-            // Operacje zapisu
             selectedUserList.forEach { user ->
                 val userDocRef = docRef.collection(user.userId.toString())
                     .document(payment.paymentId.toString())
@@ -170,10 +159,8 @@ class PaymentRepository {
                 payment.userId = user.userId
                 payment.paymentStatus = "unpaid"
 
-                // Zapisujemy lub aktualizujemy dokument
                 transaction.set(userDocRef, payment)
 
-                // Dodajemy identyfikator użytkownika do listy
                 userIds.add(user.userId.toString())
             }
 
@@ -199,11 +186,9 @@ class PaymentRepository {
                 transaction.update(
                     docRef,
                     "userIds",
-//                   dodaje do listy nowe elementy bez duplikatów
                     FieldValue.arrayUnion(*userIds.toTypedArray())
                 )
             } else {
-//                Jeżeli lista nie istnieje to tworzymy ją i dodajemy do niej nowe identyfikatory
                 transaction.set(docRef, mapOf("userIds" to userIds))
             }
             null

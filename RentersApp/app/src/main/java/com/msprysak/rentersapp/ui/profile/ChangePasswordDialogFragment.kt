@@ -45,32 +45,26 @@ class ChangePasswordDialogFragment: DialogFragment() {
 
         newPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Niepotrzebna implementacja
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Niepotrzebna implementacja
 
             }
 
             override fun afterTextChanged(s: Editable?) {
-//                DODAC WALIDACJE HASLA
             }
         })
         confirmPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Niepotrzebna implementacja
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Niepotrzebna implementacja
                 if (s.toString() != newPassword.text.toString()){
                     binding.saveButton.isEnabled = false
                 }
             }
 
             override fun afterTextChanged(s: Editable?) {
-//                DODAC WALIDACJE HASLA
                 if (s.toString() != newPassword.text.toString()) {
                     confirmPassword.error = "Hasła nie są takie same"
                 }else if (s.toString().length < 6){
