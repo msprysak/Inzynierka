@@ -5,9 +5,9 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.msprysak.rentersapp.data.UserRepositoryInstance
-import com.msprysak.rentersapp.interfaces.CallBack
 import com.msprysak.rentersapp.data.model.PdfFile
 import com.msprysak.rentersapp.data.repositories.FilesRepository
+import com.msprysak.rentersapp.interfaces.CallBack
 
 class ContractsViewModel: ViewModel() {
 
@@ -28,10 +28,10 @@ class ContractsViewModel: ViewModel() {
         }
     }
 
-    fun downloadFile(item: PdfFile,context: Context , callBack: CallBack) {
-        repository.downloadFile(item,context, callBack, "contracts")
+    fun downloadFile(item: PdfFile,context: Context) {
+        repository.downloadFile(item,context)
     }
     fun deleteFile(item: PdfFile, callBack: CallBack) {
-        repository.deletePdfFile(item.fileId.toString(), callBack, "contracts")
+        repository.deletePdfFile(item.fileId.toString(), callBack)
     }
 }
