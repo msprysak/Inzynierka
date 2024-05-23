@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".ui.register.RegisterFragment"
+    android:focusableInTouchMode="true">
 
     <TextView
         android:id="@+id/createAccountTextView"
@@ -15,37 +14,13 @@
         android:layout_marginTop="40dp"
         android:gravity="top|center"
         android:text="@string/create_account"
+        android:textColor="?attr/colorPrimary"
         android:textSize="30sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/googleIconImageView"
-        android:layout_width="@dimen/icon_size_large"
-
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:adjustViewBounds="true"
-
-        android:src="@drawable/google_icon"
-        app:layout_constraintEnd_toStartOf="@id/incognitoIconImageView"
-        app:layout_constraintStart_toStartOf="@id/createAccountTextView"
-        app:layout_constraintTop_toBottomOf="@id/createAccountTextView" />
-
-    <ImageView
-        android:id="@+id/incognitoIconImageView"
-        android:layout_width="@dimen/icon_size_large"
-
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:src="@drawable/incognito_icon"
-
-        app:layout_constraintBottom_toBottomOf="@id/googleIconImageView"
-        app:layout_constraintEnd_toEndOf="@id/createAccountTextView"
-        app:layout_constraintStart_toEndOf="@id/googleIconImageView"
-        app:layout_constraintTop_toTopOf="@id/googleIconImageView" />
 
 
     <LinearLayout
@@ -55,73 +30,107 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/googleIconImageView">
+        app:layout_constraintTop_toBottomOf="@id/createAccountTextView">
 
-        <TextView
-            android:id="@+id/orTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:hint="@string/or"
-            android:textAlignment="center"
-
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/googleIconImageView" />
 
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/usernameTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="50dp"
-
             android:layout_marginTop="30dp"
             android:layout_marginEnd="50dp"
-            android:hint="@string/email">
+            app:helperTextEnabled="false"
+            app:helperTextTextColor="?attr/colorError"
+            android:hint="@string/username">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="40"
+                android:inputType="text"
+                tools:ignore="VisualLintTextFieldSize" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="30dp"
+            app:errorEnabled="true"
+            app:helperTextEnabled="false"
+            app:helperTextTextColor="?attr/colorError"
+            android:layout_marginEnd="50dp"
+            android:hint="@string/email"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
                 android:inputType="textEmailAddress"
+                android:maxLength="40"
                 tools:ignore="VisualLintTextFieldSize" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="50dp"
-
             android:layout_marginTop="30dp"
             android:layout_marginEnd="50dp"
-            android:hint="@string/name">
+            android:hint="@string/password"
+            app:errorEnabled="true"
+            app:helperTextEnabled="false"
+            app:helperTextTextColor="?attr/colorError"
+            app:passwordToggleEnabled="true"
+            app:errorIconDrawable="@null"
+            app:counterMaxLength="15"
+            app:counterEnabled="true"
+
+
+            >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="15"
-                android:inputType="textPersonName"
-                tools:ignore="VisualLintTextFieldSize" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="50dp"
-
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="50dp"
-            android:hint="@string/password">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLength="15"
+                android:ems="10"
                 android:inputType="textPassword"
+                android:maxLength="15"
                 tools:ignore="VisualLintTextFieldSize" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/confirmPasswordTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="50dp"
+            app:helperTextEnabled="false"
+            app:helperTextTextColor="?attr/colorError"
+            android:hint="@string/confirm_password"
+            app:passwordToggleEnabled="true"
+            app:errorEnabled="true"
+            app:counterMaxLength="15"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirmPasswordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:maxLength="15" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -136,9 +145,8 @@
                 android:id="@+id/registerButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/register"
                 android:layout_centerInParent="true"
-                />
+                android:text="@string/register" />
 
         </RelativeLayout>
 
@@ -146,12 +154,12 @@
             android:id="@+id/accountSetTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:longClickable="false"
             android:text="@string/account_set"
             android:textIsSelectable="false"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center"
-            android:textSize="15sp"
-            />
+            android:textSize="15sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

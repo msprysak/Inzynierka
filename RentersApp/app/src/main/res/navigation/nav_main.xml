@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/calendarFragment">
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.msprysak.rentersapp.ui.calendar.CalendarFragment"
+        android:label="@string/calendar"
+        tools:layout="@layout/fragment_calendar" />
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.msprysak.rentersapp.ui.chat.ChatFragment"
+        android:label="@string/messages"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.msprysak.rentersapp.ui.notifications.NotificationsFragment"
+        android:label="@string/notifications"
+        tools:layout="@layout/fragment_notifications_list" />
+    <fragment
+        android:id="@+id/paymentsFragment"
+        android:name="com.msprysak.rentersapp.ui.payments.PaymentsFragment"
+        android:label="@string/payments"
+        tools:layout="@layout/fragment_payments" />
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.msprysak.rentersapp.ui.menu.MenuFragment"
+        android:label="@string/menu"
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_addUsersFragment"
+            app:destination="@id/addUsersFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_usersFragment"
+            app:destination="@id/usersFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_reportsFragment"
+            app:destination="@id/reportsFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_addPremisesFragment"
+            app:destination="@id/addPremisesFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_mediaFragment"
+            app:destination="@id/mediaFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_contractsFragment"
+            app:destination="@id/contractsFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_invoicesFragment"
+            app:destination="@id/invoicesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addUsersFragment"
+        android:name="com.msprysak.rentersapp.ui.addusers.AddUsersFragment"
+        android:label="@string/add_users"
+        tools:layout="@layout/fragment_add_users" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.msprysak.rentersapp.ui.profile.ProfileFragment"
+        android:label="@string/edit_profile"
+        tools:layout="@layout/fragment_profile"/>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.msprysak.rentersapp.ui.home.HomeFragment"
+        android:label="@string/edit_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/usersFragment"
+        android:name="com.msprysak.rentersapp.ui.users.UsersFragment"
+        android:label="@string/users"
+        tools:layout="@layout/fragment_users_list" >
+        <action
+            android:id="@+id/action_usersFragment_to_userInfoFragment"
+            app:destination="@id/userInfoFragment">
+
+            <argument
+                android:name="user"
+                app:argType="com.msprysak.rentersapp.data.model.User" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/reportsFragment"
+        android:name="com.msprysak.rentersapp.ui.reports.ReportsFragment"
+        android:label="@string/reports"
+        tools:layout="@layout/fragment_reports" >
+        <action
+            android:id="@+id/action_reportsFragment_to_addEditReportsFragment"
+            app:destination="@id/addEditReportsFragment" />
+        <action
+            android:id="@+id/action_reportsFragment_to_fullReportFragment"
+            app:destination="@id/fullReportFragment">
+
+            <argument
+                android:name="report"
+                app:argType="com.msprysak.rentersapp.data.model.Reports" />
+
+            <argument
+                android:name="user"
+                app:argType="com.msprysak.rentersapp.data.model.User" />
+
+
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/addEditReportsFragment"
+        android:name="com.msprysak.rentersapp.ui.reports.AddEditReportsFragment"
+        android:label="@string/add_report"
+        tools:layout="@layout/fragment_add_report" />
+
+    <fragment
+        android:id="@+id/fullReportFragment"
+        android:name="com.msprysak.rentersapp.ui.reports.FullReportFragment"
+        android:label="Podgląd zgłoszenia"
+        tools:layout="@layout/fragment_full_report">
+
+        <action
+            android:id="@+id/action_fullReportFragment_to_imageFullScreen"
+            app:destination="@id/imageFullScreen">
+
+        <argument
+            android:name="imageUri"
+            app:argType="string" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/imageFullScreen"
+        android:name="com.msprysak.rentersapp.ui.reports.ImageFullScreen"
+        android:label="@string/image_preview" />
+    <fragment
+        android:id="@+id/addPremisesFragment"
+        android:name="com.msprysak.rentersapp.ui.addpremises.AddPremisesFragment"
+        android:label="Zarządzaj mieszkaniami" />
+    <fragment
+        android:id="@+id/mediaFragment"
+        android:name="com.msprysak.rentersapp.ui.media.MediaFragment"
+        android:label="Media" >
+        <action
+            android:id="@+id/action_mediaFragment_to_addMediaFragment"
+            app:destination="@id/addMediaFragment" />
+        <action
+            android:id="@+id/action_mediaFragment_to_fullMediaFragment"
+            app:destination="@id/fullMediaFragment">
+
+            <argument
+                android:name="media"
+                app:argType="com.msprysak.rentersapp.data.model.Media" />
+
+            <argument
+                android:name="user"
+                app:argType="com.msprysak.rentersapp.data.model.User" />
+
+
+        </action>
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/addMediaFragment"
+        android:name="com.msprysak.rentersapp.ui.media.AddMediaFragment"
+        android:label="Dodaj media" />
+    <fragment
+        android:id="@+id/fullMediaFragment"
+        android:name="com.msprysak.rentersapp.ui.media.FullMediaFragment"
+        android:label="Media" >
+        <action
+            android:id="@+id/action_fullMediaFragment_to_imageFullScreen"
+            app:destination="@id/imageFullScreen">
+
+            <argument
+                android:name="imageUri"
+                app:argType="string" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/contractsFragment"
+        android:name="com.msprysak.rentersapp.ui.contracts.ContractsFragment"
+        android:label="Umowy" />
+    <fragment
+        android:id="@+id/invoicesFragment"
+        android:name="com.msprysak.rentersapp.ui.invoices.InvoicesFragment"
+        android:label="Faktury"
+        tools:layout="@layout/fragment_invoices" >
+        <action
+            android:id="@+id/action_invoicesFragment_to_invoicesTemplateFragment"
+            app:destination="@id/invoicesTemplateFragment" />
+        <action
+            android:id="@+id/action_invoicesFragment_to_pdfViewerFragment"
+            app:destination="@id/pdfViewerFragment"
+            >
+
+            <argument
+                android:name="item"
+                app:argType="com.msprysak.rentersapp.data.model.PdfFile" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/invoicesTemplateFragment"
+        android:name="com.msprysak.rentersapp.ui.invoices.InvoicesTemplateFragment"
+        android:label="Faktury" />
+    <fragment
+        android:id="@+id/userInfoFragment"
+        android:name="com.msprysak.rentersapp.ui.users.UserInfoFragment"
+        android:label="Podgląd użytkownika"
+        tools:layout="@layout/fragment_user_info" />
+    <fragment
+        android:id="@+id/pdfViewerFragment"
+        android:name="com.msprysak.rentersapp.ui.invoices.PdfViewerFragment"
+        android:label="Podgląd faktury"
+        tools:layout="@layout/fragment_pdf_viewer" />
+
+</navigation>

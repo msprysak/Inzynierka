@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="confirm_password">Potwierdź hasło</string>
+    <string name="login">Zaloguj się</string>
+    <string name="nie_masz_jeszcze_konta_zarejestruj_si">Nie masz jeszcze konta? Zarejestruj się!</string>
+</resources>

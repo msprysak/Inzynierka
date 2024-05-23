@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.payments.PaymentsLandlordFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/payment_title_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:elevation="10dp"
+
+            android:textColorHint="?attr/colorOnSecondaryContainer"
+       app:boxBackgroundColor="?attr/colorSecondaryContainer"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       >
+
+       <com.google.android.material.textfield.TextInputEditText
+           android:id="@+id/payment_title"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:hint="@string/enter_title"
+           android:textSize="20sp"
+           />
+
+   </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/payment_amount_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:elevation="10dp"
+        android:textColorHint="?attr/colorOnSecondaryContainer"
+        app:boxBackgroundColor="?attr/colorSecondaryContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/payment_title_container"
+
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/payment_amount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:hint="@string/enter_amount"
+            android:textSize="20sp"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/start_payment_date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_payment_date_label"
+        android:textColor="?attr/colorOnSurface"
+        android:textStyle="bold"
+        android:textSize="19sp"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/payment_amount_container"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/start_payment_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="19.11.2023"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="28sp"
+        android:textStyle="bold|italic"
+        android:layout_margin="10dp"
+        android:letterSpacing="0.3"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/start_payment_date_label"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/end_payment_date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/end_payment_date_label"
+        android:textColor="?attr/colorOnSurface"
+        android:textStyle="bold"
+        android:textSize="19sp"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/start_payment_date"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/end_payment_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="20.11.2023"
+        android:textSize="28sp"
+        android:textColor="?attr/colorPrimary"
+        android:textStyle="bold|italic"
+        android:layout_margin="10dp"
+        android:letterSpacing="0.3"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/end_payment_date_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <Button
+        android:id="@+id/calednar_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/add_payment_date"
+        android:textColor="?attr/colorOnPrimary"
+        android:drawableLeft="@drawable/ic_edit_calendar"
+        android:drawableTint="?attr/colorOnPrimary"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/end_payment_date" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/users_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/calednar_button" />
+
+        <Button
+            android:id="@+id/add_to_selected_users"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/add_to_selected_users"
+            app:layout_constraintEnd_toStartOf="@id/save_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/users_recycler_view" />
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/add_to_selected_users"
+            app:layout_constraintTop_toTopOf="@id/add_to_selected_users"
+            app:layout_constraintBottom_toBottomOf="@id/add_to_selected_users"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

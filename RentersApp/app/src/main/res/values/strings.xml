@@ -1,22 +1,216 @@
 <resources>
     <string name="app_name">RentersApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="create_account">Utwórz konto</string>
     <string name="email">Email</string>
+    <string name="name_surname">Imie i nazwisko</string>
+    <string name="pesel_nip">Pesel lub NIP</string>
     <string name="name">Nazwa</string>
     <string name="password">Hasło</string>
-    <string name="or">──────── lub ────────</string>
+    <string name="or">─────────────────────</string>
+    <string name="send">Wyślij</string>
     <string name="register">Zarejestruj się</string>
     <string name="account_set">Masz już konto? Zaloguj się!</string>
+
+    <!-- Strings related to registration -->
+    <string name="invalid_email">Adres email jest nieprawidłowy!</string>
+    <string name="empty_password">Proszę wprowadź hasło</string>
+    <string name="welcome_message">Witaj %s,\ndziękujemy za wybór naszej aplikacji!</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="select_user">Wybierz użytkownika</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome!"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="select_users">Wybierz użytkowników</string>
+    <string name="select_all_users">Wybierz wszystkich</string>
+    <string name="invalid_username">Nazwa użytkownika musi zawierać co najmniej 3 znaki!</string>
+    <string name="invalid_password">Hasło nie spełnia wymogów bezpieczeństwa</string>
+    <string name="invalid_confirm_password">Hasła nie są takie same!</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="register_success">Rejestracja zakończona sukcesem</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="confirm_password">Potwierdź hasło</string>
+    <string name="login">Zaloguj się</string>
+    <string name="nie_masz_jeszcze_konta_zarejestruj_si">Nie masz jeszcze konta? Zarejestruj się!</string>
+    <string name="username">Nazwa użytkownika</string>
+    <string name="join_home_button">Dołącz do istniejącego lokalu</string>
+    <string name="create_home_button">Utwórz nowy lokal</string>
+    <string name="home_name">Nazwa domu</string>
+    <string name="home_address">Adres (opcjonalnie)</string>
+    <string name="cancel">Anuluj</string>
+    <string name="change_dates">Edyuj daty płatności</string>
+    <string name="select_payment_dates">Wybierz daty płatności</string>
+    <string name="select_payment_date">Wybierz date płatności</string>
+    <string name="select_picture_take_date">Wybierz datę wykonania zdjęć</string>
+    <string name="edit_selected_users">Edytuj wybranych użytkowników</string>
+    <string name="create">Utwórz</string>
+    <string name="Add_home_photo">Dodaj zdjęcie domu</string>
+    <string name="home_photo">Zdjęcie domu</string>
+    <string name="no_address">Brak adresu</string>
+    <string name="enter_access_code">Podaj 4 cyfrowy kod dostępu</string>
+    <string name="confirm">Zatwierdź</string>
+    <string name="title_activity_create_home">CreateHomeActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="upload">Wczytaj</string>
+    <string name="create_from_template">Utwórz z szablonu</string>
+    <string name="choose_add_inovice_option">Wybierz opcję dodania faktury</string>
+    <string name="add_invoice">Dodaj fakturę</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
+        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
+        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
+        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
+        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
+        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
+        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
+        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
+        bibendum, vel congue leo egestas.\n\n
+        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
+        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
+        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
+        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
+        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
+        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
+        est.\n\n
+        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
+        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
+        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
+        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
+        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
+        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
+        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
+        convallis.\n\n
+        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
+        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
+        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
+        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
+        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
+        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
+        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+    </string>
+    <string name="code_expired">Kod wygasł!</string>
+    <string name="menu">Menu</string>
+    <string name="home">Dom</string>
+    <string name="show_home_info">Pokaż informacje o mieszkaniu</string>
+    <string name="payments">Płatności</string>
+    <string name="chat">Czat</string>
+    <string name="profile">Profil</string>
+    <string name="notifications">Powiadomienia</string>
+    <string name="settings">Ustawienia</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="more">Więcej</string>
+    <string name="edit_profile">Edytuj profil</string>
+    <string name="generate_code">Wygeneruj jednorazowy kod</string>
+    <string name="tenants">Najemcy</string>
+    <string name="invoices">Faktury</string>
+    <string name="umowy">Umowy</string>
+    <string name="add_users">Dodaj użytkowników</string>
+    <string name="reports">Zgłoszenia</string>
+    <string name="edit_home">Edytuj informacje o mieszkaniu</string>
+    <string name="create_code">Utwórz kod</string>
+    <string name="_0000">0000</string>
+    <string name="create_temporary_code_to_join">Utwórz jednorazowy kod, aby użytkownik mógł dołączyć do lokalu!</string>
+    <string name="place_holder_time">00:00:00</string>
+    <string name="calendar">Kalendarz</string>
+    <string name="delete_event">Usuń wydarzenie</string>
+    <string name="new_event">Nowe wydarzenie</string>
+    <string name="phone_number">Numer telefonu</string>
+    <string name="peselOrNip">PESEL lub NIP</string>
+    <string name="save_changes">Zapisz zmiany</string>
+    <string name="change_password">Zmień hasło</string>
+    <string name="changing_password">Zmiana hasła</string>
+    <string name="new_password">Nowe hasło</string>
+    <string name="repeat_password">Powtórz hasło</string>
+    <string name="save">Zapisz</string>
+    <string name="enter_code">Wprowadź kod</string>
+    <string name="enter_title">Wprowadź tytuł</string>
+    <string name="title">Tytuł</string>
+    <string name="join_to_group_request">Prośba o dołaczenie do lokalu</string>
+    <string name="accept">Akceptuj</string>
+    <string name="delete">Usuń</string>
+    <string name="preview">Podgląd</string>
+    <string name="status">Status:</string>
+    <string name="decline">Odrzuć</string>
+    <string name="sign_out">Wyloguj</string>
+    <string name="users">Użytkownicy</string>
+    <string name="colon">:</string>
+    <string name="landlord">Właściciel</string>
+    <string name="messages">Wiadomości</string>
+    <string name="type_message">Wpisz wiadomość...</string>
+    <string name="add_report">Dodaj zgłoszenie</string>
+    <string name="enter_report_title">Wprowadź tytuł zgłoszenia</string>
+    <string name="report_title">Tytuł zgłoszenia</string>
+    <string name="enter_report_description">Wprowadź opis zgłoszenia</string>
+    <string name="enter_comment">Wprowadź komenatrz</string>
+    <string name="add_images">Dodaj zdjęcia</string>
+    <string name="report_description">Opis: ktoś sie włamał na chate i nam wszystko zajmumali złodziejaszki1!!! :((((</string>
+    <string name="reporter">Zgłaszający:</string>
+    <string name="enter_comment_to_report">Wprowadź komentarz do zgłoszenia</string>
+    <string name="image_preview">Podgląd zdjęcia</string>
+    <string name="enter_amount">Podaj kwotę</string>
+    <string name="add_payment_date">Dodaj datę płatności</string>
+    <string name="start_payment_date_label">Data rozpoczęcia płatności:</string>
+    <string name="end_payment_date_label">Data zakończenia płatności:</string>
+    <string name="add_to_selected_users">Przypisz do wybranych użytkowników</string>
+    <string name="payment_amount">Kwota do zapłaty:</string>
+    <string name="payment">Płatność</string>
+    <string name="sent_date">Data wysłania:</string>
+    <string name="sample_date">21.11.2023</string>
+    <string name="payment_date_since">Data płatności od</string>
+    <string name="payment_date">Data płatności</string>
+    <string name="since">Od:</string>
+    <string name="until">Do:</string>
+    <string name="delete_report">Usuń zgłoszenie</string>
+    <string name="paid">Zapłacono</string>
+    <string name="payment_paid">Opłacono płatność</string>
+    <string name="add_new_home">Zarządzaj mieszkaniami</string>
+    <string name="premises_name">Nazwa Domu\n</string>
+    <string name="choose">Wybierz</string>
+    <string name="media">Media</string>
+    <string name="add_media">Dodaj media</string>
+    <string name="add_dates">Dodaj daty</string>
+    <string name="start_date">Data rozpoczęcia</string>
+    <string name="creation_date">Data utworzenia:</string>
+    <string name="date_photo_was_taken">Data wykonania zdjęcia:</string>
+    <string name="date_photos_were_taken">Data wykonania zdjęć:</string>
+    <string name="download">Pobierz</string>
+    <string name="add_date_picture_was_taken">Dodaj date wykonania zdjęcia</string>
+    <string name="date_pictures_were_taken">Data wykonania zdjęć</string>
+    <string name="issue_place">Miejsce wystawienia</string>
+    <string name="issue_date">Data wystawienia</string>
+    <string name="sale_date">Data sprzedaży</string>
+    <string name="name_surname_seller">Imię i nazwisko sprzedawcy</string>
+    <string name="nip">NIP</string>
+    <string name="postal_code">Kod pocztowy</string>
+    <string name="street">Ulica</string>
+    <string name="town">Miejscowość</string>
+    <string name="seller_data">Dane sprzedawcy</string>
+    <string name="buyer_data">Dane nabywcy\n</string>
+    <string name="service_name">Nazwa towaru lub usługi</string>
+    <string name="attentions">Uwagi</string>
+    <string name="price_netto">Cena netto</string>
+    <string name="payment_deadline">Termin płatności</string>
+    <string name="name_surname_buyer">Imię i nazwisko nabywcy</string>
+    <string name="pesel">PESEL</string>
+    <string name="save_and_download">Zapisz i pobierz</string>
+    <string name="forgot_password">Nie pamiętasz hasła?</string>
+    <string name="reset_password">Zresetuj hasło</string>
+    <string name="remind_password">Przypomnij hasło</string>
+    <string name="email_sent">Wysłano prośbę o zresetowanie hasła!</string>
+    <string name="enter_email_address">Wprowadź adres email</string>
+    <string name="main_page">Strona główna</string>
+    <string name="upload_">Wczytaj</string>
+    <string name="upload_buyer_data">Wczytaj dane nabywcy</string>
+    <string name="invoice_name">Nazwa faktury</string>
+    <string name="load_your_data">Wczytaj swoje dane</string>
 </resources>
